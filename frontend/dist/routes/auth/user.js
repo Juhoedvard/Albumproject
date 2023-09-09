@@ -37,3 +37,21 @@ router.get('/api/users/me', (req, res) => __awaiter(void 0, void 0, void 0, func
         });
     }
 }));
+router.get('/api/users/get-profile', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.query;
+    try {
+        const apiRes = yield fetch(`${process.env.API_URL}/api/users/get-profile?id=${id}`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+            },
+        });
+        const data = yield apiRes.json();
+        return res.status(apiRes.status).json(data);
+    }
+    catch (err) {
+        return res.status(500).json({
+            error: `Something went wrong when getting user data, ${err}`
+        });
+    }
+}));

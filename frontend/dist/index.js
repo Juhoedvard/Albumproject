@@ -17,7 +17,7 @@ const send_password_1 = require("./routes/auth/send-password");
 const forgotten_password_1 = require("./routes/auth/forgotten-password");
 const change_password_1 = require("./routes/auth/change-password");
 const album_1 = require("./routes/photo/album");
-const addPhoto_1 = require("./routes/photo/addPhoto");
+const addPhoto_S3_1 = require("./routes/photo/addPhoto_S3");
 dotenv_1.default.config();
 const PORT = process.env.PORT || 5000;
 const allowedOrigins = ['http://localhost:3000'];
@@ -38,7 +38,7 @@ app.use(send_password_1.resetPasswordRouter);
 app.use(forgotten_password_1.forgottenPasswordRouter);
 app.use(change_password_1.changePasswordRouter);
 app.use(album_1.albumRouter);
-app.use(addPhoto_1.photoRouter);
+app.use(addPhoto_S3_1.photoRouter);
 app.get("*", (req, res) => {
     return res.sendFile(path_1.default.resolve(__dirname, 'client', 'build', 'index.html'));
 });
