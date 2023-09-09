@@ -39,6 +39,7 @@ app.use(forgotten_password_1.forgottenPasswordRouter);
 app.use(change_password_1.changePasswordRouter);
 app.use(album_1.albumRouter);
 app.use(addPhoto_S3_1.photoRouter);
+app.use(express_1.default.static('client/build'));
 app.get("*", (req, res) => {
     return res.sendFile(path_1.default.resolve(__dirname, 'client', 'build', 'index.html'));
 });
