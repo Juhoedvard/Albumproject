@@ -45,7 +45,7 @@ app.use(photoRouter)
 app.use(express.static('build'))
 
 app.get("*", (req: Request, res: Response): void => {
-    return res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
+    return res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
 });
 
 
