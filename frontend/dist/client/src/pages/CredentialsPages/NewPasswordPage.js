@@ -10,7 +10,7 @@ const store_1 = require("../../store");
 const NewPasswordPage = () => {
     const navigate = (0, react_router_dom_1.useNavigate)();
     const time = parseInt(window.localStorage.getItem("passwordResetTime") || '0');
-    console.log(time);
+    (time);
     if (!time) {
         navigate("/login");
     }

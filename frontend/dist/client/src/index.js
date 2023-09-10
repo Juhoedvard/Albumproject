@@ -19,6 +19,6 @@ root.render(react_1.default.createElement(react_1.default.StrictMode, null,
         react_1.default.createElement(react_toastify_1.ToastContainer, { position: "bottom-center", autoClose: 2000, hideProgressBar: true, newestOnTop: true, closeOnClick: true }),
         react_1.default.createElement(App_1.default, null))));
 // If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
+// to log results (for example: reportWebVitals())
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 (0, reportWebVitals_1.default)();

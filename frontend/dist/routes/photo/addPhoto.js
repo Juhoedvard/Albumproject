@@ -59,7 +59,7 @@ router.post('/api/album/add-photo', upload.single('image'), (req, res) => __awai
                 Body: buffer,
                 ContentType: (_b = req.file) === null || _b === void 0 ? void 0 : _b.mimetype,
             };
-            console.log(req.file);
+            (req.file);
             const command = new client_s3_1.PutObjectCommand(params);
             const uploadUrl = yield s3.send(command);
             const imageUrl = `https://${bucketname}.s3.${bucketRegion}.amazonaws.com/${key}`;

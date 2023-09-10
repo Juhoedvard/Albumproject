@@ -21,9 +21,9 @@ exports.albumRouter = router;
 router.post('/api/album/create-album', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const access = req.cookies['access'];
     const { title, description, thumbnail } = req.body;
-    console.log(req.body);
+    (req.body);
     const body = JSON.stringify({ title: title, description: description, thumbnail: thumbnail });
-    console.log('secondbody,', body);
+    ('secondbody,', body);
     try {
         const AlbumResponse = yield fetch(`${process.env.API_URL}/api/album/create-album`, {
             method: 'POST',
@@ -38,17 +38,17 @@ router.post('/api/album/create-album', (req, res) => __awaiter(void 0, void 0, v
         return res.status(AlbumResponse.status).json(data);
     }
     catch (err) {
-        console.log('error', err);
+        ('error', err);
         return res.status(500).json({
             error: `something went wrong ${err}`
         });
     }
 }));
 router.post('/api/album/add-photos', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('Lisätään kuvia!');
+    ('Lisätään kuvia!');
     const access = req.cookies['access'];
     const body = req.body;
-    console.log(body, 'second body');
+    (body, 'second body');
     try {
         const PhotoResponse = yield fetch(`${process.env.API_URL}/api/album/add-photos`, {
             method: 'POST',
@@ -60,17 +60,18 @@ router.post('/api/album/add-photos', (req, res) => __awaiter(void 0, void 0, voi
             body: JSON.stringify(body),
         });
         const data = yield PhotoResponse.json();
-        console.log(data);
+        (data);
         return res.status(PhotoResponse.status).json(data);
     }
     catch (err) {
-        console.log('error', err);
+        ('error', err);
         return res.status(500).json({
             error: `something went wrong ${err}`
         });
     }
 }));
 router.get('/api/album/albums', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    (process.env.API_URL, 'apiURL');
     try {
         const apiRes = yield fetch(`${process.env.API_URL}/api/album/albums`, {
             method: 'GET',
@@ -80,17 +81,18 @@ router.get('/api/album/albums', (req, res) => __awaiter(void 0, void 0, void 0, 
         });
         const data = yield apiRes.json();
         for (const album of data) {
-            console.log(`Album title: ${album.title}`);
+            (`Album title: ${album.title}`);
             // Käydään läpi kunkin albumin valokuvat
             for (const photo of album.photos) {
-                console.log(`Photo caption: ${photo.caption}`);
-                console.log(photo.likedUsers);
+                (`Photo caption: ${photo.caption}`);
+                (photo.likedUsers);
             }
-            console.log('=========================');
+            ('=========================');
         }
         return res.status(apiRes.status).json(data);
     }
     catch (err) {
+        (err);
         return res.status(500).json({
             error: `Something went wrong when getting  data, ${err}`
         });
@@ -99,7 +101,7 @@ router.get('/api/album/albums', (req, res) => __awaiter(void 0, void 0, void 0, 
 router.post('/api/album/likephoto', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const access = req.cookies['access'];
     const body = req.body;
-    console.log(body);
+    (body);
     try {
         const PhotoResponse = yield fetch(`${process.env.API_URL}/api/album/likephoto`, {
             method: 'POST',
@@ -111,7 +113,7 @@ router.post('/api/album/likephoto', (req, res) => __awaiter(void 0, void 0, void
             body: JSON.stringify(body),
         });
         const data = yield PhotoResponse.json();
-        console.log(data);
+        (data);
         return res.status(PhotoResponse.status).json(data);
     }
     catch (err) {
@@ -122,7 +124,7 @@ router.post('/api/album/likephoto', (req, res) => __awaiter(void 0, void 0, void
 }));
 router.get('/api/album/getPhotoLikes/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
-    console.log(id, 'kuvia');
+    (id, 'kuvia');
     try {
         const PhotoResponse = yield fetch(`${process.env.API_URL}/api/album/getPhotoLikes/${id}`, {
             method: 'GET',
@@ -132,7 +134,7 @@ router.get('/api/album/getPhotoLikes/:id', (req, res) => __awaiter(void 0, void 
             },
         });
         const data = yield PhotoResponse.json();
-        console.log(data);
+        (data);
         return res.status(PhotoResponse.status).json(data);
     }
     catch (err) {

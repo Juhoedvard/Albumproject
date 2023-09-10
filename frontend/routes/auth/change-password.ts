@@ -30,7 +30,7 @@ router.post('/api/users/change-password', async (req: Request, res: Response) =>
             const data = await apiRes.json()
             return res.status(apiRes.status).json(data)
         }catch(err) {
-            console.log(err)
+            (err)
             return res.status(500).json({
                 error: 'Something went wrong when resetting password'
             })

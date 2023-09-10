@@ -39,7 +39,7 @@ router.post('/api/users/change-password', (req, res) => __awaiter(void 0, void 0
         return res.status(apiRes.status).json(data);
     }
     catch (err) {
-        console.log(err);
+        (err);
         return res.status(500).json({
             error: 'Something went wrong when resetting password'
         });

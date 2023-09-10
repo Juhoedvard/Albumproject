@@ -19,15 +19,8 @@ import { photoRouter } from './routes/photo/addPhoto_S3';
 dotenv.config();
 const PORT = process.env.PORT || 5000;
 
-const allowedOrigins = ['http://localhost:3000'];
-
-const options: cors.CorsOptions = {
-  origin: allowedOrigins,
-  credentials: true,
-};
-
 const app:Express = express();
-app.use(cors(options));
+
 app.use(cookieParser());
 app.use(express.json());
 
@@ -51,5 +44,5 @@ app.get("*", (req: Request, res: Response): void => {
 
 app.listen(PORT, () => {
 
-    console.log(`App listening on port ${PORT}`);
+    (`App listening on port ${PORT}`);
 });

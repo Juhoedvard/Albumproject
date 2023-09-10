@@ -9,9 +9,9 @@ const EditPhotoComponent = ({ photo, removePhoto, photosLoaded, index, selectedP
     const [selectedPhotoIndexes, setSelectedPhotoIndexes] = (0, react_1.useState)({});
     const [selectedPhotoEffects, setSelectedPhotoEffects] = (0, react_1.useState)({});
     const finalPhoto = (photo) => {
-        console.log(index);
-        console.log(caption);
-        console.log(caption);
+        (index);
+        (caption);
+        (caption);
         if (!caption) {
             return react_toastify_1.toast.error('Set caption for photo');
         }
@@ -20,7 +20,7 @@ const EditPhotoComponent = ({ photo, removePhoto, photosLoaded, index, selectedP
             photo: photo,
             albumID: '',
         };
-        console.log(temporaryPhoto);
+        (temporaryPhoto);
         const isSelected = selectedPhotoIndexes[photo];
         let newSelectedPhotos = [...selectedPhoto];
         if (isSelected) {
@@ -35,7 +35,7 @@ const EditPhotoComponent = ({ photo, removePhoto, photosLoaded, index, selectedP
     const handleCaptionChange = (index, value) => {
         const newCaptions = [...caption];
         newCaptions[index] = value;
-        console.log(newCaptions);
+        (newCaptions);
         setCaption(newCaptions);
     };
     const toggleSelected = () => {
@@ -44,9 +44,9 @@ const EditPhotoComponent = ({ photo, removePhoto, photosLoaded, index, selectedP
             setSelectedPhotoEffects((prevSelectedPhotoEffects) => (Object.assign(Object.assign({}, prevSelectedPhotoEffects), { [photo]: !isSelected })));
         }
         if (finalPhoto && !isSelected && index !== undefined) {
-            console.log(photo);
-            console.log(index);
-            console.log(caption);
+            (photo);
+            (index);
+            (caption);
             finalPhoto(photo);
         }
     };

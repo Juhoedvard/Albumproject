@@ -14,20 +14,19 @@ const  ModalComponent = ({openModal, setOpenModal, photo, caption, likes, id }: 
   const [loaded, setLoaded] = useState(false)
   const [userLiked, setUserLiked] = useState<boolean>(false)
   const [currentLike, setCurrentLike] = useState<number>(likes || 0)
-  console.log(id, likes)
+
   useEffect(() => {
     if(id && likes){
       dispatch(getPhotoLikes(id)).then((users)=>{
         setLoaded(true)
         setCurrentLike(users.payload.length)
         if(users.payload.length && user){
-          console.log('here')
          const checklikes = users.payload.includes(user.id)
          setUserLiked(checklikes)
         }
       })
    }
-  }, [dispatch, loaded])
+  }, [dispatch, loaded, user])
 
 
   const likePhoto =  (id: number, event: React.MouseEvent<HTMLButtonElement> ) => {
@@ -37,13 +36,13 @@ const  ModalComponent = ({openModal, setOpenModal, photo, caption, likes, id }: 
       setUserLiked(!userLiked)
 
     }).catch((err) =>{
-      console.log(err)
+      throw Error(err)
     })
     }
 
   return (
 
-      <Modal  dismissible show={openModal === 'dismissible'}  size={'md'}  onClose={() => setOpenModal(true)}>
+      <Modal  dismissible show={openModal === 'dismissible'}  size={'md'}  onClose={() => setOpenModal(undefined)}>
       <Modal.Header className='bg-' >{caption}</Modal.Header>
         <Modal.Body >
         <figure className="flex flex-growrelative text-transparent hover:text-zinc-300">

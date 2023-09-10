@@ -10,7 +10,7 @@ const EditAlbum = () => {
     const { id } = (0, react_router_dom_1.useParams)();
     const { albums } = (0, store_1.useAppSelector)((state) => state.albums);
     const album = albums.find((album) => album.id.toString() === id);
-    console.log(album === null || album === void 0 ? void 0 : album.likes);
+    (album === null || album === void 0 ? void 0 : album.likes);
     const editPhoto = (photo) => {
     };
     return (React.createElement("div", { className: "flex flex-col justify-center items-center" },

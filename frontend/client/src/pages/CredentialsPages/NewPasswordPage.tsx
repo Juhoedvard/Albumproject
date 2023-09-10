@@ -16,7 +16,6 @@ const NewPasswordPage = () => {
 
     const navigate = useNavigate()
     const time = parseInt(window.localStorage.getItem("passwordResetTime") || '0')
-    console.log(time)
     if(!time){
         navigate("/login")
     }

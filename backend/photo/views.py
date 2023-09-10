@@ -14,7 +14,6 @@ class CreateAlbumView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     def post(self, request):
         data = request.data
-        print(data)
         user = request.user
         serializer = CreateAlbumSerializer(data=data, context={'request': request})
         if not serializer.is_valid():
@@ -39,7 +38,7 @@ class AddPhotosView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     def post(self, request):
         data = request.data
-        print(data)
+
         photos = []
 
         for photo_data in data:
@@ -77,7 +76,6 @@ class LikePhotoView(APIView):
             return Response({"error": "Authentication required."}, status=status.HTTP_401_UNAUTHORIZED)
 
         user = request.user
-        print(user)
         photo = get_object_or_404(Photo, id=photoID)
         liked_user, created = LikedUsers.objects.get_or_create(photo=photo, user=user )
         if created:
@@ -96,7 +94,6 @@ class LikePhotoView(APIView):
 class LikedUsersForPhotoView(APIView):
 
     def get(self, request, id):
-        print(id)
 
         liked_users = LikedUsers.objects.filter(photo_id=id)
         if liked_users:

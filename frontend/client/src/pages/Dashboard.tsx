@@ -17,7 +17,6 @@ const Dashboard = () => {
     const {
         register,
         handleSubmit,
-        formState: { errors },
       } = useForm<NewPassword>()
 
       const onSubmit: SubmitHandler<NewPassword> = (data) => {

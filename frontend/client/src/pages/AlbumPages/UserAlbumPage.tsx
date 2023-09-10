@@ -19,7 +19,6 @@ const UserAlbumPage = () =>{
     const {albums, loading} = useAppSelector((state) => state.albums)
     const album : Album | undefined = albums.find((a) => a.id.toString() === id)
     const photos = album?.photos
-    console.log(photos)
     if(!album && !loading) {
         navigate('/')
     }

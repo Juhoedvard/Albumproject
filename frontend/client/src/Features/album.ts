@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { API_URL } from '../config'
 import type { User } from './user';
 import { toast } from 'react-toastify';
 
@@ -36,12 +35,12 @@ export const addThumbnail = createAsyncThunk(
     const formData = new FormData()
     formData.append('thumbnail', thumbnail)
     try {
-      const res = await fetch(`${API_URL}/api/album/add-thumbnail-s3`, {
+      const res = await fetch(`/api/album/add-thumbnail-s3`, {
           method: 'POST',
           headers: {
             Accept: 'multipart/form-data',
           },
-          credentials: 'include',
+
           body: formData
         })
         const data = await res.json()
@@ -53,7 +52,6 @@ export const addThumbnail = createAsyncThunk(
         }
     }
     catch(error: any | typeof Error) {
-      console.log('maybe happening')
       return thunkAPI.rejectWithValue(error.response.data)
     }
   }
@@ -67,12 +65,12 @@ export const addPhotos = createAsyncThunk(
     }
 
     try {
-      const res = await fetch(`${API_URL}/api/album/add-photos-s3`, {
+      const res = await fetch(`/api/album/add-photos-s3`, {
           method: 'POST',
           headers: {
             Accept: 'multipart/form-data',
           },
-          credentials: 'include',
+
           body: formData
         })
         const data = await res.json()
@@ -85,7 +83,6 @@ export const addPhotos = createAsyncThunk(
         }
     }
     catch(error: any | typeof Error) {
-      console.log('maybe happening')
       return thunkAPI.rejectWithValue(error.response.data)
     }
 
@@ -95,15 +92,14 @@ export const addPhotos = createAsyncThunk(
 export const LikePhoto = createAsyncThunk(
   'album/likephoto', async (id: number, thunkAPI ) => {
     const body = JSON.stringify({id : id})
-    console.log(body)
     try{
-      const res = await fetch(`${API_URL}/api/album/likephoto`,{
+      const res = await fetch(`/api/album/likephoto`,{
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json'
         },
-        credentials: 'include',
+
         body
       })
       const data = await res.json()
@@ -113,11 +109,10 @@ export const LikePhoto = createAsyncThunk(
             return data
           }
           else {
-            return thunkAPI.rejectWithValue(console.log(data))
+            return thunkAPI.rejectWithValue((data))
           }
       }
       catch(error: any | typeof Error) {
-        console.log('maybe happening')
         return thunkAPI.rejectWithValue(error.response.data)
       }
     })
@@ -126,13 +121,13 @@ export const createAlbum = createAsyncThunk(
     async ({title, description, thumbnail, photos} : Album,  thunkAPI) => {
         const body = JSON.stringify({title: title, description: description, thumbnail: thumbnail})
       try {
-        const res = await fetch(`${API_URL}/api/album/create-album`, {
+        const res = await fetch(`/api/album/create-album`, {
             method: 'POST',
             headers: {
               Accept: 'application/json',
               'Content-Type': 'application/json'
             },
-            credentials: 'include',
+
             body
           })
           const data = await res.json()
@@ -152,7 +147,6 @@ export const createAlbum = createAsyncThunk(
           }
       }
       catch(error: any | typeof Error) {
-        console.log('maybe happening')
         return thunkAPI.rejectWithValue(error.response.data)
       }
     }
@@ -161,15 +155,14 @@ export const Photos = createAsyncThunk(
   'album/photos',
   async (photos: Photo[],  thunkAPI) => {
       const body = JSON.stringify(photos)
-      console.log(body)
     try {
-      const res = await fetch(`${API_URL}/api/album/add-photos`, {
+      const res = await fetch(`/api/album/add-photos`, {
           method: 'POST',
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json'
           },
-          credentials: 'include',
+
           body
         })
         const data = await res.json()
@@ -181,7 +174,6 @@ export const Photos = createAsyncThunk(
         }
     }
     catch(error: any | typeof Error) {
-      console.log('maybe happening')
       return thunkAPI.rejectWithValue(error.response.data)
     }
   }
@@ -190,13 +182,14 @@ export const Photos = createAsyncThunk(
 export const getAlbums = createAsyncThunk(
   'api/album/albums',
   async (_, thunkAPI) => {
+    ('täällä')
     try{
-      const res = await fetch(`${API_URL}/api/album/albums`, {
+      const res = await fetch(`/api/album/albums`, {
         method: 'GET',
         headers: {
           Accepts: 'application/json',
         },
-        credentials: 'include',
+
 
     })
     const data = await res.json()
@@ -204,10 +197,12 @@ export const getAlbums = createAsyncThunk(
       return data
     }
     else{
+      (thunkAPI.rejectWithValue(data))
       return thunkAPI.rejectWithValue(data)
     }
     }
     catch(err: any | typeof Error){
+      (thunkAPI.rejectWithValue(err.response.data))
       return thunkAPI.rejectWithValue(err.response.data)
     }
    })
@@ -216,28 +211,26 @@ export const getPhotoLikes = createAsyncThunk(
   'api/album/getPhotoLikes',
   async (id: number, thunkAPI) => {
     const body = JSON.stringify(id)
-    console.log(body)
     try{
-      const res = await fetch(`${API_URL}/api/album/getPhotoLikes/${id}`, {
+      const res = await fetch(`/api/album/getPhotoLikes/${id}`, {
         method: 'GET',
         headers: {
           Accepts: 'application/json',
         },
-        credentials: 'include',
+
 
     })
     const data = await res.json()
-    console.log(data)
     if(res.status === 200) {
       return data
     }
     else{
-      console.log(thunkAPI.rejectWithValue(data))
+      (thunkAPI.rejectWithValue(data))
       return thunkAPI.rejectWithValue(data)
     }
     }
     catch(err: any | typeof Error){
-      console.log(thunkAPI.rejectWithValue(err.response.data))
+      (thunkAPI.rejectWithValue(err.response.data))
       return thunkAPI.rejectWithValue(err.response.data)
     }
    })

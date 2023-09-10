@@ -14,7 +14,7 @@ const UserAlbumPage = () => {
     const { albums, loading } = (0, store_1.useAppSelector)((state) => state.albums);
     const album = albums.find((a) => a.id.toString() === id);
     const photos = album === null || album === void 0 ? void 0 : album.photos;
-    console.log(photos);
+    (photos);
     if (!album && !loading) {
         navigate('/');
     }

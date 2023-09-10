@@ -12,27 +12,28 @@ const ModalComponent = ({ openModal, setOpenModal, photo, caption, likes, id }) 
     const [loaded, setLoaded] = (0, react_1.useState)(false);
     const [userLiked, setUserLiked] = (0, react_1.useState)(false);
     const [currentLike, setCurrentLike] = (0, react_1.useState)(likes || 0);
-    console.log(id, likes);
+    (id, likes);
     (0, react_1.useEffect)(() => {
         if (id && likes) {
             dispatch((0, album_1.getPhotoLikes)(id)).then((users) => {
                 setLoaded(true);
                 setCurrentLike(users.payload.length);
                 if (users.payload.length && user) {
-                    console.log('here');
+                    ('here');
                     const checklikes = users.payload.includes(user.id);
+                    (checklikes, 'checklikes');
                     setUserLiked(checklikes);
                 }
             });
         }
-    }, [dispatch, loaded]);
+    }, [dispatch, loaded, user]);
     const likePhoto = (id, event) => {
         event.preventDefault();
         dispatch((0, album_1.LikePhoto)(id)).then(() => {
             setCurrentLike((prevLike) => (userLiked ? Math.max(prevLike - 1, 0) : prevLike + 1));
             setUserLiked(!userLiked);
         }).catch((err) => {
-            console.log(err);
+            (err);
         });
     };
     return (React.createElement(flowbite_react_1.Modal, { dismissible: true, show: openModal === 'dismissible', size: 'md', onClose: () => setOpenModal(true) },

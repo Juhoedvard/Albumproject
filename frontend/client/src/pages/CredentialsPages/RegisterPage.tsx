@@ -14,11 +14,9 @@ const RegisterPage = () => {
     const {
         register,
         handleSubmit,
-        formState: {errors},
       } = useForm<RegisterUser>()
 
     const onSubmit: SubmitHandler<RegisterUser> = (data) => {
-        console.log(data);
         dispatch(registerUser({...data}));
         return <Navigate to="/login"/>
       }

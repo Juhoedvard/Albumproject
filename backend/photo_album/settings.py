@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'users',
     'photo',
-    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -142,11 +141,7 @@ REST_FRAMEWORK = {
     ]
 }
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://localhost:5000",
 
-]
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),

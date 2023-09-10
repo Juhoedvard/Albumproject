@@ -10,7 +10,6 @@ const EditAlbum = () => {
     const {id} = useParams()
     const {albums} = useAppSelector((state) => state.albums)
     const album = albums.find((album) => album.id.toString() === id)
-    console.log(album?.likes)
     const editPhoto = (photo: string) => {
 
     }

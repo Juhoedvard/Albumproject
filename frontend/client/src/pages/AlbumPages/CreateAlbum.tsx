@@ -47,7 +47,6 @@ const CreateAlbum = () => {
       for (let i = 0; i < e.target.files.length; i++) {
         newPhotos.push(e.target.files[i]);
       }
-      console.log(newPhotos);
       setPhotos(newPhotos);
     }
   };
@@ -58,7 +57,7 @@ const CreateAlbum = () => {
           setThumbnailUrl(add.payload);
         })
         .catch((error) => {
-          console.log(error);
+          throw Error(error)
         });
       if (photos) {
         dispatch(addPhotos(photos))
@@ -67,7 +66,7 @@ const CreateAlbum = () => {
             setPhotosLoaded(true)
           })
           .catch((error) => {
-            console.log(error);
+              throw Error(error)
           });
       }
     } else {

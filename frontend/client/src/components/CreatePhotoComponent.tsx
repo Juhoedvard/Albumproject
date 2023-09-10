@@ -31,9 +31,6 @@ const EditPhotoComponent: React.FC<EditPhotoComponentProps> = ({
 
 
   const finalPhoto = (photo: string) => {
-    console.log(index)
-    console.log(caption)
-    console.log(caption)
     if (!caption) {
       return toast.error('Set caption for photo');
     }
@@ -42,7 +39,6 @@ const EditPhotoComponent: React.FC<EditPhotoComponentProps> = ({
       photo: photo,
       albumID: '',
     };
-    console.log(temporaryPhoto)
     const isSelected = selectedPhotoIndexes[photo];
 
     let newSelectedPhotos: Photo[] = [...selectedPhoto]
@@ -61,7 +57,6 @@ const EditPhotoComponent: React.FC<EditPhotoComponentProps> = ({
   const handleCaptionChange = (index: number, value: string) => {
     const newCaptions = [...caption];
     newCaptions[index] = value;
-    console.log(newCaptions)
     setCaption(newCaptions);
   };
 
@@ -76,9 +71,6 @@ const EditPhotoComponent: React.FC<EditPhotoComponentProps> = ({
       }));
     }
     if(finalPhoto && !isSelected && index !== undefined){
-        console.log(photo)
-        console.log(index)
-        console.log(caption)
         finalPhoto(photo)
     }
   };

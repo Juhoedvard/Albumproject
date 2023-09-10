@@ -13,7 +13,7 @@ const RegisterPage = () => {
     const dispatch = (0, store_1.useAppDispatch)();
     const { register, handleSubmit, formState: { errors }, } = (0, react_hook_form_1.useForm)();
     const onSubmit = (data) => {
-        console.log(data);
+        (data);
         dispatch((0, user_1.registerUser)(Object.assign({}, data)));
         return React.createElement(react_router_dom_1.Navigate, { to: "/login" });
     };

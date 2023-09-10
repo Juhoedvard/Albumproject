@@ -13,7 +13,6 @@ const router = Router();
 router.post('/api/users/send-password', async (req: Request, res: Response) => {
 
     const token = randomUUID()
-    console.log(token)
     const email = req.body.email;
     const body = JSON.stringify({
         email: email,

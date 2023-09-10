@@ -59,7 +59,7 @@ router.post('/api/album/add-thumbnail-s3', upload.single('thumbnail'), (req, res
                 Body: buffer,
                 ContentType: (_b = req.file) === null || _b === void 0 ? void 0 : _b.mimetype,
             };
-            console.log(req.file);
+            (req.file);
             const command = new client_s3_1.PutObjectCommand(params);
             yield s3.send(command);
             const imageUrl = `https://${bucketname}.s3.${bucketRegion}.amazonaws.com/${key}`;
@@ -71,16 +71,16 @@ router.post('/api/album/add-thumbnail-s3', upload.single('thumbnail'), (req, res
     }
 }));
 router.post('/api/album/add-photos-s3', upload.array('photo', 10), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(typeof req.files);
+    (typeof req.files);
     const s3 = (0, exports.s3ClientData)();
-    console.log('täällä');
+    ('täällä');
     const bucketname = process.env.AWS_BUCKET_NAME;
     const bucketRegion = process.env.REGION;
     try {
         if (s3 && bucketname && req.files) {
             const uploadedImageUrls = [];
             if (Array.isArray(req.files)) {
-                console.log('on array');
+                ('on array');
                 for (const file of req.files) {
                     const buffer = yield (0, sharp_1.default)(file.buffer).resize({ height: 1080, width: 1080, fit: 'contain' }).toBuffer();
                     const key = (0, crypto_1.randomUUID)().toString();
@@ -92,7 +92,7 @@ router.post('/api/album/add-photos-s3', upload.array('photo', 10), (req, res) =>
                     };
                     const command = new client_s3_1.PutObjectCommand(params);
                     yield s3.send(command);
-                    console.log('lisätty');
+                    ('lisätty');
                     const imageUrl = `https://${bucketname}.s3.${bucketRegion}.amazonaws.com/${key}`;
                     uploadedImageUrls.push(imageUrl);
                 }

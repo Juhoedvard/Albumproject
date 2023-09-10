@@ -11,18 +11,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.resetRegistered = exports.UserSlice = exports.changePassword = exports.changeForgottenPassword = exports.sendPasswordEmail = exports.logoutUser = exports.verifyUser = exports.loginUser = exports.getProfile = exports.registerUser = void 0;
 const toolkit_1 = require("@reduxjs/toolkit");
-const config_1 = require("../config");
 const react_toastify_1 = require("react-toastify");
 exports.registerUser = (0, toolkit_1.createAsyncThunk)('users/register', ({ first_name, last_name, email, password }, thunkAPI) => __awaiter(void 0, void 0, void 0, function* () {
     const body = JSON.stringify({ first_name, last_name, email, password });
     try {
-        const res = yield fetch(`${config_1.API_URL}/api/users/register`, {
+        const res = yield fetch(`/api/users/register`, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
             },
-            credentials: 'include',
             body
         });
         const data = yield res.json();
@@ -39,12 +37,11 @@ exports.registerUser = (0, toolkit_1.createAsyncThunk)('users/register', ({ firs
 }));
 const getUser = (0, toolkit_1.createAsyncThunk)('users/me', (_, thunkAPI) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const res = yield fetch(`${config_1.API_URL}/api/users/me`, {
+        const res = yield fetch(`}/api/users/me`, {
             method: 'GET',
             headers: {
                 Accept: 'application/json'
             },
-            credentials: 'include',
         });
         const data = yield res.json();
         if (res.status === 200) {
@@ -60,13 +57,12 @@ const getUser = (0, toolkit_1.createAsyncThunk)('users/me', (_, thunkAPI) => __a
 }));
 exports.getProfile = (0, toolkit_1.createAsyncThunk)('users/get-profile', (id, thunkAPI) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log('yritetään');
-        const res = yield fetch(`${config_1.API_URL}/api/users/get-profile?id=${id}`, {
+        ('yritetään');
+        const res = yield fetch(`/api/users/get-profile?id=${id}`, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
             },
-            credentials: 'include',
         });
         const data = yield res.json();
         if (res.status === 200) {
@@ -83,13 +79,12 @@ exports.getProfile = (0, toolkit_1.createAsyncThunk)('users/get-profile', (id, t
 exports.loginUser = (0, toolkit_1.createAsyncThunk)('users/login', ({ email, password }, thunkAPI) => __awaiter(void 0, void 0, void 0, function* () {
     const body = JSON.stringify({ email, password });
     try {
-        const res = yield fetch(`${config_1.API_URL}/api/users/login`, {
+        const res = yield fetch(`/api/users/login`, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
             },
-            credentials: 'include',
             body
         });
         const data = yield res.json();
@@ -108,12 +103,11 @@ exports.loginUser = (0, toolkit_1.createAsyncThunk)('users/login', ({ email, pas
 }));
 exports.verifyUser = (0, toolkit_1.createAsyncThunk)('users/verify', (_, thunkAPI) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const res = yield fetch(`${config_1.API_URL}/api/users/verify`, {
+        const res = yield fetch(`/api/users/verify`, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
             },
-            credentials: 'include', /// IMPORTANT
         });
         const data = yield res.json();
         if (res.status === 200) {
@@ -131,12 +125,11 @@ exports.verifyUser = (0, toolkit_1.createAsyncThunk)('users/verify', (_, thunkAP
 }));
 exports.logoutUser = (0, toolkit_1.createAsyncThunk)('users/logout', (_, thunkAPI) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const res = yield fetch(`${config_1.API_URL}/api/users/logout`, {
+        const res = yield fetch(`/api/users/logout`, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
             },
-            credentials: 'include',
         });
         const data = yield res.json();
         if (res.status === 200) {
@@ -153,14 +146,13 @@ exports.logoutUser = (0, toolkit_1.createAsyncThunk)('users/logout', (_, thunkAP
 exports.sendPasswordEmail = (0, toolkit_1.createAsyncThunk)('users/send-password', (email, thunkAPI) => __awaiter(void 0, void 0, void 0, function* () {
     const body = JSON.stringify({ email });
     try {
-        console.log('trying');
-        const res = yield fetch(`${config_1.API_URL}/api/users/send-password`, {
+        ('trying');
+        const res = yield fetch(`/api/users/send-password`, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
             },
-            credentials: 'include',
             body
         });
         const data = yield res.json();
@@ -172,21 +164,20 @@ exports.sendPasswordEmail = (0, toolkit_1.createAsyncThunk)('users/send-password
         }
     }
     catch (error) {
-        console.log(error.response.data, 'error');
-        console.log('rejected');
+        (error.response.data, 'error');
+        ('rejected');
         return thunkAPI.rejectWithValue(error.response.data);
     }
 }));
 exports.changeForgottenPassword = (0, toolkit_1.createAsyncThunk)('users/forgotten-password', ({ password, token }, thunkAPI) => __awaiter(void 0, void 0, void 0, function* () {
     const body = JSON.stringify({ password, token });
     try {
-        const res = yield fetch(`${config_1.API_URL}/api/users/forgotten-password`, {
+        const res = yield fetch(`/api/users/forgotten-password`, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
             },
-            credentials: 'include',
             body
         });
         const data = yield res.json();
@@ -204,18 +195,17 @@ exports.changeForgottenPassword = (0, toolkit_1.createAsyncThunk)('users/forgott
 exports.changePassword = (0, toolkit_1.createAsyncThunk)('users/change-password', ({ password, email }, thunkAPI) => __awaiter(void 0, void 0, void 0, function* () {
     const body = JSON.stringify({ password, email });
     try {
-        const res = yield fetch(`${config_1.API_URL}/api/users/change-password`, {
+        const res = yield fetch(`/api/users/change-password`, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
             },
-            credentials: 'include',
             body
         });
         const data = yield res.json();
         if (res.status === 200) {
-            console.log(data);
+            (data);
             return data;
         }
         else {

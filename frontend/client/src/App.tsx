@@ -7,7 +7,7 @@ import Layout from './components/Layout';
 import EditAlbum from './pages/AlbumPages/EditAlbum';
 import { useAppDispatch} from './store';
 import { useEffect } from 'react';
-import { verifyUser } from './Features/user';
+import { getUser, verifyUser } from './Features/user';
 import LoadingSpinner from './components/LoadingSpinner';
 import ResetPasswordPage from './pages/CredentialsPages/ResetPasswordPage';
 import NewPasswordPage from './pages/CredentialsPages/NewPasswordPage';
@@ -48,6 +48,7 @@ function App() {
 
   useEffect(() => {
     dispatch(verifyUser())
+    dispatch(getUser())
     dispatch(getAlbums())
   }, [])
 
