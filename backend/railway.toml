@@ -1,0 +1,11 @@
+[[services]]
+  internal_port = 3306
+  protocol = "tcp"
+  envfile = ".env"
+
+# Määritetään build- ja run-komennot
+[build]
+  command = "python manage.py migrate"
+
+[run]
+  command = "python manage.py runserver 0.0.0.0:$PORT"
