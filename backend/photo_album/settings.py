@@ -34,7 +34,9 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['https://albumproject-production.up.railway.app', 'https://albumbackend-production.up.railway.app','127.0.0.1', 'http://localhost:5000' ]
 # Application definition
-
+CORS_ALLOWED_ORIGINS = [
+    'https://albumproject-production.up.railway.app', 'https://albumbackend-production.up.railway.app','127.0.0.1', 'http://localhost:5000' 
+]
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'rest_framework',
+    'corsheaders',
     'users',
     'photo',
 ]
@@ -55,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "django.middleware.common.CommonMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = 'photo_album.urls'

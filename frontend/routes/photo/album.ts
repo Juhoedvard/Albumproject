@@ -67,10 +67,8 @@ router.get('/api/album/albums', async (req: Request, res: Response) => {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
-
             },
         });
-
         const data = await apiRes.json()
         console.log(data)
         return res.status(apiRes.status).json(data)
