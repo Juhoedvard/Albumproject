@@ -13,16 +13,15 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 from datetime import timedelta
-import pymysql
 from dotenv import load_dotenv
 import sys
-pymysql.install_as_MySQLdb()
+
 
 load_dotenv()
-print(sys.path)
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-print(os.getenv("SECRET_KEY"))
+
 
 
 # Quick-start development settings - unsuitable for production
