@@ -37,5 +37,5 @@ app.get("*", (req, res) => {
     return res.sendFile(path_1.default.resolve(__dirname, 'client', 'build', 'index.html'));
 });
 app.listen(PORT, () => {
-    (`App listening on port ${PORT}`);
+    console.log(`App listening on port ${PORT}`);
 });

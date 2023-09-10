@@ -44,5 +44,5 @@ app.get("*", (req: Request, res: Response): void => {
 
 app.listen(PORT, () => {
 
-    (`App listening on port ${PORT}`);
+    console.log(`App listening on port ${PORT}`);
 });
