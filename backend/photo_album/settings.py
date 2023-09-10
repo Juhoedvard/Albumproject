@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'photo_album.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': os.getenv("DBENGINE"),
         'NAME': os.getenv("DBNAME"),
         'USER':  os.getenv("DBUSER"),
         'PASSWORD':  os.getenv("DBPASSWORD"),
