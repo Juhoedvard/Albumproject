@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useAppSelector = exports.useAppDispatch = void 0;
-/* eslint-disable @typescript-eslint/no-use-before-define */
 const toolkit_1 = require("@reduxjs/toolkit");
 const user_1 = require("./Features/user");
 const react_redux_1 = require("react-redux");

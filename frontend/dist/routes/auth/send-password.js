@@ -21,7 +21,6 @@ const router = (0, express_1.Router)();
 exports.resetPasswordRouter = router;
 router.post('/api/users/send-password', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const token = (0, crypto_1.randomUUID)();
-    (token);
     const email = req.body.email;
     const body = JSON.stringify({
         email: email,

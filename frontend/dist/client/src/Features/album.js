@@ -32,7 +32,6 @@ exports.addThumbnail = (0, toolkit_1.createAsyncThunk)('album/add-thumbnail-s3',
         }
     }
     catch (error) {
-        ('maybe happening');
         return thunkAPI.rejectWithValue(error.response.data);
     }
 }));
@@ -58,13 +57,11 @@ exports.addPhotos = (0, toolkit_1.createAsyncThunk)('album/add-photos-s3', (imag
         }
     }
     catch (error) {
-        ('maybe happening');
         return thunkAPI.rejectWithValue(error.response.data);
     }
 }));
 exports.LikePhoto = (0, toolkit_1.createAsyncThunk)('album/likephoto', (id, thunkAPI) => __awaiter(void 0, void 0, void 0, function* () {
     const body = JSON.stringify({ id: id });
-    (body);
     try {
         const res = yield fetch(`/api/album/likephoto`, {
             method: 'POST',
@@ -85,7 +82,6 @@ exports.LikePhoto = (0, toolkit_1.createAsyncThunk)('album/likephoto', (id, thun
         }
     }
     catch (error) {
-        ('maybe happening');
         return thunkAPI.rejectWithValue(error.response.data);
     }
 }));
@@ -113,13 +109,11 @@ exports.createAlbum = (0, toolkit_1.createAsyncThunk)('album/create-album', ({ t
         }
     }
     catch (error) {
-        ('maybe happening');
         return thunkAPI.rejectWithValue(error.response.data);
     }
 }));
 exports.Photos = (0, toolkit_1.createAsyncThunk)('album/photos', (photos, thunkAPI) => __awaiter(void 0, void 0, void 0, function* () {
     const body = JSON.stringify(photos);
-    (body);
     try {
         const res = yield fetch(`/api/album/add-photos`, {
             method: 'POST',
@@ -138,7 +132,6 @@ exports.Photos = (0, toolkit_1.createAsyncThunk)('album/photos', (photos, thunkA
         }
     }
     catch (error) {
-        ('maybe happening');
         return thunkAPI.rejectWithValue(error.response.data);
     }
 }));
@@ -167,7 +160,6 @@ exports.getAlbums = (0, toolkit_1.createAsyncThunk)('api/album/albums', (_, thun
 }));
 exports.getPhotoLikes = (0, toolkit_1.createAsyncThunk)('api/album/getPhotoLikes', (id, thunkAPI) => __awaiter(void 0, void 0, void 0, function* () {
     const body = JSON.stringify(id);
-    (body);
     try {
         const res = yield fetch(`/api/album/getPhotoLikes/${id}`, {
             method: 'GET',
@@ -176,7 +168,6 @@ exports.getPhotoLikes = (0, toolkit_1.createAsyncThunk)('api/album/getPhotoLikes
             },
         });
         const data = yield res.json();
-        (data);
         if (res.status === 200) {
             return data;
         }

@@ -1,3 +1,4 @@
+import React from "react";
 import { CiCircleRemove } from 'react-icons/ci';
 import { ChangeEvent, useState } from 'react';
 import { Photo } from '../Features/album';

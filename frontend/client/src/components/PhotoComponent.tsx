@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react"
 import ModalComponent from "./ModalComponent"
 import { Photo } from "../Features/album"

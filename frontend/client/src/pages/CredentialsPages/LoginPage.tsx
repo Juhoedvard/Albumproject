@@ -1,3 +1,4 @@
+import React from "react";
 import { resetRegistered } from "../../Features/user";
 import { useEffect } from "react";
 import { useForm, SubmitHandler} from "react-hook-form";

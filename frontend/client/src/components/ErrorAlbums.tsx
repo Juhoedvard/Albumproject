@@ -1,3 +1,4 @@
+import React from "react";
 import { getAlbums } from "../Features/album"
 import { useAppDispatch } from "../store"
 import { Button } from "flowbite-react"

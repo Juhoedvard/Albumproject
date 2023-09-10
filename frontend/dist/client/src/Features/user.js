@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.resetRegistered = exports.UserSlice = exports.changePassword = exports.changeForgottenPassword = exports.sendPasswordEmail = exports.logoutUser = exports.verifyUser = exports.loginUser = exports.getProfile = exports.registerUser = void 0;
+exports.resetRegistered = exports.UserSlice = exports.changePassword = exports.changeForgottenPassword = exports.sendPasswordEmail = exports.logoutUser = exports.verifyUser = exports.loginUser = exports.getProfile = exports.getUser = exports.registerUser = void 0;
 const toolkit_1 = require("@reduxjs/toolkit");
 const react_toastify_1 = require("react-toastify");
 exports.registerUser = (0, toolkit_1.createAsyncThunk)('users/register', ({ first_name, last_name, email, password }, thunkAPI) => __awaiter(void 0, void 0, void 0, function* () {
@@ -35,9 +35,10 @@ exports.registerUser = (0, toolkit_1.createAsyncThunk)('users/register', ({ firs
         return thunkAPI.rejectWithValue(error.response.data);
     }
 }));
-const getUser = (0, toolkit_1.createAsyncThunk)('users/me', (_, thunkAPI) => __awaiter(void 0, void 0, void 0, function* () {
+exports.getUser = (0, toolkit_1.createAsyncThunk)('users/me', (_, thunkAPI) => __awaiter(void 0, void 0, void 0, function* () {
+    ('lets get user');
     try {
-        const res = yield fetch(`}/api/users/me`, {
+        const res = yield fetch(`/api/users/me`, {
             method: 'GET',
             headers: {
                 Accept: 'application/json'
@@ -57,7 +58,6 @@ const getUser = (0, toolkit_1.createAsyncThunk)('users/me', (_, thunkAPI) => __a
 }));
 exports.getProfile = (0, toolkit_1.createAsyncThunk)('users/get-profile', (id, thunkAPI) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        ('yritetään');
         const res = yield fetch(`/api/users/get-profile?id=${id}`, {
             method: 'GET',
             headers: {
@@ -90,7 +90,7 @@ exports.loginUser = (0, toolkit_1.createAsyncThunk)('users/login', ({ email, pas
         const data = yield res.json();
         if (res.status === 200) {
             const { dispatch } = thunkAPI;
-            dispatch(getUser());
+            yield dispatch((0, exports.getUser)());
             return data;
         }
         else {
@@ -112,7 +112,7 @@ exports.verifyUser = (0, toolkit_1.createAsyncThunk)('users/verify', (_, thunkAP
         const data = yield res.json();
         if (res.status === 200) {
             const { dispatch } = thunkAPI;
-            dispatch(getUser());
+            yield dispatch((0, exports.getUser)());
             return data;
         }
         else {
@@ -146,7 +146,6 @@ exports.logoutUser = (0, toolkit_1.createAsyncThunk)('users/logout', (_, thunkAP
 exports.sendPasswordEmail = (0, toolkit_1.createAsyncThunk)('users/send-password', (email, thunkAPI) => __awaiter(void 0, void 0, void 0, function* () {
     const body = JSON.stringify({ email });
     try {
-        ('trying');
         const res = yield fetch(`/api/users/send-password`, {
             method: 'POST',
             headers: {
@@ -164,8 +163,6 @@ exports.sendPasswordEmail = (0, toolkit_1.createAsyncThunk)('users/send-password
         }
     }
     catch (error) {
-        (error.response.data, 'error');
-        ('rejected');
         return thunkAPI.rejectWithValue(error.response.data);
     }
 }));
@@ -205,7 +202,6 @@ exports.changePassword = (0, toolkit_1.createAsyncThunk)('users/change-password'
         });
         const data = yield res.json();
         if (res.status === 200) {
-            (data);
             return data;
         }
         else {
@@ -260,14 +256,14 @@ exports.UserSlice = (0, toolkit_1.createSlice)({
             react_toastify_1.toast.error('Login failed');
         })
             ///Get user
-            .addCase(getUser.pending, (state, action) => {
+            .addCase(exports.getUser.pending, (state, action) => {
             state.loading = true;
         })
-            .addCase(getUser.fulfilled, (state, action) => {
+            .addCase(exports.getUser.fulfilled, (state, action) => {
             state.loading = false;
             state.user = action.payload;
         })
-            .addCase(getUser.rejected, (state, action) => {
+            .addCase(exports.getUser.rejected, (state, action) => {
             state.loading = false;
         })
             ///Get userprofile

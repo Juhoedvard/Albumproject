@@ -1,4 +1,4 @@
-
+import React from "react";
 import { Modal } from 'flowbite-react';
 import { useEffect, useState } from 'react';
 import {FcLike, FcLikePlaceholder} from 'react-icons/fc'
