@@ -48,11 +48,11 @@ const LogInModal = ({ openModal, setOpenModal }) => {
         react_1.default.createElement(flowbite_react_1.Modal.Footer, null,
             react_1.default.createElement("div", null,
                 react_1.default.createElement("div", null,
-                    react_1.default.createElement("span", { className: " text-sm text-black" },
+                    react_1.default.createElement("button", { onClick: () => setOpenModal(undefined), className: " text-sm text-black" },
                         "Don't have a account yet? ",
                         react_1.default.createElement(react_router_dom_1.Link, { to: '/register', className: "font-medium text-blue-600 underline dark:text-blue-500 hover:no-underline" }, "Sign up"))),
                 react_1.default.createElement("div", null,
-                    react_1.default.createElement("span", { className: " text-sm text-black" },
+                    react_1.default.createElement("button", { onClick: () => setOpenModal(undefined), className: " text-sm text-black" },
                         "Forgotten pasword? ",
                         react_1.default.createElement(react_router_dom_1.Link, { to: '/reset-password', className: "font-medium text-blue-600 underline dark:text-blue-500 hover:no-underline" }, "Reset password")))))));
 };

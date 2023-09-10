@@ -42,7 +42,6 @@ router.post('/api/album/create-album', (req, res) => __awaiter(void 0, void 0, v
     }
 }));
 router.post('/api/album/add-photos', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    ('Lisätään kuvia!');
     const access = req.cookies['access'];
     const body = req.body;
     try {
@@ -66,6 +65,7 @@ router.post('/api/album/add-photos', (req, res) => __awaiter(void 0, void 0, voi
     }
 }));
 router.get('/api/album/albums', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(process.env.API_URL, 'apiurl');
     try {
         const apiRes = yield fetch(`${process.env.API_URL}/api/album/albums`, {
             method: 'GET',
@@ -74,10 +74,11 @@ router.get('/api/album/albums', (req, res) => __awaiter(void 0, void 0, void 0, 
             },
         });
         const data = yield apiRes.json();
+        console.log(data);
         return res.status(apiRes.status).json(data);
     }
     catch (err) {
-        (err);
+        console.log(err);
         return res.status(500).json({
             error: `Something went wrong when getting  data, ${err}`
         });

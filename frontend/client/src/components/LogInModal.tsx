@@ -64,10 +64,10 @@ const LogInModal = ({openModal, setOpenModal} : {openModal: undefined | string, 
       <Modal.Footer >
                 <div>
                     <div>
-                        <span className=" text-sm text-black">Don't have a account yet? <Link to={'/register'} className="font-medium text-blue-600 underline dark:text-blue-500 hover:no-underline">Sign up</Link></span>
+                        <button  onClick={() => setOpenModal(undefined)} className=" text-sm text-black">Don't have a account yet? <Link to={'/register'} className="font-medium text-blue-600 underline dark:text-blue-500 hover:no-underline">Sign up</Link></button>
                     </div>
                     <div>
-                        <span className=" text-sm text-black">Forgotten pasword? <Link to={'/reset-password'} className="font-medium text-blue-600 underline dark:text-blue-500 hover:no-underline">Reset password</Link></span>
+                        <button onClick={() => setOpenModal(undefined)}className=" text-sm text-black">Forgotten pasword? <Link to={'/reset-password'} className="font-medium text-blue-600 underline dark:text-blue-500 hover:no-underline">Reset password</Link></button>
                     </div>
                 </div>
 

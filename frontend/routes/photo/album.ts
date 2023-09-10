@@ -35,7 +35,6 @@ router.post('/api/album/create-album',  async (req: Request, res: Response) => {
 });
 
 router.post('/api/album/add-photos',  async (req: Request, res: Response) => {
-    ('Lisätään kuvia!')
     const access = req.cookies['access'];
     const body = req.body
         try{
@@ -62,6 +61,7 @@ router.post('/api/album/add-photos',  async (req: Request, res: Response) => {
 });
 
 router.get('/api/album/albums', async (req: Request, res: Response) => {
+    console.log(process.env.API_URL, 'apiurl')
     try {
         const apiRes = await fetch(`${process.env.API_URL}/api/album/albums`, {
             method: 'GET',
@@ -72,11 +72,11 @@ router.get('/api/album/albums', async (req: Request, res: Response) => {
         });
 
         const data = await apiRes.json()
-
+        console.log(data)
         return res.status(apiRes.status).json(data)
     }
     catch(err) {
-        (err)
+        console.log(err)
         return res.status(500).json({
             error: `Something went wrong when getting  data, ${err}`
         })
