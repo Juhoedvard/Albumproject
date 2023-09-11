@@ -40,12 +40,6 @@ app.use(forgottenPasswordRouter)
 app.use(changePasswordRouter)
 app.use(albumRouter)
 app.use(photoRouter)
-app.use(express.static('client/build'))
-
-app.get("*", (req: Request, res: Response): void => {
-    return res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-});
-
 
 app.listen(PORT, () => {
 
