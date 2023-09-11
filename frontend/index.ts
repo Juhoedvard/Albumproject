@@ -30,7 +30,6 @@ const corsOptions = {
      'https://photo-gallery-production.up.railway.app',
      'photo-gallery-production.up.railway.app'
     ],
-
     credentials: true,
 
   };
