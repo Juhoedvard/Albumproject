@@ -15,7 +15,7 @@ const store = configureStore({
     user: UserSlice.reducer,
     albums: AlbumSlice.reducer
   },
-  devTools: process.env.NODE_ENV !== 'production',
+  devTools: process.env.REACT_APP_NODE_ENV !== 'production',
 })
 
 
