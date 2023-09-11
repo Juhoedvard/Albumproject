@@ -48,13 +48,13 @@ app.use(forgottenPasswordRouter)
 app.use(changePasswordRouter)
 app.use(albumRouter)
 app.use(photoRouter)
-app.use(express.static('dist/build'))
+app.use(express.static(path.join(__dirname, '../client/build')))
 
 app.get("*", (req: Request, res: Response): void => {
     console.log(__dirname, 'build', 'index.html')
-    return res.sendFile(path.resolve(__dirname, 'dist', 'build', 'index.html'));
+    return res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
 });
-
+console.log(__dirname, '../client/build')
 console.log(__dirname,'dist', 'build', 'index.html')
 app.listen(PORT, () => {
 
