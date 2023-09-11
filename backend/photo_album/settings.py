@@ -30,11 +30,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 print(SECRET_KEY)
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.getenv("DEBUG")
 
 ALLOWED_HOSTS = [
-    'albumproject-production.up.railway.app',
-    'albumbackend-production.up.railway.app',
+    'https://albumproject-production.up.railway.app/',
+    'https://albumbackend-production.up.railway.app/',
     '127.0.0.1:8000',
     'localhost:5000',
     '127.0.0.1',
