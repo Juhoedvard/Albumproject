@@ -33,11 +33,13 @@ print(SECRET_KEY)
 DEBUG = os.getenv("DEBUG")
 
 ALLOWED_HOSTS = [
-    'https://albumproject-production.up.railway.app',
-    'https://albumbackend-production.up.railway.app',
+    'albumproject-production.up.railway.app',
+    'albumbackend-production.up.railway.app',
     '127.0.0.1:8000',
     'localhost:5000',
     '127.0.0.1',
+    'albumproject-production.up.railway.app',
+    'albumbackend-production.up.railway.app',
 ]
 INSTALLED_APPS = [
     'django.contrib.admin',
