@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { API_URL } from '../config'
 import { toast } from 'react-toastify';
 import { Album } from './album';
 
