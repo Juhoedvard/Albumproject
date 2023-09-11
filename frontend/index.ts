@@ -21,8 +21,16 @@ const PORT = process.env.PORT || 5000;
 
 const app:Express = express();
 const corsOptions = {
-    origin: ['http://localhost:3000','127.0.0.1:8000','albumbackend-production.up.railway.app','https://albumbackend-production.up.railway.app', 'albumproject-production.up.railway.app'],
-    credentials: true
+    origin: ['http://localhost:3000',
+     '127.0.0.1:8000',
+     'https://albumbackend-production.up.railway.app',
+     'albumbackend-production.up.railway.app',
+     'https://albumproject-production.up.railway.app',
+     'albumproject-production.up.railway.app'
+
+    ],
+
+    credentials: true,
 
   };
 app.use(cors(corsOptions))
@@ -40,7 +48,14 @@ app.use(forgottenPasswordRouter)
 app.use(changePasswordRouter)
 app.use(albumRouter)
 app.use(photoRouter)
+app.use(express.static('dist/build'))
 
+app.get("*", (req: Request, res: Response): void => {
+    console.log(__dirname, 'build', 'index.html')
+    return res.sendFile(path.resolve(__dirname, 'dist', 'build', 'index.html'));
+});
+
+console.log(__dirname,'dist', 'build', 'index.html')
 app.listen(PORT, () => {
 
     console.log(`App listening on port ${PORT}`);
