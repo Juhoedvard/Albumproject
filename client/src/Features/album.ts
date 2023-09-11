@@ -29,6 +29,14 @@ export type AlbumState = {
     loading: boolean
 }
 
+let baserUrl : string | undefined= ''
+
+if(process.env.NODE_ENV !== 'production'){
+  baserUrl = process.env.REACT_APP_API_URL
+}
+else{
+  baserUrl = process.env.PRODUCTION_URL
+}
 
 
 
@@ -39,7 +47,7 @@ export const addThumbnail = createAsyncThunk(
     const formData = new FormData()
     formData.append('thumbnail', thumbnail)
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/album/add-thumbnail-s3`, {
+      const res = await fetch(`${baserUrl}/api/album/add-thumbnail-s3`, {
           method: 'POST',
           headers: {
             Accept: 'multipart/form-data',
@@ -70,7 +78,7 @@ export const addPhotos = createAsyncThunk(
     }
 
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/album/add-photos-s3`, {
+      const res = await fetch(`${baserUrl}/api/album/add-photos-s3`, {
           method: 'POST',
           headers: {
             Accept: 'multipart/form-data',
@@ -99,7 +107,7 @@ export const LikePhoto = createAsyncThunk(
   'album/likephoto', async (id: number, thunkAPI ) => {
     const body = JSON.stringify({id : id})
     try{
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/album/likephoto`,{
+      const res = await fetch(`${baserUrl}/api/album/likephoto`,{
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -127,7 +135,7 @@ export const createAlbum = createAsyncThunk(
     async ({title, description, thumbnail, photos} : Album,  thunkAPI) => {
         const body = JSON.stringify({title: title, description: description, thumbnail: thumbnail})
       try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/album/create-album`, {
+        const res = await fetch(`${baserUrl}/api/album/create-album`, {
             method: 'POST',
             headers: {
               Accept: 'application/json',
@@ -163,7 +171,7 @@ export const Photos = createAsyncThunk(
   async (photos: Photo[],  thunkAPI) => {
       const body = JSON.stringify(photos)
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/album/add-photos`, {
+      const res = await fetch(`${baserUrl}/api/album/add-photos`, {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -190,7 +198,7 @@ export const getAlbums = createAsyncThunk(
   'api/album/albums',
   async (_, thunkAPI) => {
     try{
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/album/albums`, {
+      const res = await fetch(`${baserUrl}/api/album/albums`, {
         method: 'GET',
         headers: {
           Accepts: 'application/json',
@@ -219,7 +227,7 @@ export const getPhotoLikes = createAsyncThunk(
   async (id: number, thunkAPI) => {
     const body = JSON.stringify(id)
     try{
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/album/getPhotoLikes/${id}`, {
+      const res = await fetch(`${baserUrl}/api/album/getPhotoLikes/${id}`, {
         method: 'GET',
         headers: {
           Accepts: 'application/json',
@@ -249,8 +257,6 @@ const initialState : AlbumState = {
     loading : false
 
 }
-
-
 
 export const AlbumSlice = createSlice({
     name: 'Album',

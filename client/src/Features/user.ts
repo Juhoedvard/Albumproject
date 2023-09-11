@@ -29,14 +29,21 @@ export type LoginUser = {
   password: string,
 }
 
+let baserUrl : string | undefined= ''
 
+if(process.env.NODE_ENV !== 'production'){
+  baserUrl = process.env.REACT_APP_API_URL
+}
+else{
+  baserUrl = process.env.PRODUCTION_URL
+}
 
  export const registerUser = createAsyncThunk(
   'users/register',
   async ({first_name, last_name, email, password}: RegisterUser, thunkAPI) => {
     const body = JSON.stringify({first_name, last_name, email, password})
   try {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/register`, {
+    const res = await fetch(`${baserUrl}/api/users/register`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -62,7 +69,7 @@ export type LoginUser = {
  export const getUser = createAsyncThunk('users/me', async(_, thunkAPI) => {
   ('lets get user')
   try{
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/me`, {
+    const res = await fetch(`${baserUrl}/api/users/me`, {
       method: 'GET',
       headers: {
         Accept: 'application/json'
@@ -86,7 +93,7 @@ export type LoginUser = {
  export const getProfile = createAsyncThunk('users/get-profile', async (id : string, thunkAPI)=> {
 
   try{
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/get-profile?id=${id}`, {
+    const res = await fetch(`${baserUrl}/api/users/get-profile?id=${id}`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -110,7 +117,7 @@ export type LoginUser = {
   async ({email, password}: LoginUser, thunkAPI) => {
     const body = JSON.stringify({email, password})
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/login`, {
+      const res = await fetch(`${baserUrl}/api/users/login`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -137,7 +144,7 @@ export const verifyUser = createAsyncThunk(
   'users/verify',
   async (_, thunkAPI) => {
     try{
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/verify`, {
+      const res = await fetch(`${baserUrl}/api/users/verify`, {
         method: 'GET',
         headers: {
           Accept: 'application/json',
@@ -164,7 +171,7 @@ export const logoutUser = createAsyncThunk(
   'users/logout',
   async (_, thunkAPI) => {
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/logout`, {
+      const res = await fetch(`${baserUrl}/api/users/logout`, {
         method: 'GET',
         headers: {
           Accept: 'application/json',
@@ -191,7 +198,7 @@ export const sendPasswordEmail = createAsyncThunk(
     const body = JSON.stringify({email})
 
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/send-password`, {
+      const res = await fetch(`${baserUrl}/api/users/send-password`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -217,7 +224,7 @@ export const sendPasswordEmail = createAsyncThunk(
     async ({password, token}: {password: string, token: string}, thunkAPI) => {
       const body = JSON.stringify({password, token})
       try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/forgotten-password`, {
+        const res = await fetch(`${baserUrl}/api/users/forgotten-password`, {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -243,7 +250,7 @@ export const sendPasswordEmail = createAsyncThunk(
     async ({password, email}: {password: string, email: string}, thunkAPI) => {
       const body = JSON.stringify({password, email})
       try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/change-password`, {
+        const res = await fetch(`${baserUrl}/api/users/change-password`, {
           method: 'POST',
           headers: {
             Accept: 'application/json',
