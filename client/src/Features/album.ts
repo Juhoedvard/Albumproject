@@ -31,9 +31,6 @@ export type AlbumState = {
 let api_Url: string | undefined= process.env.REACT_APP_API_URL
 
 
-if(process.env.REACT_APP_NODE_ENV === 'PRODUCTION'){
-    api_Url = ''
-}
 
 
 export const addThumbnail = createAsyncThunk(

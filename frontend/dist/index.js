@@ -27,7 +27,8 @@ const corsOptions = {
         'https://albumbackend-production.up.railway.app',
         'albumbackend-production.up.railway.app',
         'https://albumproject-production.up.railway.app',
-        'albumproject-production.up.railway.app'
+        'albumproject-production.up.railway.app',
+        'https://photo-gallery-production.up.railway.app'
     ],
     credentials: true,
 };
