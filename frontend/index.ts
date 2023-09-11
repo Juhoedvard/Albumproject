@@ -14,6 +14,7 @@ import { forgottenPasswordRouter } from './routes/auth/forgotten-password';
 import { changePasswordRouter } from './routes/auth/change-password';
 import { albumRouter } from './routes/photo/album';
 import { photoRouter } from './routes/photo/addPhoto_S3';
+import path from 'path';
 
 
 dotenv.config();
@@ -48,7 +49,11 @@ app.use(forgottenPasswordRouter)
 app.use(changePasswordRouter)
 app.use(albumRouter)
 app.use(photoRouter)
+app.use(express.static(path.join(__dirname, 'build')))
 
+app.get("*", (req: Request, res: Response): void => {
+    return res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
+});
 app.listen(PORT, () => {
 
     console.log(`App listening on port ${PORT}`);
