@@ -1,7 +1,5 @@
 import express, { Express,  Request, Response } from 'express';
 import cors from 'cors';
-
-
 import  { registerRouter }  from './routes/auth/register';
 import { loginRouter } from './routes/auth/login';
 import { userRouter } from './routes/auth/user';
@@ -15,6 +13,7 @@ import { changePasswordRouter } from './routes/auth/change-password';
 import { albumRouter } from './routes/photo/album';
 import { photoRouter } from './routes/photo/addPhoto_S3';
 import path from 'path';
+
 
 
 dotenv.config();
