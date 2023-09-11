@@ -45,11 +45,13 @@ exports.photoRouter = router;
 /// https://www.youtube.com/watch?v=eQAIojcArRY&t=258s&ab_channel=SamMeech-Ward 28:46. Keksi miten djangolla tallentaa kuva, josas tekijä on user
 router.post('/api/album/add-thumbnail-s3', upload.single('thumbnail'), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
+    console.log('täällä');
     const s3 = (0, exports.s3ClientData)();
     const bucketname = process.env.AWS_BUCKET_NAME;
     const buffer = yield (0, sharp_1.default)((_a = req.file) === null || _a === void 0 ? void 0 : _a.buffer).resize({ height: 1080, width: 1080, fit: 'contain' }).toBuffer();
     const key = (0, crypto_1.randomUUID)().toString();
     const bucketRegion = process.env.REGION;
+    console.log('s3 luotu');
     try {
         if (s3 && bucketname) {
             const params = {
@@ -58,7 +60,6 @@ router.post('/api/album/add-thumbnail-s3', upload.single('thumbnail'), (req, res
                 Body: buffer,
                 ContentType: (_b = req.file) === null || _b === void 0 ? void 0 : _b.mimetype,
             };
-            (req.file);
             const command = new client_s3_1.PutObjectCommand(params);
             yield s3.send(command);
             const imageUrl = `https://${bucketname}.s3.${bucketRegion}.amazonaws.com/${key}`;

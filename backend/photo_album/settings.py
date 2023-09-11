@@ -28,14 +28,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY")
-
+print(SECRET_KEY)
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['https://albumproject-production.up.railway.app', 'https://albumbackend-production.up.railway.app','127.0.0.1', 'http://localhost:5000' ]
-# Application definition
-CORS_ALLOWED_ORIGINS = [
-    'https://albumproject-production.up.railway.app', 'https://albumbackend-production.up.railway.app','127.0.0.1', 'http://localhost:5000' 
+ALLOWED_HOSTS = [
+    'albumproject-production.up.railway.app',
+    'albumbackend-production.up.railway.app',
+    '127.0.0.1:8000',
+    'localhost:5000',
+    '127.0.0.1',
 ]
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -94,6 +96,7 @@ DATABASES = {
 
     }
 }
+print(os.getenv("DBNAME"))
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 

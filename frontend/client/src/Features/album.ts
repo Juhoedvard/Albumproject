@@ -28,6 +28,13 @@ export type AlbumState = {
     albumphotos: Photo[],
     loading: boolean
 }
+let api_Url: string | undefined= ''
+
+
+if(process.env.REACT_APP_NODE_ENV === 'development'){
+    api_Url = process.env.REACT_APP_API_URL
+}
+
 
 export const addThumbnail = createAsyncThunk(
   'album/add-thumbnail-s3',
@@ -35,13 +42,14 @@ export const addThumbnail = createAsyncThunk(
     const formData = new FormData()
     formData.append('thumbnail', thumbnail)
     try {
-      const res = await fetch(`/api/album/add-thumbnail-s3`, {
+      const res = await fetch(`${api_Url}/api/album/add-thumbnail-s3`, {
           method: 'POST',
           headers: {
             Accept: 'multipart/form-data',
           },
 
-          body: formData
+          body: formData,
+          credentials: 'include'
         })
         const data = await res.json()
         if(res.status === 200){
@@ -65,13 +73,14 @@ export const addPhotos = createAsyncThunk(
     }
 
     try {
-      const res = await fetch(`/api/album/add-photos-s3`, {
+      const res = await fetch(`${api_Url}/api/album/add-photos-s3`, {
           method: 'POST',
           headers: {
             Accept: 'multipart/form-data',
           },
 
-          body: formData
+          body: formData,
+         credentials: 'include'
         })
         const data = await res.json()
 
@@ -93,14 +102,14 @@ export const LikePhoto = createAsyncThunk(
   'album/likephoto', async (id: number, thunkAPI ) => {
     const body = JSON.stringify({id : id})
     try{
-      const res = await fetch(`/api/album/likephoto`,{
+      const res = await fetch(`${api_Url}/api/album/likephoto`,{
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json'
         },
-
-        body
+        body,
+        credentials: 'include'
       })
       const data = await res.json()
           if(res.status === 200){
@@ -121,14 +130,15 @@ export const createAlbum = createAsyncThunk(
     async ({title, description, thumbnail, photos} : Album,  thunkAPI) => {
         const body = JSON.stringify({title: title, description: description, thumbnail: thumbnail})
       try {
-        const res = await fetch(`/api/album/create-album`, {
+        const res = await fetch(`${api_Url}/api/album/create-album`, {
             method: 'POST',
             headers: {
               Accept: 'application/json',
               'Content-Type': 'application/json'
             },
 
-            body
+            body,
+            credentials: 'include'
           })
           const data = await res.json()
           if(res.status === 201){
@@ -156,14 +166,14 @@ export const Photos = createAsyncThunk(
   async (photos: Photo[],  thunkAPI) => {
       const body = JSON.stringify(photos)
     try {
-      const res = await fetch(`/api/album/add-photos`, {
+      const res = await fetch(`${api_Url}/api/album/add-photos`, {
           method: 'POST',
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json'
           },
-
-          body
+          body,
+          credentials: 'include'
         })
         const data = await res.json()
         if(res.status === 20){
@@ -182,13 +192,13 @@ export const Photos = createAsyncThunk(
 export const getAlbums = createAsyncThunk(
   'api/album/albums',
   async (_, thunkAPI) => {
-    ('täällä')
     try{
-      const res = await fetch(`/api/album/albums`, {
+      const res = await fetch(`${api_Url}/api/album/albums`, {
         method: 'GET',
         headers: {
           Accepts: 'application/json',
         },
+        credentials:'include',
 
 
     })
@@ -212,13 +222,14 @@ export const getPhotoLikes = createAsyncThunk(
   async (id: number, thunkAPI) => {
     const body = JSON.stringify(id)
     try{
-      const res = await fetch(`/api/album/getPhotoLikes/${id}`, {
+      const res = await fetch(`${api_Url}/api/album/getPhotoLikes/${id}`, {
         method: 'GET',
         headers: {
           Accepts: 'application/json',
         },
 
 
+        credentials: 'include'
     })
     const data = await res.json()
     if(res.status === 200) {

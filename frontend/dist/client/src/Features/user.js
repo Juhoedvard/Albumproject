@@ -12,10 +12,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.resetRegistered = exports.UserSlice = exports.changePassword = exports.changeForgottenPassword = exports.sendPasswordEmail = exports.logoutUser = exports.verifyUser = exports.loginUser = exports.getProfile = exports.getUser = exports.registerUser = void 0;
 const toolkit_1 = require("@reduxjs/toolkit");
 const react_toastify_1 = require("react-toastify");
+let api_Url = '';
+if (process.env.NODE_ENV === 'development') {
+    api_Url = process.env.API_URL || '';
+}
 exports.registerUser = (0, toolkit_1.createAsyncThunk)('users/register', ({ first_name, last_name, email, password }, thunkAPI) => __awaiter(void 0, void 0, void 0, function* () {
     const body = JSON.stringify({ first_name, last_name, email, password });
     try {
-        const res = yield fetch(`/api/users/register`, {
+        const res = yield fetch(`${api_Url}/api/users/register`, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -38,7 +42,7 @@ exports.registerUser = (0, toolkit_1.createAsyncThunk)('users/register', ({ firs
 exports.getUser = (0, toolkit_1.createAsyncThunk)('users/me', (_, thunkAPI) => __awaiter(void 0, void 0, void 0, function* () {
     ('lets get user');
     try {
-        const res = yield fetch(`/api/users/me`, {
+        const res = yield fetch(`${api_Url}/api/users/me`, {
             method: 'GET',
             headers: {
                 Accept: 'application/json'
@@ -58,7 +62,7 @@ exports.getUser = (0, toolkit_1.createAsyncThunk)('users/me', (_, thunkAPI) => _
 }));
 exports.getProfile = (0, toolkit_1.createAsyncThunk)('users/get-profile', (id, thunkAPI) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const res = yield fetch(`/api/users/get-profile?id=${id}`, {
+        const res = yield fetch(`${api_Url}/api/users/get-profile?id=${id}`, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -79,7 +83,7 @@ exports.getProfile = (0, toolkit_1.createAsyncThunk)('users/get-profile', (id, t
 exports.loginUser = (0, toolkit_1.createAsyncThunk)('users/login', ({ email, password }, thunkAPI) => __awaiter(void 0, void 0, void 0, function* () {
     const body = JSON.stringify({ email, password });
     try {
-        const res = yield fetch(`/api/users/login`, {
+        const res = yield fetch(`${api_Url}/api/users/login`, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -103,7 +107,7 @@ exports.loginUser = (0, toolkit_1.createAsyncThunk)('users/login', ({ email, pas
 }));
 exports.verifyUser = (0, toolkit_1.createAsyncThunk)('users/verify', (_, thunkAPI) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const res = yield fetch(`/api/users/verify`, {
+        const res = yield fetch(`${api_Url}/api/users/verify`, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -125,7 +129,7 @@ exports.verifyUser = (0, toolkit_1.createAsyncThunk)('users/verify', (_, thunkAP
 }));
 exports.logoutUser = (0, toolkit_1.createAsyncThunk)('users/logout', (_, thunkAPI) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const res = yield fetch(`/api/users/logout`, {
+        const res = yield fetch(`${api_Url}/api/users/logout`, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -146,7 +150,7 @@ exports.logoutUser = (0, toolkit_1.createAsyncThunk)('users/logout', (_, thunkAP
 exports.sendPasswordEmail = (0, toolkit_1.createAsyncThunk)('users/send-password', (email, thunkAPI) => __awaiter(void 0, void 0, void 0, function* () {
     const body = JSON.stringify({ email });
     try {
-        const res = yield fetch(`/api/users/send-password`, {
+        const res = yield fetch(`${api_Url}/api/users/send-password`, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -169,7 +173,7 @@ exports.sendPasswordEmail = (0, toolkit_1.createAsyncThunk)('users/send-password
 exports.changeForgottenPassword = (0, toolkit_1.createAsyncThunk)('users/forgotten-password', ({ password, token }, thunkAPI) => __awaiter(void 0, void 0, void 0, function* () {
     const body = JSON.stringify({ password, token });
     try {
-        const res = yield fetch(`/api/users/forgotten-password`, {
+        const res = yield fetch(`${api_Url}/api/users/forgotten-password`, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -192,7 +196,7 @@ exports.changeForgottenPassword = (0, toolkit_1.createAsyncThunk)('users/forgott
 exports.changePassword = (0, toolkit_1.createAsyncThunk)('users/change-password', ({ password, email }, thunkAPI) => __awaiter(void 0, void 0, void 0, function* () {
     const body = JSON.stringify({ password, email });
     try {
-        const res = yield fetch(`/api/users/change-password`, {
+        const res = yield fetch(`${api_Url}/api/users/change-password`, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',

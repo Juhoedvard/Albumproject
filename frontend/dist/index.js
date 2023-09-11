@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const cors_1 = __importDefault(require("cors"));
 const path_1 = __importDefault(require("path"));
 const register_1 = require("./routes/auth/register");
 const login_1 = require("./routes/auth/login");
@@ -20,6 +21,11 @@ const addPhoto_S3_1 = require("./routes/photo/addPhoto_S3");
 dotenv_1.default.config();
 const PORT = process.env.PORT || 5000;
 const app = (0, express_1.default)();
+const corsOptions = {
+    origin: ['http://localhost:3000', '127.0.0.1:8000', 'https://albumbackend-production.up.railway.app/', 'https://albumproject-production.up.railway.app/'],
+    credentials: true
+};
+app.use((0, cors_1.default)(corsOptions));
 app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.json());
 app.use(register_1.registerRouter);

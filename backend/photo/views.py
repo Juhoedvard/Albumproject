@@ -30,6 +30,7 @@ class CreateAlbumView(APIView):
 class GetAlbumsView(APIView):
     def get(self, request):
         Albums = Album.objects.all()
+        print(Albums)
         serializer = AlbumSerializer(Albums, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
