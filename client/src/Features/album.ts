@@ -28,10 +28,10 @@ export type AlbumState = {
     albumphotos: Photo[],
     loading: boolean
 }
-let api_Url: string | undefined= ''
+let api_Url: string | undefined= process.env.REACT_APP_API_URL
 
 
-if(process.env.REACT_APP_NODE_ENV === 'development'){
+if(process.env.REACT_APP_NODE_ENV === 'PRODUCTION'){
     api_Url = process.env.REACT_APP_API_URL
 }
 
