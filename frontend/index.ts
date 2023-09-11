@@ -1,6 +1,6 @@
 import express, { Express,  Request, Response } from 'express';
 import cors from 'cors';
-import path from 'path';
+
 
 import  { registerRouter }  from './routes/auth/register';
 import { loginRouter } from './routes/auth/login';
