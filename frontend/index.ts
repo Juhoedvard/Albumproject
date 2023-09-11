@@ -26,8 +26,8 @@ const corsOptions = {
      'https://albumbackend-production.up.railway.app',
      'albumbackend-production.up.railway.app',
      'https://albumproject-production.up.railway.app',
-     'albumproject-production.up.railway.app'
-
+     'albumproject-production.up.railway.app',
+     'https://photo-gallery-production.up.railway.app/'
     ],
 
     credentials: true,
@@ -48,14 +48,7 @@ app.use(forgottenPasswordRouter)
 app.use(changePasswordRouter)
 app.use(albumRouter)
 app.use(photoRouter)
-app.use(express.static(path.join(__dirname, 'build')))
 
-app.get("*", (req: Request, res: Response): void => {
-    console.log(__dirname, 'build', 'index.html')
-    return res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
-});
-console.log(__dirname, '../client/build')
-console.log(__dirname,'dist', 'build', 'index.html')
 app.listen(PORT, () => {
 
     console.log(`App listening on port ${PORT}`);
