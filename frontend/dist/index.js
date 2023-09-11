@@ -44,10 +44,10 @@ app.use(forgotten_password_1.forgottenPasswordRouter);
 app.use(change_password_1.changePasswordRouter);
 app.use(album_1.albumRouter);
 app.use(addPhoto_S3_1.photoRouter);
-app.use(express_1.default.static(path_1.default.join(__dirname, '../../client/build')));
+app.use(express_1.default.static(path_1.default.join(__dirname, '../client/build')));
 app.get("*", (req, res) => {
     console.log(__dirname, 'build', 'index.html');
-    return res.sendFile(path_1.default.resolve(__dirname, '../../client/build', 'index.html'));
+    return res.sendFile(path_1.default.resolve(__dirname, '../build', 'index.html'));
 });
 console.log(__dirname, '../client/build');
 console.log(__dirname, 'dist', 'build', 'index.html');
