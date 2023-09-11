@@ -35,7 +35,7 @@ if(process.env.NODE_ENV !== 'production'){
   baserUrl = process.env.REACT_APP_API_URL
 }
 else{
-  baserUrl = process.env.PRODUCTION_URL
+  baserUrl = process.env.REACT_APP_PRODUCTION_URL
 }
 
 
