@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
+const path_1 = __importDefault(require("path"));
 const register_1 = require("./routes/auth/register");
 const login_1 = require("./routes/auth/login");
 const user_1 = require("./routes/auth/user");
@@ -21,8 +22,14 @@ dotenv_1.default.config();
 const PORT = process.env.PORT || 5000;
 const app = (0, express_1.default)();
 const corsOptions = {
-    origin: ['http://localhost:3000', '127.0.0.1:8000', 'albumbackend-production.up.railway.app', 'https://albumbackend-production.up.railway.app', 'albumproject-production.up.railway.app'],
-    credentials: true
+    origin: ['http://localhost:3000',
+        '127.0.0.1:8000',
+        'https://albumbackend-production.up.railway.app',
+        'albumbackend-production.up.railway.app',
+        'https://albumproject-production.up.railway.app',
+        'albumproject-production.up.railway.app'
+    ],
+    credentials: true,
 };
 app.use((0, cors_1.default)(corsOptions));
 app.use((0, cookie_parser_1.default)());
@@ -37,6 +44,12 @@ app.use(forgotten_password_1.forgottenPasswordRouter);
 app.use(change_password_1.changePasswordRouter);
 app.use(album_1.albumRouter);
 app.use(addPhoto_S3_1.photoRouter);
+app.use(express_1.default.static('dist/build'));
+app.get("*", (req, res) => {
+    console.log(__dirname, 'build', 'index.html');
+    return res.sendFile(path_1.default.resolve(__dirname, 'dist', 'build', 'index.html'));
+});
+console.log(__dirname, 'dist', 'build', 'index.html');
 app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}`);
 });
