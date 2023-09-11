@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 5000;
 
 const app:Express = express();
 const corsOptions = {
-    origin: ['http://localhost:3000','127.0.0.1:8000', 'https://albumbackend-production.up.railway.app', 'https://albumproject-production.up.railway.app'],
+    origin: ['http://localhost:3000','127.0.0.1:8000', 'https://photo-gallery-production.up.railway.app','https://albumbackend-production.up.railway.app', 'https://albumproject-production.up.railway.app'],
     credentials: true
 
   };
