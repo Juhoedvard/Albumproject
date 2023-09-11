@@ -29,9 +29,11 @@ export type LoginUser = {
   email: string,
   password: string,
 }
-let api_Url: string = ''
-if(process.env.NODE_ENV === 'development'){
-    api_Url = process.env.API_URL || ''
+let api_Url: string | undefined= process.env.REACT_APP_API_URL
+
+
+if(process.env.REACT_APP_NODE_ENV === 'PRODUCTION'){
+    api_Url = ''
 }
 
  export const registerUser = createAsyncThunk(
