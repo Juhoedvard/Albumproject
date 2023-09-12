@@ -14,7 +14,7 @@ router.post('/api/users/login', async (req: Request, res: Response) => {
 
     const { email, password} = req.body
     const body = JSON.stringify({ email, password});
-
+    console.log(process.env.API_URL)
     try {
         const apiRes = await fetch(`${process.env.API_URL}/api/token/`, {
             method: 'POST',
@@ -25,6 +25,8 @@ router.post('/api/users/login', async (req: Request, res: Response) => {
             body
             });
         const data = await apiRes.json()
+        console.log(data.access)
+        console.log(apiRes.status)
         if(apiRes.status === 200) {
             res.cookie('access', data.access, {httpOnly: true, maxAge: 1000*60*30, sameSite: 'strict', secure: process.env.NODE_ENV === 'production'}),
             res.cookie('refresh', data.refresh, {httpOnly: true, maxAge: 1000*60*30*48, sameSite: 'strict', secure: process.env.NODE_ENV === 'production'})
@@ -35,7 +37,9 @@ router.post('/api/users/login', async (req: Request, res: Response) => {
             return res.status(apiRes.status).json(data)
         }
     }catch(err) {
+        console.log(err)
         return res.status(500).json({
+
             error: 'Something went wrong when logging in'
         })
     }

@@ -31,12 +31,15 @@ export type LoginUser = {
 
 let baserUrl : string | undefined= ''
 
-if(process.env.REACT_APP_NODE_ENV !== 'production'){
+if(process.env.REACT_APP_NODE_ENV === 'development'){
+  console.log('täällä')
   baserUrl = process.env.REACT_APP_API_URL
 }
 else{
   baserUrl = process.env.REACT_APP_PRODUCTION_URL
 }
+
+console.log(baserUrl)
 
  export const registerUser = createAsyncThunk(
   'users/register',
@@ -49,6 +52,7 @@ else{
         Accept: 'application/json',
         'Content-Type': 'application/json'
       },
+      credentials:'include',
 
       body
     })
@@ -67,13 +71,13 @@ else{
  )
 
  export const getUser = createAsyncThunk('users/me', async(_, thunkAPI) => {
-  ('lets get user')
   try{
     const res = await fetch(`${baserUrl}/api/users/me`, {
       method: 'GET',
       headers: {
         Accept: 'application/json'
       },
+      credentials:'include',
 
 
   })
@@ -98,6 +102,7 @@ else{
       headers: {
         Accept: 'application/json',
       },
+      credentials:'include',
 
   })
   const data = await res.json()
@@ -123,6 +128,7 @@ else{
           Accept: 'application/json',
           'Content-Type': 'application/json'
         },
+        credentials:'include',
         body
       })
       const data = await res.json()
@@ -149,6 +155,7 @@ export const verifyUser = createAsyncThunk(
         headers: {
           Accept: 'application/json',
         },
+        credentials:'include',
 
       })
       const data = await res.json()
@@ -176,6 +183,7 @@ export const logoutUser = createAsyncThunk(
         headers: {
           Accept: 'application/json',
         },
+        credentials:'include',
 
       })
       const data = await res.json()
@@ -204,6 +212,7 @@ export const sendPasswordEmail = createAsyncThunk(
           Accept: 'application/json',
           'Content-Type': 'application/json'
         },
+        credentials:'include',
 
         body
       })
@@ -230,6 +239,7 @@ export const sendPasswordEmail = createAsyncThunk(
             Accept: 'application/json',
             'Content-Type': 'application/json'
           },
+          credentials:'include',
           body
         })
         const data = await res.json()
@@ -256,6 +266,7 @@ export const sendPasswordEmail = createAsyncThunk(
             Accept: 'application/json',
             'Content-Type': 'application/json'
           },
+          credentials:'include',
           body
         })
         const data = await res.json()

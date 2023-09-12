@@ -1,12 +1,12 @@
-import express, { Express,  Request, Response } from 'express';
+import express, { Express} from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import dotenv from 'dotenv';
 import  { registerRouter }  from './routes/auth/register';
 import { loginRouter } from './routes/auth/login';
 import { userRouter } from './routes/auth/user';
 import { logoutRouter } from './routes/auth/logout';
 import { verifyRouter } from './routes/auth/verify';
-import dotenv from 'dotenv';
-import cookieParser from 'cookie-parser';
 import { resetPasswordRouter } from './routes/auth/send-password';
 import { forgottenPasswordRouter } from './routes/auth/forgotten-password';
 import { changePasswordRouter } from './routes/auth/change-password';
@@ -33,9 +33,10 @@ const corsOptions = {
     credentials: true,
 
   };
+app.use(express.json());
 app.use(cors(corsOptions))
 app.use(cookieParser());
-app.use(express.json());
+
 
 
 app.use(registerRouter);
@@ -48,11 +49,7 @@ app.use(forgottenPasswordRouter)
 app.use(changePasswordRouter)
 app.use(albumRouter)
 app.use(photoRouter)
-app.use(express.static(path.join(__dirname, 'build')))
 
-app.get("*", (req: Request, res: Response): void => {
-    return res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
-});
 app.listen(PORT, () => {
 
     console.log(`App listening on port ${PORT}`);

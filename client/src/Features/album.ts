@@ -31,14 +31,15 @@ export type AlbumState = {
 
 let baserUrl : string | undefined= ''
 
-if(process.env.REACT_APP_NODE_ENV !== 'production'){
+if(process.env.REACT_APP_NODE_ENV === 'development'){
+  console.log('täällä')
   baserUrl = process.env.REACT_APP_API_URL
 }
 else{
   baserUrl = process.env.REACT_APP_PRODUCTION_URL
 }
 
-
+console.log(baserUrl)
 
 
 export const addThumbnail = createAsyncThunk(
@@ -225,7 +226,6 @@ export const getAlbums = createAsyncThunk(
 export const getPhotoLikes = createAsyncThunk(
   'api/album/getPhotoLikes',
   async (id: number, thunkAPI) => {
-    const body = JSON.stringify(id)
     try{
       const res = await fetch(`${baserUrl}/api/album/getPhotoLikes/${id}`, {
         method: 'GET',

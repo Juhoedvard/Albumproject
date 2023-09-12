@@ -13,7 +13,7 @@ import LoadingSpinner from "./LoadingSpinner"
 const LogInModal = ({openModal, setOpenModal} : {openModal: undefined | string, setOpenModal: Function,}) => {
     ('avauttu')
     const dispatch = useAppDispatch()
-    const {isAuthenticated, loading, registered} = useAppSelector((state) => state.user)
+    const {loading, registered} = useAppSelector((state) => state.user)
 
     const {
         register,
@@ -29,8 +29,7 @@ const LogInModal = ({openModal, setOpenModal} : {openModal: undefined | string, 
             setOpenModal(undefined)
         })
     }
-    if(isAuthenticated && openModal === 'dismissible')
-        setOpenModal(undefined)
+
     return(
 
     <Modal  dismissible show={openModal === 'dismissible'}  size={'md'}  onClose={() => setOpenModal(undefined)}>
