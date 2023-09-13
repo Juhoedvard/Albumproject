@@ -271,7 +271,6 @@ export const AlbumSlice = createSlice({
         state.loading = true
     })
     .addCase(createAlbum.fulfilled, (state, action) => {
-        state.albums.push(action.payload)
         toast.success('Album created!')
         state.loading = false
     })

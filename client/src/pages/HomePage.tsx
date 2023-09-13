@@ -47,12 +47,19 @@ const HomePage = () => {
     return(
         <div className="grid h-full w-full ">
             <br></br>
-            {!loading && <h1 className="font-extrabold text-5xl italic m-10">
+            <h1 className="font-extrabold text-5xl italic m-10">
                 Albums
-            </h1>}
+            </h1>
             <br></br>
-            <div className="grid grid-cols-3 md:grid-cols-4 gap-10 m-10 ">{loading ?
-                <LoadingSpinner/>
+            <div className="grid grid-cols-3 md:grid-cols-4 gap-10 m-10 ">{loading && albums.length < 1 ?
+
+                Array(8).fill(null).map((index)=> {
+                    return(
+                        <div key={index} className="flex justify-center items-center h-80">
+                          <LoadingSpinner/>
+                        </div>
+                    )
+            })
              :
                 searchResults?.map((album : Album, index) => {
                     return(

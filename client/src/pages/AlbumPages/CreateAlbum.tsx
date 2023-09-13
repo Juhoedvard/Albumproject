@@ -1,5 +1,5 @@
 import React from "react";
-import { FileInput, Label, Textarea } from "flowbite-react";
+import { FileInput, Label, Textarea, Tooltip } from "flowbite-react";
 import { ChangeEvent, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Album, addPhotos, addThumbnail, createAlbum } from "../../Features/album";
@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import type { Photo } from "../../Features/album";
 import EditPhotoComponent from "../../components/CreatePhotoComponent";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 const CreateAlbum = () => {
   const {
@@ -24,12 +25,15 @@ const CreateAlbum = () => {
   const [thumbnailUrl, setThumbnailUrl] = useState<string>('');
   const [selectedPhoto, setSelectedPhoto] = useState<Photo[]>([]);
   const [photosLoaded, setPhotosLoaded] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const dispatch = useAppDispatch();
 
   const onSubmit: SubmitHandler<Album> = async (data) => {
     if (thumbnail && selectedPhoto) {
+      setLoading(true)
       await dispatch(createAlbum({ ...data, thumbnail: thumbnailUrl, photos: selectedPhoto }));
+      setLoading(false)
       navigate('/');
     } else {
       toast.info('Add a thumbnail for your album');
@@ -81,7 +85,11 @@ const CreateAlbum = () => {
     const updatedPhotoFiles = photos.filter((p) => p.name !== photo);
     setPhotos(updatedPhotoFiles);
   };
+  const Reset = () =>{
+    setThumbnailUrl('')
+    setAddedPhotos([])
 
+  }
     return(
             <main className="flex flex-col items-center justify-center gap-4 py-5 ">
              <br></br>
@@ -111,7 +119,7 @@ const CreateAlbum = () => {
                         </div>
                     </div>
                         <Textarea {...register("description", {required:true})} rows={6} id="floating_title"   placeholder="Description " required  />
-                        <div
+                        <Tooltip placement="right" style="light" content={<span>You can get pictures from Unsplash for free <a className="text-blue-500 hover:underline italic" href="https://unsplash.com/" target="_black">https://unsplash.com/</a></span>}
                             className="max-w-md"
                             id="fileUpload"
                             >
@@ -127,8 +135,10 @@ const CreateAlbum = () => {
                                 id="file"
                                 onChange={UploadThumbnail}
                             />
-                        </div>
+                        </Tooltip>
+                    <br></br>
                     <div className="flex flex-col gap-4">
+                      <Tooltip placement="right" style="light" content={<span>You can get pictures from Unsplash for free <a className="text-blue-500 hover:underline italic" href="https://unsplash.com/" target="_black">https://unsplash.com/</a></span>}>
                         <div className="mb-2 block">
                             <Label
                             htmlFor="file"
@@ -136,13 +146,14 @@ const CreateAlbum = () => {
                             color={'white'}
                             />
                           </div>
-                      <FileInput
+                        <FileInput
 
-                            helperText="Upload you album photos"
-                            id="file"
-                            multiple
-                            onChange={UploadPhotos}
-                        />
+                              helperText="Upload you album photos"
+                              id="file"
+                              multiple
+                              onChange={UploadPhotos}
+                          />
+                        </Tooltip>
                         <p>Added photos:</p>
                         {photos && (
                             photos.map((p, index) => {
@@ -153,15 +164,22 @@ const CreateAlbum = () => {
                                     </ul>
                                 </div>)
                         }))}
-                        <div className="flex w-full gap-2 justify-center">
+                       {loading ?<div>
+                        <LoadingSpinner/>
+                       </div> :
+                       <div className="flex w-full gap-2 justify-center">
                             <button type='button' onClick={() => navigate('/')}className="w-1/3 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Cancel</button>
                             <button type='button' onClick={uploadSelectedPhotos} className="w-1/3 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Preview</button>
-                        </div>
+                        </div>}
                     </div>
                   </div>
                 </div>
 
-              {thumbnailUrl  &&
+              {loading ?
+              <div>
+                <LoadingSpinner/>
+              </div> :
+              thumbnailUrl  &&
               <div className="flex flex-col w-2/3 h-full">
 
                     <div className="flex w-full items-center justify-center gap-4">
@@ -203,9 +221,14 @@ const CreateAlbum = () => {
                             )}
                         </div>
                         <br></br>
-                        <div className="flex justify-center ">
+                      {loading?
+                         <div>
+                              <LoadingSpinner/>
+                        </div>:
+                         <div className="flex justify-center ">
                             <button type="submit" className="w-1/5 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Add album</button>
-                        </div>
+                            <button type="button" onClick={Reset} className="w-1/5 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Cancel</button>
+                        </div>}
              </div>}
             </form>
         </main>

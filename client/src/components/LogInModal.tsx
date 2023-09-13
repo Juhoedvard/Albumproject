@@ -11,10 +11,9 @@ import LoadingSpinner from "./LoadingSpinner"
 
 
 const LogInModal = ({openModal, setOpenModal} : {openModal: undefined | string, setOpenModal: Function,}) => {
-    ('avauttu')
     const dispatch = useAppDispatch()
     const {loading, registered} = useAppSelector((state) => state.user)
-
+    console.log(loading)
     const {
         register,
         handleSubmit,
@@ -32,7 +31,7 @@ const LogInModal = ({openModal, setOpenModal} : {openModal: undefined | string, 
 
     return(
 
-    <Modal  dismissible show={openModal === 'dismissible'}  size={'md'}  onClose={() => setOpenModal(undefined)}>
+    <Modal  dismissible show={openModal === 'dismissible'}  size={'lg'}  onClose={() => setOpenModal(undefined)}>
     <Modal.Header> <h1 className="text-2xl">Log in to you account</h1></Modal.Header>
       <Modal.Body >
       <form onSubmit={handleSubmit(onSubmit)} className="">
@@ -51,7 +50,9 @@ const LogInModal = ({openModal, setOpenModal} : {openModal: undefined | string, 
                     <label htmlFor="remember" className="ml-2 text-sm font-medium text-black dark:text-gray-300">Remember me</label>
                 </div>
                 {loading ? (
-                  <LoadingSpinner/>
+                    <div className="flex justify-center">
+                        <LoadingSpinner/>
+                    </div>
                     ):(
                 <div className="flex justify-center">
                     <button onClick={() => setOpenModal(undefined)}type="button" className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium  focus:outline-none text-black bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-black-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Cancel</button>
