@@ -32,14 +32,13 @@ export type AlbumState = {
 let baserUrl : string | undefined= ''
 
 if(process.env.REACT_APP_NODE_ENV === 'development'){
-  console.log('täällä')
   baserUrl = process.env.REACT_APP_API_URL
 }
 else{
   baserUrl = process.env.REACT_APP_PRODUCTION_URL
 }
 
-console.log(baserUrl)
+
 
 
 export const addThumbnail = createAsyncThunk(
@@ -53,9 +52,9 @@ export const addThumbnail = createAsyncThunk(
           headers: {
             Accept: 'multipart/form-data',
           },
-
+          credentials: 'include',
           body: formData,
-          credentials: 'include'
+
         })
         const data = await res.json()
         if(res.status === 200){
@@ -84,9 +83,9 @@ export const addPhotos = createAsyncThunk(
           headers: {
             Accept: 'multipart/form-data',
           },
-
+          credentials: 'include',
           body: formData,
-         credentials: 'include'
+
         })
         const data = await res.json()
 
@@ -114,8 +113,9 @@ export const LikePhoto = createAsyncThunk(
           Accept: 'application/json',
           'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body,
-        credentials: 'include'
+
       })
       const data = await res.json()
           if(res.status === 200){
@@ -142,9 +142,9 @@ export const createAlbum = createAsyncThunk(
               Accept: 'application/json',
               'Content-Type': 'application/json'
             },
-
+            credentials: 'include',
             body,
-            credentials: 'include'
+
           })
           const data = await res.json()
           if(res.status === 201){
@@ -178,8 +178,9 @@ export const Photos = createAsyncThunk(
             Accept: 'application/json',
             'Content-Type': 'application/json'
           },
+          credentials: 'include',
           body,
-          credentials: 'include'
+
         })
         const data = await res.json()
         if(res.status === 20){
@@ -232,9 +233,9 @@ export const getPhotoLikes = createAsyncThunk(
         headers: {
           Accepts: 'application/json',
         },
-
-
         credentials: 'include'
+
+
     })
     const data = await res.json()
     if(res.status === 200) {
