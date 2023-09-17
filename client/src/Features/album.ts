@@ -72,11 +72,9 @@ export const addThumbnail = createAsyncThunk(
 export const addPhotos = createAsyncThunk(
   'album/add-photos-s3', async( images: File[], thunkAPI) => {
     const formData = new FormData()
-    console.log(images)
     images.forEach((image) => {
       formData.append('photo', image)
     })
-    console.log(formData)
     try {
       const res = await fetch(`${baserUrl}/api/album/add-photos-s3`, {
           method: 'POST',
@@ -90,7 +88,6 @@ export const addPhotos = createAsyncThunk(
         const data = await res.json()
 
         if(res.status === 200){
-          console.log(data)
           return data
         }
         else {

@@ -53,6 +53,10 @@ const CreateAlbum = () => {
   };
 
   const UploadPhotos = (e: ChangeEvent<HTMLInputElement>) => {
+    if(photos.length > 2 ){
+      toast.info('You can upload only 3 images when creating Album, you can upload more later')
+      return
+    }
     if (e.target.files) {
       const newPhotos = [...photos];
       for (let i = 0; i < e.target.files.length; i++) {
@@ -74,16 +78,12 @@ const CreateAlbum = () => {
           throw Error(error)
         });
       if (photos) {
-        console.log(photos)
         dispatch(addPhotos(photos))
           .then((add) => {
-            console.log(add)
-            console.log(add.payload)
             setAddedPhotos(add.payload);
             setPhotosLoaded(true)
           })
           .catch((error) => {
-            console.log(error)
             setLoading(false)
               throw Error(error)
           });
@@ -172,7 +172,7 @@ const CreateAlbum = () => {
                         </Tooltip>
                     <br></br>
                     <div className="flex flex-col gap-4">
-                      <Tooltip placement="right" style="light" content={<span>You can get pictures from Unsplash for free <a className="text-blue-500 hover:underline italic" href="https://unsplash.com/" target="_black">https://unsplash.com/</a></span>}>
+                      <Tooltip placement="right" style="light" content={<span>You can get pictures from Unsplash for free. You can only upload 3 pictures, when creating Album <a className="text-blue-500 hover:underline italic" href="https://unsplash.com/" target="_black">https://unsplash.com/</a></span>}>
                         <div className="mb-2 block">
                             <Label
                             htmlFor="file"
