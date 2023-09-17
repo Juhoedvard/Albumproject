@@ -53,7 +53,7 @@ const CreateAlbum = () => {
   };
 
   const UploadPhotos = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
+    if (e.target.files && e.target.files.length > 0) {
       const newPhotos = [...photos];
       for (let i = 0; i < e.target.files.length; i++) {
         newPhotos.push(e.target.files[i]);
@@ -61,9 +61,10 @@ const CreateAlbum = () => {
       setPhotos(newPhotos);
     }
   };
+
   const uploadSelectedPhotos = () => {
+    setLoading(true)
     if (thumbnail) {
-      setLoading(true)
       dispatch(addThumbnail(thumbnail))
         .then((add) => {
           setThumbnailUrl(add.payload);
