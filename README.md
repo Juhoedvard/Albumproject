@@ -1,22 +1,22 @@
 # Albumproject
 
-##Description: 
+## Description: 
 
 I made this project to learn about django and redux-toolkit. Project frontend side was made with typescript and server with python. Project is simple site where you can put your albums so others can view them. Project has still some things to fix, example updating more than 3 photos at time to S3 bucket and some routing fixes. I used following frameworks to create project: 
 
- Server: 
+### Server: 
 
 - [django-resframework](https://www.django-rest-framework.org/), including simple jwt for cookies
 - [MySQL](https://www.mysql.com/) database
 - [Railway](https://railway.app/)for hosting a database and project
   
- Express
+### Express
 
 - [S3bucket](https://s3.console.aws.amazon.com/s3/get-started?region=eu-north-1&region=eu-north-1) to store images and get the urls(image URLs are stored in MySQL also)
 - [NodeJS](https://nodejs.org/en) and [Express](https://expressjs.com/) for routing between client and server
 - [Multer](https://github.com/expressjs/multer) and [Sharp](https://www.npmjs.com/package/express-sharp) for image handling
   
- Client
+ ### Client
 
 - [React](https://create-react-app.dev/) create react app to setup frontend
 - [Tailwind](https://tailwindcss.com/) and [Flowbite](https://www.flowbite-react.com/) for css
