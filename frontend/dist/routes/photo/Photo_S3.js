@@ -62,31 +62,28 @@ router.post('/api/album/add-photos-s3', upload.array('photo', 10), async (req, r
     const s3 = (0, exports.s3ClientData)();
     const bucketname = process.env.AWS_BUCKET_NAME;
     const bucketRegion = process.env.REGION;
-    console.log(req.files);
-    try {
-        if (s3 && bucketname && req.files) {
-            const uploadedImageUrls = [];
-            if (Array.isArray(req.files)) {
-                for (const file of req.files) {
-                    const buffer = await (0, sharp_1.default)(file.buffer).resize({ height: 1080, width: 1080, fit: 'contain' }).toBuffer();
-                    const key = (0, crypto_1.randomUUID)().toString();
-                    const params = {
-                        Bucket: bucketname,
-                        Key: key,
-                        Body: buffer,
-                        ContentType: file?.mimetype,
-                    };
-                    const command = new client_s3_1.PutObjectCommand(params);
-                    await s3.send(command);
-                    const imageUrl = `https://${bucketname}.s3.${bucketRegion}.amazonaws.com/${key}`;
-                    uploadedImageUrls.push(imageUrl);
-                }
-            }
+    const files = req.files;
+    if (s3 && req.files) {
+        const uploadPromises = files.map(async (file) => {
+            const buffer = await (0, sharp_1.default)(file.buffer).resize({ height: 1080, width: 1080, fit: 'contain' }).toBuffer();
+            const key = (0, crypto_1.randomUUID)().toString();
+            const params = {
+                Bucket: bucketname,
+                Key: key,
+                Body: buffer,
+                ContentType: file.mimetype,
+            };
+            const command = new client_s3_1.PutObjectCommand(params);
+            await s3.send(command);
+            return `https://${bucketname}.s3.${bucketRegion}.amazonaws.com/${key}`;
+        });
+        try {
+            const uploadedImageUrls = await Promise.all(uploadPromises);
             return res.status(200).json(uploadedImageUrls);
         }
-    }
-    catch (err) {
-        return res.status(500).json({ error: `something went wrong ${err}` });
+        catch (err) {
+            return res.status(500).json({ error: `Something went wrong ${err}` });
+        }
     }
 });
 router.delete('/api/album/remove-photo-s3', async (req, res) => {
