@@ -67,10 +67,13 @@ const CreateAlbum = () => {
     if (thumbnail) {
       dispatch(addThumbnail(thumbnail))
         .then((add) => {
+          console.log(add)
+          console.log(add.payload)
           setThumbnailUrl(add.payload);
         })
         .catch((error) => {
           setLoading(false)
+          console.log(error)
           throw Error(error)
         });
       if (photos) {
