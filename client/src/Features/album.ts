@@ -76,6 +76,7 @@ export const addPhotos = createAsyncThunk(
     images.forEach((image) => {
       formData.append('photo', image)
     })
+    console.log(formData)
     try {
       const res = await fetch(`${baserUrl}/api/album/add-photos-s3`, {
           method: 'POST',
