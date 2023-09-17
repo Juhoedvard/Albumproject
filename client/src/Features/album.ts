@@ -72,6 +72,7 @@ export const addThumbnail = createAsyncThunk(
 export const addPhotos = createAsyncThunk(
   'album/add-photos-s3', async( images: File[], thunkAPI) => {
     const formData = new FormData()
+    console.log(images)
     for (let i = 0; i <images.length; i++){
       formData.append(`photo`, images[i])
     }
