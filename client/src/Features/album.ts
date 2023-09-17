@@ -93,6 +93,7 @@ export const addPhotos = createAsyncThunk(
           return data
         }
         else {
+          console.log(thunkAPI.rejectWithValue(data))
           return thunkAPI.rejectWithValue(data)
         }
     }
