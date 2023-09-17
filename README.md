@@ -37,7 +37,7 @@ Project is deployed at https://photo-gallery-production.up.railway.app/
 
  Express: 
 
-1.Open project in terminal and add command cd frontend
+1. Open project in terminal and add command cd frontend
 2. Use command use npm install to install dependencies
 3. Use command npm run dev to run express locally in development enviroment
 
