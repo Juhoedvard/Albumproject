@@ -67,22 +67,23 @@ const CreateAlbum = () => {
     if (thumbnail) {
       dispatch(addThumbnail(thumbnail))
         .then((add) => {
-          console.log(add)
-          console.log(add.payload)
           setThumbnailUrl(add.payload);
         })
         .catch((error) => {
           setLoading(false)
-          console.log(error)
           throw Error(error)
         });
       if (photos) {
+        console.log(photos)
         dispatch(addPhotos(photos))
           .then((add) => {
+            console.log(add)
+            console.log(add.payload)
             setAddedPhotos(add.payload);
             setPhotosLoaded(true)
           })
           .catch((error) => {
+            console.log(error)
             setLoading(false)
               throw Error(error)
           });
