@@ -7,11 +7,13 @@ I made this project to learn about django and redux-toolkit. Project frontend si
 Server: 
 - [django-resframework](https://www.django-rest-framework.org/), including simple jwt for cookies
 - [MySQL](https://www.mysql.com/) database
-- [Railway](https://railway.app/)for hosting a database and project 
+- [Railway](https://railway.app/)for hosting a database and project
+  
 Express:
 - [S3bucket](https://s3.console.aws.amazon.com/s3/get-started?region=eu-north-1&region=eu-north-1) to store images and get the urls(image URLs are stored in MySQL also)
 - [NodeJS](https://nodejs.org/en) and [Express](https://expressjs.com/) for routing between client and server
-- [Multer](https://github.com/expressjs/multer) and [Sharp](https://www.npmjs.com/package/express-sharp) for image handling 
+- [Multer](https://github.com/expressjs/multer) and [Sharp](https://www.npmjs.com/package/express-sharp) for image handling
+  
 Client:
 - [React](https://create-react-app.dev/) create react app to setup frontend
 - [Tailwind](https://tailwindcss.com/) and [Flowbite](https://www.flowbite-react.com/) for css
