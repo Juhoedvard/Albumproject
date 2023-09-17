@@ -63,7 +63,7 @@ router.post('/api/album/add-photos-s3', upload.array('photo', 10),  async (req: 
     const s3 = s3ClientData();
     const bucketname = process.env.AWS_BUCKET_NAME
     const bucketRegion = process.env.REGION
-
+    console.log('Adding photos')
     try {
         if (s3 && bucketname && req.files) {
             const uploadedImageUrls: string[] = [];
@@ -72,7 +72,7 @@ router.post('/api/album/add-photos-s3', upload.array('photo', 10),  async (req: 
                  for ( const file of req.files) {
                     const buffer = await sharp(file.buffer).resize({height: 1080, width: 1080, fit:'contain' }).toBuffer()
                     const key = randomUUID().toString()
-
+                    console.log(file)
                     const params = {
                                     Bucket: bucketname,
                                     Key: key,
