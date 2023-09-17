@@ -23,7 +23,13 @@ const UserAlbumPage = () =>{
     if(!album && !loading) {
         navigate('/')
     }
-
+    if(loading) {
+        return (
+            <div className="flex h-screen w-full justify-center">
+                    <LoadingSpinner loadingText="Loading album..."/>               
+            </div>
+        )
+    }
 
     return(
         <div className="flex flex-col justify-center items-center">
@@ -47,32 +53,18 @@ const UserAlbumPage = () =>{
                         </div>
                     </div>
                 </div>
-                }
+              }
             </div>
-           {photos ?  <div className="grid grid-cols-3 md:grid-cols-3 m-10 gap-4 justify-items-start ">
-                {photos.map((photo, index) => {
+            <div className="grid grid-cols-3 md:grid-cols-3 gap-10 m-10 ">{photos &&
+                photos.map((photo) => {
                     return(
-                        <div key={index} className="flex items-center gap-2">
+                        <div key={photo.id} className="flex items-center gap-2">
                              <PhotoComponent photo = {photo}
-
-                             />
-                        </div>
-                    )
-                })}
-            </div>
-                : <div className="grid grid-cols-3 md:grid-cols-3 m-10 gap-4 justify-items-start ">
-                    {Array(6).fill(null).map((_, index) => {
-                        return(
-                            <div key={index}>
-                                <LoadingSpinner/>
-                            </div>
-                        )
-                    })}
-                </div>
-                     }
-         <div>
-
-         </div>
+                                             albumUser = {album.user.id}/>
+                        </div>)}) 
+                    }
+                     
+             </div>
         </div>
     )
 }

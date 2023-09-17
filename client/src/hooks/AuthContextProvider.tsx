@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { createContext, useState} from "react";
 import { useAppSelector } from "../store";
 import { Outlet, useNavigate} from "react-router-dom";
 import LogInModal from "../components/LogInModal";
 import { Button } from "flowbite-react";
 import LoadingSpinner from "../components/LoadingSpinner";
+
 
 
 
@@ -24,11 +25,17 @@ export default  function  Auth() {
 
 export const ProtectedRoutes = () => {
 
-    const {isAuthenticated } = useAppSelector((state) => state.user);
+    const {isAuthenticated, loading } = useAppSelector((state) => state.user);
     const [openModal, setOpenModal] = useState<string |undefined>()
     const navigate = useNavigate()
 
-
+   if(loading) {
+    return(
+      <div className="flex w-full h-screen justify-center">
+        <LoadingSpinner loadingText="Loading..."/>
+      </div>
+    )
+   }
 
     return (
     isAuthenticated ? <Outlet /> :

@@ -24,7 +24,7 @@ const UserProfile = () => {
         <div className="flex">
             <br></br>
             <div className="flex flex-col h-1/3  items-center my-6 w-1/3 border-b">
-                {loading ? <LoadingSpinner/> : userprofile  &&
+                {loading ? <LoadingSpinner loadingText="Loading profile"/> : userprofile  &&
                 <div>
                  <div>
                       <h1 className="text-3xl font-bold">{userprofile.first_name} {userprofile.last_name}</h1>
@@ -45,7 +45,7 @@ const UserProfile = () => {
                 </h1>
                 <br></br>
                 <div className="grid grid-cols-2 md:grid-cols-3 m-10 gap-10 w-2/3 ">{loading ?
-                    <LoadingSpinner/>
+                    <LoadingSpinner loadingText="Loading albums..."/>
                 :
                     userprofile?.useralbums.map((album : Album, index: string) => {
                         return(

@@ -32,15 +32,13 @@ export type LoginUser = {
 let baserUrl : string | undefined= ''
 
 if(process.env.REACT_APP_NODE_ENV === 'development'){
-  console.log('täällä')
   baserUrl = process.env.REACT_APP_API_URL
 }
 else{
   baserUrl = process.env.REACT_APP_PRODUCTION_URL
 }
 
-console.log(baserUrl)
-
+///Register user 
  export const registerUser = createAsyncThunk(
   'users/register',
   async ({first_name, last_name, email, password}: RegisterUser, thunkAPI) => {
@@ -70,6 +68,7 @@ console.log(baserUrl)
   }
  )
 
+ ///Get logged in user
  export const getUser = createAsyncThunk('users/me', async(_, thunkAPI) => {
   try{
     const res = await fetch(`${baserUrl}/api/users/me`, {
@@ -94,8 +93,9 @@ console.log(baserUrl)
     return thunkAPI.rejectWithValue(err.response.data)
   }
  })
- export const getProfile = createAsyncThunk('users/get-profile', async (id : string, thunkAPI)=> {
 
+///Get user's profile (for UserProfile)
+export const getProfile = createAsyncThunk('users/get-profile', async (id : string, thunkAPI)=> {
   try{
     const res = await fetch(`${baserUrl}/api/users/get-profile?id=${id}`, {
       method: 'GET',
@@ -117,6 +117,8 @@ console.log(baserUrl)
     return thunkAPI.rejectWithValue(err.response.data)
   }
  })
+
+ ///Log in User
  export const loginUser = createAsyncThunk(
   'users/login',
   async ({email, password}: LoginUser, thunkAPI) => {
@@ -146,6 +148,7 @@ console.log(baserUrl)
     }
 });
 
+///Check for access cookie
 export const verifyUser = createAsyncThunk(
   'users/verify',
   async (_, thunkAPI) => {
@@ -174,6 +177,7 @@ export const verifyUser = createAsyncThunk(
     }
   });
 
+///Log out user
 export const logoutUser = createAsyncThunk(
   'users/logout',
   async (_, thunkAPI) => {
@@ -199,6 +203,7 @@ export const logoutUser = createAsyncThunk(
     }
 });
 
+/// Sending password reset link to email
 export const sendPasswordEmail = createAsyncThunk(
   'users/send-password',
   async (email: string, thunkAPI) => {
@@ -228,6 +233,8 @@ export const sendPasswordEmail = createAsyncThunk(
       return thunkAPI.rejectWithValue(error.response.data)
     }
   });
+
+  ///Change forgotten password
   export const changeForgottenPassword = createAsyncThunk(
     'users/forgotten-password',
     async ({password, token}: {password: string, token: string}, thunkAPI) => {
@@ -254,7 +261,7 @@ export const sendPasswordEmail = createAsyncThunk(
         return thunkAPI.rejectWithValue(error.response.data)
       }
     });
-
+///Change existing password
   export const changePassword = createAsyncThunk(
     'users/change-password',
     async ({password, email}: {password: string, email: string}, thunkAPI) => {
@@ -314,6 +321,7 @@ export const UserSlice = createSlice({
     state.loading = false
     toast.error('Registration failed')
    })
+   
    // Login user
     .addCase(loginUser.pending, (state, action) => {
     state.loading = true
@@ -327,6 +335,7 @@ export const UserSlice = createSlice({
     state.loading = false
     toast.error('Login failed')
   })
+
   ///Get user
     .addCase(getUser.pending, (state, action) => {
     state.loading = true
@@ -338,6 +347,7 @@ export const UserSlice = createSlice({
     .addCase(getUser.rejected, (state, action) =>{
     state.loading = false
   })
+
   ///Get userprofile
   .addCase(getProfile.pending, (state, action) => {
     state.loading = true
@@ -350,6 +360,7 @@ export const UserSlice = createSlice({
     .addCase(getProfile.rejected, (state, action) =>{
     state.loading = false
   })
+
   ///Verify user
   .addCase(verifyUser.pending, (state, action) => {
     state.loading = true
@@ -361,10 +372,11 @@ export const UserSlice = createSlice({
   .addCase(verifyUser.rejected, (state, action) => {
     state.loading = false
   })
+
   ///Logout user
   .addCase(logoutUser.pending, (state, action) => {
   state.loading = true
-    })
+  })
   .addCase(logoutUser.fulfilled, (state, action) => {
   state.loading = false
   state.isAuthenticated = false
@@ -375,6 +387,7 @@ export const UserSlice = createSlice({
   state.loading = false
   toast.error('Logout failed')
   })
+
   ///Send email to reset password
   .addCase(sendPasswordEmail.pending, (state, action) => {
     state.loading = true
@@ -388,6 +401,7 @@ export const UserSlice = createSlice({
     state.loading = false
     toast.error('Email failed to send')
   })
+
   ///Change forgotten password
   .addCase(changeForgottenPassword.pending, (state, action) => {
     state.loading = true

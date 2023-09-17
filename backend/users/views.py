@@ -36,7 +36,6 @@ from django.conf import settings
 class GetProfileView(APIView):
     def get(self, request):
         id = request.query_params.get('id')
-        print(id)
         if User.objects.filter(id = int(id)).exists():
             user = User.objects.get(id=id)
             user = UserSerializer(user)
@@ -81,7 +80,6 @@ class ChangeForgottenPassWordView(APIView):
                 user.save()
                 return Response(True, status=status.HTTP_200_OK)
             else:
-                print('error')
                 return Response(False, status=status.HTTP_400_BAD_REQUEST)
 
 

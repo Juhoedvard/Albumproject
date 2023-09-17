@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink, Link } from "react-router-dom";
 import { logoutUser } from "../Features/user";
 import {  useAppDispatch, useAppSelector } from "../store";
-import { Dropdown } from "flowbite-react";
+import { Dropdown, Spinner } from "flowbite-react";
 import { HiLogout, HiViewGrid, } from 'react-icons/hi';
 import {BiPhotoAlbum} from 'react-icons/bi'
 import {MdPhotoAlbum} from 'react-icons/md'
@@ -10,14 +10,14 @@ import { DropdownItem } from "flowbite-react/lib/esm/components/Dropdown/Dropdow
 import { useSearch } from "../hooks/SearchContextProvider";
 import { useState } from "react";
 import LogInModal from "./LogInModal";
+import LoadingSpinner from "./LoadingSpinner";
 
 
 
 const NavBar = () => {
 
     const dispatch = useAppDispatch()
-    const {user } = useAppSelector((state) => state.user);
-    const kayttaja = useAppSelector((state) => state.user)
+    const {user, loading } = useAppSelector((state) => state.user);
 
     const {searchTerm, setSearchTerm} = useSearch()
     const [openModal, setOpenModal] = useState<string |undefined>()
@@ -67,7 +67,7 @@ const NavBar = () => {
                             </svg>
                         </button>
                     </div>
-                    <div className="flex md:order-3">
+                   {loading ? <div className="flex md:order-3"> <Spinner/> </div> :  <div className="flex md:order-3">
                         {user ?
                             <Dropdown color={'bg-neutral-700'}  label={user.first_name}>
                                   <Dropdown.Header>
@@ -94,7 +94,7 @@ const NavBar = () => {
                                 <span className=" font-medium">Login</span>
                             </button>
                          }
-                    </div>
+                    </div>}
                        {openModal === 'dismissible' &&   <LogInModal setOpenModal={setOpenModal}
                                      openModal={openModal}
                                      />}

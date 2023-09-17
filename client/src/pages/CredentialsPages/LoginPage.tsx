@@ -2,7 +2,7 @@ import React from "react";
 import { resetRegistered } from "../../Features/user";
 import { useEffect } from "react";
 import { useForm, SubmitHandler} from "react-hook-form";
-import { Link, Navigate, useLocation } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { loginUser } from "../../Features/user";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { useAppDispatch, useAppSelector } from "../../store";

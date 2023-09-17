@@ -11,7 +11,7 @@ class Album(models.Model):
     description = models.TextField(blank=True, null=True)
     thumbnail = models.CharField(max_length=200)
     likes = models.IntegerField(default=0)
-    user = models.ForeignKey(UserAccount, on_delete=models.CASCADE, related_name='useralbums')
+    user = models.ForeignKey(UserAccount,on_delete=models.CASCADE, related_name='useralbums')
 
 
 
@@ -21,7 +21,7 @@ class Photo(models.Model):
     likes = models.IntegerField(default=0)
     photo = models.URLField(max_length=200)
     album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name='photos')
-    likedUsers = models.ManyToManyField('LikedUsers', related_name='liked_photos', default=[], )
+    likedUsers = models.ManyToManyField('LikedUsers', related_name='liked_photos', default=[])
 
 class LikedUsers(models.Model):
 
@@ -53,6 +53,5 @@ class PhotoManager(models.Manager):
                photo = photo,
                album = album
           )
-          print(newPhoto)
           newPhoto.save(using=self._db)
           return newPhoto

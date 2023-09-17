@@ -2,12 +2,12 @@ import React from "react";
 import { FileInput, Label, Textarea, Tooltip } from "flowbite-react";
 import { ChangeEvent, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Album, addPhotos, addThumbnail, createAlbum } from "../../Features/album";
+import { Album, addPhotos, addThumbnail, createAlbum, removePhoto } from "../../Features/album";
 import { useAppDispatch } from "../../store";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import type { Photo } from "../../Features/album";
-import EditPhotoComponent from "../../components/CreatePhotoComponent";
+import CreatePhotoComponent from "../../components/CreatePhotoComponent";
 import LoadingSpinner from "../../components/LoadingSpinner";
 
 const CreateAlbum = () => {
@@ -26,6 +26,8 @@ const CreateAlbum = () => {
   const [selectedPhoto, setSelectedPhoto] = useState<Photo[]>([]);
   const [photosLoaded, setPhotosLoaded] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [removeThesePhotos, setRemoveThesePhotos] = useState<string[]>([])
+
 
   const dispatch = useAppDispatch();
 
@@ -33,6 +35,10 @@ const CreateAlbum = () => {
     if (thumbnail && selectedPhoto) {
       setLoading(true)
       await dispatch(createAlbum({ ...data, thumbnail: thumbnailUrl, photos: selectedPhoto }));
+      if(removeThesePhotos.length > 0)
+      {
+          await dispatch(removePhoto(removeThesePhotos))
+      }
       setLoading(false)
       navigate('/');
     } else {
@@ -57,11 +63,13 @@ const CreateAlbum = () => {
   };
   const uploadSelectedPhotos = () => {
     if (thumbnail) {
+      setLoading(true)
       dispatch(addThumbnail(thumbnail))
         .then((add) => {
           setThumbnailUrl(add.payload);
         })
         .catch((error) => {
+          setLoading(false)
           throw Error(error)
         });
       if (photos) {
@@ -71,25 +79,45 @@ const CreateAlbum = () => {
             setPhotosLoaded(true)
           })
           .catch((error) => {
+            setLoading(false)
               throw Error(error)
           });
       }
     } else {
       toast.error('Add a thumbnail');
     }
+    setLoading(false)
   };
 
-  const removePhoto = (photo: string) => {
+  const CutPhoto = async (photo: string) => {
+    const cutPhotos = [...removeThesePhotos]
+    cutPhotos.push(photo)
+    setRemoveThesePhotos(cutPhotos)
     const updatedPhotos = addedPhotos.filter((p) => p !== photo);
     setAddedPhotos(updatedPhotos);
     const updatedPhotoFiles = photos.filter((p) => p.name !== photo);
     setPhotos(updatedPhotoFiles);
+    const newSelectedPhotos = selectedPhoto.filter((p) => p.photo !== photo)
+    setSelectedPhoto(newSelectedPhotos)
+
   };
   const Reset = () =>{
+    const removeFromS3 = [...addedPhotos]
+    removeFromS3.push(thumbnailUrl)
+    setRemoveThesePhotos(removeFromS3)
     setThumbnailUrl('')
     setAddedPhotos([])
 
   }
+  const removePhotosS3 = async () => {
+    if(removeThesePhotos.length > 0){
+      setLoading(true)
+      await dispatch(removePhoto(removeThesePhotos))
+      setLoading(false)
+      navigate('/')
+    }
+  }
+
     return(
             <main className="flex flex-col items-center justify-center gap-4 py-5 ">
              <br></br>
@@ -106,8 +134,9 @@ const CreateAlbum = () => {
                          <br></br>
                     </div>}
                     <div className="relative z-0 w-full mb-6 group">
-                        <input {...register("title", {required:true})} type="text"  id="floating_title" className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                        <label  htmlFor="floating_title" className="peer-focus:font-medium absolute text-sm text-white dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Album title</label>
+                        <label  htmlFor="floating_title" className="block mb-2 text-sm font-medium text-white  dark:text-white">Album title</label>
+                        <input {...register("title", {required:true})} type="text"  id="floating_title" className="bg-gray-50 border text-black border-gray-300  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Title " required />
+
                     </div>
                     <div className="max-w-md" id="textarea">
                         <div className="mb-2 block">
@@ -164,20 +193,20 @@ const CreateAlbum = () => {
                                     </ul>
                                 </div>)
                         }))}
-                       {loading ?<div>
-                        <LoadingSpinner/>
+                       {loading ? <div>
+                        <LoadingSpinner loadingText=""/>
                        </div> :
                        <div className="flex w-full gap-2 justify-center">
-                            <button type='button' onClick={() => navigate('/')}className="w-1/3 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Cancel</button>
+                            <button type='button' onClick={removePhotosS3}className="w-1/3 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Cancel</button>
                             <button type='button' onClick={uploadSelectedPhotos} className="w-1/3 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Preview</button>
                         </div>}
                     </div>
                   </div>
                 </div>
 
-              {loading ?
+              {loading  && !thumbnailUrl?
               <div>
-                <LoadingSpinner/>
+                <LoadingSpinner loadingText=""/>
               </div> :
               thumbnailUrl  &&
               <div className="flex flex-col w-2/3 h-full">
@@ -205,8 +234,8 @@ const CreateAlbum = () => {
                                         return(
                                             <div key={index} className="flex flex-col w-80  items-center ">
                                                 <div>
-                                                    <EditPhotoComponent photo={photo}
-                                                        removePhoto={removePhoto}
+                                                    <CreatePhotoComponent photo={photo}
+                                                        CutPhoto={CutPhoto}
                                                         selectedPhoto= {selectedPhoto}
                                                         setSelectedPhoto= {setSelectedPhoto}
                                                         photosLoaded={photosLoaded}
@@ -223,7 +252,7 @@ const CreateAlbum = () => {
                         <br></br>
                       {loading?
                          <div>
-                              <LoadingSpinner/>
+                              <LoadingSpinner loadingText="Creating album..."/>
                         </div>:
                          <div className="flex justify-center ">
                            <button type="button" onClick={Reset} className="w-1/5 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Cancel</button>

@@ -31,7 +31,7 @@ const Dashboard = () => {
         return(
             <div>
                 {loading || user === null ? (
-                        <LoadingSpinner/>
+                        <LoadingSpinner loadingText="Loading dashboard..."/>
                 ):
                 (
                 <main className="flex gap-4 items-center justify-center">
@@ -59,8 +59,8 @@ const Dashboard = () => {
 
                                 </div>
                                 <div className="flex gap-2 ">
-                                    <Button color="light" className="text-white"  onClick={() =>setEdit(!edit)}>{!edit ? 'Edit' : 'Cancel'}</Button>
-                                    <Button color="light" className="text-white" onClick={() => setShowPassword(!showPassword)} >Change password</Button>
+                                    <Button color="light" className="text-white hover:text-black"  onClick={() =>setEdit(!edit)}>{!edit ? 'Edit' : 'Cancel'}</Button>
+                                    <Button color="light" className="text-white hover:text-black" onClick={() => setShowPassword(!showPassword)} >Change password</Button>
                                 </div>
                             </> ) : (
                                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full items-center justify-center gap-3">
@@ -73,8 +73,8 @@ const Dashboard = () => {
                                         <input {...register("confirm_password", {required:true, minLength: 6})} type="password" id="confirm_password" className="bg-gray-50 border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required/>
                                     </div>
                                     <div className="flex gap-2 w-1/2">
-                                        <Button color="light" className="text-white" onClick={() => setShowPassword(!showPassword)}>Cancel</Button>
-                                        <Button color="light" className="text-white" type="submit">Change password</Button>
+                                        <Button color="light" className="text-white hover:text-black" onClick={() => setShowPassword(!showPassword)}>Cancel</Button>
+                                        <Button color="light" className="text-white hover:text-black" type="submit">Change password</Button>
                                     </div>
                                 </form>
                             )}

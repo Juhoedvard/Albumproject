@@ -11,8 +11,8 @@ import { resetPasswordRouter } from './routes/auth/send-password';
 import { forgottenPasswordRouter } from './routes/auth/forgotten-password';
 import { changePasswordRouter } from './routes/auth/change-password';
 import { albumRouter } from './routes/photo/album';
-import { photoRouter } from './routes/photo/addPhoto_S3';
-import path from 'path';
+import { photoRouter } from './routes/photo/Photo_S3';
+
 
 
 
@@ -38,7 +38,6 @@ app.use(cors(corsOptions))
 app.use(cookieParser());
 
 
-
 app.use(registerRouter);
 app.use(loginRouter);
 app.use(userRouter);
@@ -49,7 +48,12 @@ app.use(forgottenPasswordRouter)
 app.use(changePasswordRouter)
 app.use(albumRouter)
 app.use(photoRouter)
-
+app.use((req, res, next) => {
+  console.log(`Received ${req.method} request to ${req.path}`);
+  console.log('Request Headers:', req.headers);
+  console.log('Request Body:', req.body);
+  next(); // Siirry seuraavaan middlewareen tai reittiin
+});
 app.listen(PORT, () => {
 
     console.log(`App listening on port ${PORT}`);

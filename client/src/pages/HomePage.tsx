@@ -18,15 +18,12 @@ const HomePage = () => {
 
 
     useEffect(() => {
-
         if(debouncedSearch === ''){
             setSearchResults(albums)
         }
         else{
              const searchedAlbums = albums.filter((album) => {
                 return( album.title.toLowerCase().startsWith(debouncedSearch.toLowerCase())   )
-
-
         })
         if(searchedAlbums.length < 1 ){
             setTimeout(() => {
@@ -53,17 +50,17 @@ const HomePage = () => {
             <br></br>
             <div className="grid grid-cols-3 md:grid-cols-4 gap-10 m-10 ">{loading && albums.length < 1 ?
 
-                Array(8).fill(null).map((index)=> {
+                Array(8).fill(null).map((_, index)=> {
                     return(
                         <div key={index} className="flex justify-center items-center h-80">
-                          <LoadingSpinner/>
+                          <LoadingSpinner loadingText=""/>
                         </div>
                     )
             })
              :
-                searchResults?.map((album : Album, index) => {
+                searchResults?.map((album : Album) => {
                     return(
-                        <div key={index}>
+                        <div key={album.id}>
                             <AlbumComponent
                                 album = {album}
                             />

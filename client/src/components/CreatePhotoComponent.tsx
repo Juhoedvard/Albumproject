@@ -5,9 +5,9 @@ import { Photo } from '../Features/album';
 import { toast } from 'react-toastify';
 
 
-interface EditPhotoComponentProps {
+interface CreatePhotoComponentProps {
   photo: string;
-  removePhoto?: Function;
+  CutPhoto?: Function;
   photosLoaded?: boolean
   index: number,
   selectedPhoto: Photo[],
@@ -15,9 +15,9 @@ interface EditPhotoComponentProps {
 
 }
 
-const EditPhotoComponent: React.FC<EditPhotoComponentProps> = ({
+const CreatePhotoComponent: React.FC<CreatePhotoComponentProps> = ({
     photo,
-    removePhoto,
+    CutPhoto,
     photosLoaded,
     index,
     selectedPhoto,
@@ -27,9 +27,7 @@ const EditPhotoComponent: React.FC<EditPhotoComponentProps> = ({
 
   const [isSelected, setIsSelected] = useState(false)
   const [caption, setCaption] =  useState<string[]>([]);
-  const [selectedPhotoIndexes, setSelectedPhotoIndexes] = useState<{ [key: string]: boolean }>({});
   const [selectedPhotoEffects, setSelectedPhotoEffects] = useState<{ [key: string]: boolean }>({});
-
 
   const finalPhoto = (photo: string) => {
     if (!caption) {
@@ -40,17 +38,10 @@ const EditPhotoComponent: React.FC<EditPhotoComponentProps> = ({
       photo: photo,
       albumID: '',
     };
-    const isSelected = selectedPhotoIndexes[photo];
-
     let newSelectedPhotos: Photo[] = [...selectedPhoto]
-    if(isSelected) {
-        newSelectedPhotos = newSelectedPhotos.filter((selected) => selected.photo !== photo )
-    }
-    else{
-        newSelectedPhotos.push(temporaryPhoto)
-    }
+    newSelectedPhotos = newSelectedPhotos.filter((selected) => selected.photo !== photo )
+    newSelectedPhotos.push(temporaryPhoto)
     setSelectedPhoto(newSelectedPhotos);
-
     setSelectedPhotoEffects({ ...selectedPhotoEffects, [photo]: !isSelected });
 
   };
@@ -93,9 +84,9 @@ const EditPhotoComponent: React.FC<EditPhotoComponentProps> = ({
         <figcaption className="w-full absolute px-4 bottom-6 text-center">
           {caption && <p>{caption}</p>}
         </figcaption>
-        {removePhoto && (
+        {CutPhoto && (
           <figcaption className="w-full absolute px-4 top-2 text-right">
-            <button type="button" onClick={() => removePhoto(photo)}>
+            <button type="button" onClick={() => CutPhoto(photo)}>
               <CiCircleRemove size={30} />
             </button>
           </figcaption>
@@ -103,13 +94,13 @@ const EditPhotoComponent: React.FC<EditPhotoComponentProps> = ({
       </figure>
       <br></br>
       <div className='flex w-full justify-center items-center'>
-        {photosLoaded && (
+        {photosLoaded && isSelected=== false && (
           <button
             type="button"
             onClick={toggleSelected}
             className="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
           >
-            {!isSelected ? 'Add photo' : 'Remove photo'}
+            Add photo
           </button>
         )}
       </div>
@@ -117,4 +108,4 @@ const EditPhotoComponent: React.FC<EditPhotoComponentProps> = ({
   );
 };
 
-export default EditPhotoComponent;
+export default CreatePhotoComponent;

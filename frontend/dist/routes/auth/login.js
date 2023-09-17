@@ -1,29 +1,19 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loginRouter = void 0;
 const express_1 = require("express");
 const importDynamic = new Function('modulePath', 'return import(modulePath)');
-const fetch = (...args) => __awaiter(void 0, void 0, void 0, function* () {
-    const module = yield importDynamic('node-fetch');
+const fetch = async (...args) => {
+    const module = await importDynamic('node-fetch');
     return module.default(...args);
-});
+};
 const router = (0, express_1.Router)();
 exports.loginRouter = router;
-router.post('/api/users/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post('/api/users/login', async (req, res) => {
     const { email, password } = req.body;
     const body = JSON.stringify({ email, password });
-    console.log(process.env.API_URL);
     try {
-        const apiRes = yield fetch(`${process.env.API_URL}/api/token/`, {
+        const apiRes = await fetch(`${process.env.API_URL}/api/token/`, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -31,9 +21,7 @@ router.post('/api/users/login', (req, res) => __awaiter(void 0, void 0, void 0, 
             },
             body
         });
-        const data = yield apiRes.json();
-        console.log(data.access);
-        console.log(apiRes.status);
+        const data = await apiRes.json();
         if (apiRes.status === 200) {
             res.cookie('access', data.access, { httpOnly: true, maxAge: 1000 * 60 * 30, sameSite: 'strict', secure: process.env.NODE_ENV === 'production' }),
                 res.cookie('refresh', data.refresh, { httpOnly: true, maxAge: 1000 * 60 * 30 * 48, sameSite: 'strict', secure: process.env.NODE_ENV === 'production' });
@@ -44,9 +32,8 @@ router.post('/api/users/login', (req, res) => __awaiter(void 0, void 0, void 0, 
         }
     }
     catch (err) {
-        console.log(err);
         return res.status(500).json({
             error: 'Something went wrong when logging in'
         });
     }
-}));
+});

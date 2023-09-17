@@ -8,7 +8,6 @@ import Layout from './components/Layout';
 import EditAlbum from './pages/AlbumPages/EditAlbum';
 import { useAppDispatch} from './store';
 import { useEffect } from 'react';
-import { getUser, verifyUser } from './Features/user';
 import LoadingSpinner from './components/LoadingSpinner';
 import ResetPasswordPage from './pages/CredentialsPages/ResetPasswordPage';
 import NewPasswordPage from './pages/CredentialsPages/NewPasswordPage';
@@ -16,6 +15,7 @@ import CreateAlbum from './pages/AlbumPages/CreateAlbum';
 import UserAlbumPage from './pages/AlbumPages/UserAlbumPage';
 import UserProfile from './pages/UserProfile';
 import MyAlbumsPage from './pages/AlbumPages/MyAlbumsPage';
+import { verifyUser } from "./Features/user";
 import { getAlbums } from './Features/album';
 import { ProtectedRoutes }  from './hooks/AuthContextProvider';
 
@@ -49,7 +49,6 @@ function App() {
 
   useEffect(() => {
     dispatch(verifyUser())
-    dispatch(getUser())
     dispatch(getAlbums())
   }, [])
 

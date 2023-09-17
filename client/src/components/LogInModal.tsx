@@ -13,10 +13,10 @@ import LoadingSpinner from "./LoadingSpinner"
 const LogInModal = ({openModal, setOpenModal} : {openModal: undefined | string, setOpenModal: Function,}) => {
     const dispatch = useAppDispatch()
     const {loading, registered} = useAppSelector((state) => state.user)
-    console.log(loading)
     const {
         register,
         handleSubmit,
+        reset,
       } = useForm<LoginUser>()
 
     useEffect(() => {
@@ -26,6 +26,8 @@ const LogInModal = ({openModal, setOpenModal} : {openModal: undefined | string, 
     const onSubmit: SubmitHandler<LoginUser> = (data) => {
         dispatch(loginUser({...data})).then(() => {
             setOpenModal(undefined)
+            reset({email: '', password: ''})
+          
         })
     }
 
@@ -37,7 +39,7 @@ const LogInModal = ({openModal, setOpenModal} : {openModal: undefined | string, 
       <form onSubmit={handleSubmit(onSubmit)} className="">
                 <div className="mb-6">
                     <label htmlFor="email" className="block mb-2 text-sm font-medium text-black  dark:text-white">Your email</label>
-                    <input  {...register("email", {required:true})}type="email" id="email" className="bg-gray-50 border border-gray-300  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" required/>
+                    <input  {...register("email", {required:true})}type="email" id="email" className=" bg-gray-50 border text-black border-gray-300  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required/>
                 </div>
                 <div className="mb-6">
                     <label htmlFor="password" className="block mb-2 text-sm font-medium text-black dark:text-white">Your password</label>
@@ -51,7 +53,7 @@ const LogInModal = ({openModal, setOpenModal} : {openModal: undefined | string, 
                 </div>
                 {loading ? (
                     <div className="flex justify-center">
-                        <LoadingSpinner/>
+                        <LoadingSpinner loadingText="Logging in..."/>
                     </div>
                     ):(
                 <div className="flex justify-center">

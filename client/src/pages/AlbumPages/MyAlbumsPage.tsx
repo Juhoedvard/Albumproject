@@ -4,7 +4,6 @@ import { useAppSelector } from "../../store"
 import LoadingSpinner from "../../components/LoadingSpinner"
 import AlbumComponent from "../../components/AlbumComponent"
 import { Album } from "../../Features/album"
-import { Button } from "flowbite-react"
 import {AiOutlineUpload} from 'react-icons/ai'
 
 
@@ -14,7 +13,7 @@ const MyAlbumsPage = () => {
     const {id} = useParams()
 
     const {albums, loading} = useAppSelector((state) =>state.albums)
-    const {user, isAuthenticated} = useAppSelector((state) => state.user)
+    const {user} = useAppSelector((state) => state.user)
     const myAlbums = albums.filter((album) => album.user.id.toString() === id)
 
 
@@ -40,7 +39,7 @@ const MyAlbumsPage = () => {
             }
             <br></br>
             <div className="grid grid-cols-3 md:grid-cols-3 gap-10 m-10 ">{loading ?
-                <LoadingSpinner/>
+                <LoadingSpinner loadingText="Loading albums..."/>
              :
                 myAlbums?.map((album : Album, index) => {
                     return(

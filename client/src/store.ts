@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import React from "react";
 import { configureStore } from '@reduxjs/toolkit'
 import { UserSlice } from './Features/user'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'

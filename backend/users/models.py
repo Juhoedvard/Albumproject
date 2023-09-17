@@ -30,6 +30,7 @@ class UserAccountManager(BaseUserManager):
             last_name = last_name,
             email = email,
             password=password,
+            description= ''
         )
 
         user.is_staff = True

@@ -16,7 +16,7 @@ const send_password_1 = require("./routes/auth/send-password");
 const forgotten_password_1 = require("./routes/auth/forgotten-password");
 const change_password_1 = require("./routes/auth/change-password");
 const album_1 = require("./routes/photo/album");
-const addPhoto_S3_1 = require("./routes/photo/addPhoto_S3");
+const Photo_S3_1 = require("./routes/photo/Photo_S3");
 dotenv_1.default.config();
 const PORT = process.env.PORT || 5000;
 const app = (0, express_1.default)();
@@ -44,7 +44,13 @@ app.use(send_password_1.resetPasswordRouter);
 app.use(forgotten_password_1.forgottenPasswordRouter);
 app.use(change_password_1.changePasswordRouter);
 app.use(album_1.albumRouter);
-app.use(addPhoto_S3_1.photoRouter);
+app.use(Photo_S3_1.photoRouter);
+app.use((req, res, next) => {
+    console.log(`Received ${req.method} request to ${req.path}`);
+    console.log('Request Headers:', req.headers);
+    console.log('Request Body:', req.body);
+    next(); // Siirry seuraavaan middlewareen tai reittiin
+});
 app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}`);
 });

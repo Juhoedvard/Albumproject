@@ -27,7 +27,6 @@ class CreatePhotoSerializer(serializers.ModelSerializer):
         fields = ['caption', 'likes', 'photo', 'album']
 
     def create(self, validated_data):
-        print('Serializer!')
         album = validated_data.pop('album')
         createPhoto = Photo.objects.create(
             caption = validated_data['caption'],
@@ -65,9 +64,7 @@ class AlbumPhotosSerializer(serializers.ModelSerializer):
         fields = ['caption', 'likes', 'photo', 'album', 'id', 'likedUsers']
 
     def get_likedUsers(self, obj):
-        print('täällä')
         liked_users = obj.likedUsers.all()
-        print(liked_users, 'tulostus tästä')
         from users.serializers import UserSerializer
         serializer = UserSerializer(liked_users, many=True)
         return serializer.data

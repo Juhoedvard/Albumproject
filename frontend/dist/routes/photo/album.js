@@ -1,29 +1,20 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.albumRouter = void 0;
 const express_1 = require("express");
 const importDynamic = new Function('modulePath', 'return import(modulePath)');
-const fetch = (...args) => __awaiter(void 0, void 0, void 0, function* () {
-    const module = yield importDynamic('node-fetch');
+const fetch = async (...args) => {
+    const module = await importDynamic('node-fetch');
     return module.default(...args);
-});
+};
 const router = (0, express_1.Router)();
 exports.albumRouter = router;
-router.post('/api/album/create-album', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post('/api/album/create-album', async (req, res) => {
     const access = req.cookies['access'];
     const { title, description, thumbnail } = req.body;
     const body = JSON.stringify({ title: title, description: description, thumbnail: thumbnail });
     try {
-        const AlbumResponse = yield fetch(`${process.env.API_URL}/api/album/create-album`, {
+        const AlbumResponse = await fetch(`${process.env.API_URL}/api/album/create-album`, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -32,7 +23,7 @@ router.post('/api/album/create-album', (req, res) => __awaiter(void 0, void 0, v
             },
             body: body,
         });
-        const data = yield AlbumResponse.json();
+        const data = await AlbumResponse.json();
         return res.status(AlbumResponse.status).json(data);
     }
     catch (err) {
@@ -40,12 +31,12 @@ router.post('/api/album/create-album', (req, res) => __awaiter(void 0, void 0, v
             error: `something went wrong ${err}`
         });
     }
-}));
-router.post('/api/album/add-photos', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+});
+router.post('/api/album/add-photos', async (req, res) => {
     const access = req.cookies['access'];
     const body = req.body;
     try {
-        const PhotoResponse = yield fetch(`${process.env.API_URL}/api/album/add-photos`, {
+        const PhotoResponse = await fetch(`${process.env.API_URL}/api/album/add-photos`, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -54,8 +45,7 @@ router.post('/api/album/add-photos', (req, res) => __awaiter(void 0, void 0, voi
             },
             body: JSON.stringify(body),
         });
-        const data = yield PhotoResponse.json();
-        (data);
+        const data = await PhotoResponse.json();
         return res.status(PhotoResponse.status).json(data);
     }
     catch (err) {
@@ -63,32 +53,29 @@ router.post('/api/album/add-photos', (req, res) => __awaiter(void 0, void 0, voi
             error: `something went wrong ${err}`
         });
     }
-}));
-router.get('/api/album/albums', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(process.env.API_URL, 'apiurl');
+});
+router.get('/api/album/albums', async (req, res) => {
     try {
-        const apiRes = yield fetch(`${process.env.API_URL}/api/album/albums`, {
+        const apiRes = await fetch(`${process.env.API_URL}/api/album/albums`, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
             },
         });
-        const data = yield apiRes.json();
-        console.log(data);
+        const data = await apiRes.json();
         return res.status(apiRes.status).json(data);
     }
     catch (err) {
-        console.log(err);
         return res.status(500).json({
             error: `Something went wrong when getting  data, ${err}`
         });
     }
-}));
-router.post('/api/album/likephoto', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+});
+router.post('/api/album/likephoto', async (req, res) => {
     const access = req.cookies['access'];
     const body = req.body;
     try {
-        const PhotoResponse = yield fetch(`${process.env.API_URL}/api/album/likephoto`, {
+        const PhotoResponse = await fetch(`${process.env.API_URL}/api/album/likephoto`, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -97,7 +84,7 @@ router.post('/api/album/likephoto', (req, res) => __awaiter(void 0, void 0, void
             },
             body: JSON.stringify(body),
         });
-        const data = yield PhotoResponse.json();
+        const data = await PhotoResponse.json();
         return res.status(PhotoResponse.status).json(data);
     }
     catch (err) {
@@ -105,23 +92,84 @@ router.post('/api/album/likephoto', (req, res) => __awaiter(void 0, void 0, void
             error: `Something went wrong when getting  data, ${err}`
         });
     }
-}));
-router.get('/api/album/getPhotoLikes/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = req.params.id;
+});
+router.get('/api/album/getPhotoLikes', async (req, res) => {
+    const { id } = req.query;
     try {
-        const PhotoResponse = yield fetch(`${process.env.API_URL}/api/album/getPhotoLikes/${id}`, {
+        const PhotoResponse = await fetch(`${process.env.API_URL}/api/album/getPhotoLikes?id=${id}`, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
         });
-        const data = yield PhotoResponse.json();
+        const data = await PhotoResponse.json();
         return res.status(PhotoResponse.status).json(data);
     }
     catch (err) {
         return res.status(500).json({
-            error: `Something went wrong when getting  data, ${err}`
+            error: `Something went wrong when getting data, ${err}`
         });
     }
-}));
+});
+router.delete('/api/album/remove-photo-album', async (req, res) => {
+    const { id } = req.query;
+    const access = req.cookies['access'];
+    try {
+        const apiRes = await fetch(`${process.env.API_URL}/api/album/remove-photo-album?id=${id}`, {
+            method: 'DELETE',
+            headers: {
+                Accept: 'application/json',
+                Authorization: `Bearer ${access}`,
+            },
+        });
+        const data = await apiRes.json();
+        return res.status(apiRes.status).json(data);
+    }
+    catch {
+        return res.status(500).json({
+            error: 'Something went wrong when trying to remove photo from album'
+        });
+    }
+});
+router.put('/api/album/editPhoto', async (req, res) => {
+    const access = req.cookies['access'];
+    try {
+        const apiRes = await fetch(`${process.env.API_URL}/api/album/editPhoto`, {
+            method: 'PUT',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${access}`,
+            },
+            body: JSON.stringify(req.body)
+        });
+        const data = await apiRes.json();
+        return res.status(apiRes.status).json(data);
+    }
+    catch (err) {
+        return res.status(500).json({
+            err: 'Something went wrong when trying to remove album'
+        });
+    }
+});
+router.delete('/api/album/removealbum', async (req, res) => {
+    const { albumID } = req.query;
+    const access = req.cookies['access'];
+    try {
+        const apiRes = await fetch(`${process.env.API_URL}/api/album/removealbum?albumID=${albumID}`, {
+            method: 'DELETE',
+            headers: {
+                Accept: 'application/json',
+                Authorization: `Bearer ${access}`,
+            },
+        });
+        const data = await apiRes.json();
+        return res.status(apiRes.status).json(data);
+    }
+    catch (err) {
+        return res.status(500).json({
+            err: 'Something went wrong when trying to remove album'
+        });
+    }
+});

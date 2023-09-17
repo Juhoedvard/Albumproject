@@ -17,7 +17,7 @@ import { toast } from 'react-toastify';
 export type Photo = {
   caption: string,
   photo: string,
-  albumID: string,
+  album: string,
   likes?: number,
   id?: number,
   likedUsers? : User[]
@@ -38,9 +38,7 @@ else{
   baserUrl = process.env.REACT_APP_PRODUCTION_URL
 }
 
-
-
-
+///Add albumcover to s3 bucket
 export const addThumbnail = createAsyncThunk(
   'album/add-thumbnail-s3',
   async( thumbnail : File, thunkAPI) => {
@@ -70,6 +68,7 @@ export const addThumbnail = createAsyncThunk(
   }
 
 )
+///Add album's photos to s3 bucket
 export const addPhotos = createAsyncThunk(
   'album/add-photos-s3', async( images: File[], thunkAPI) => {
     const formData = new FormData()
@@ -102,7 +101,85 @@ export const addPhotos = createAsyncThunk(
 
   }
 )
+/// Album removal
+export const removeAlbum = createAsyncThunk(
+  'api/album/remove-album', async (albumID: string, thunkAPI) => {
+    try{
+      const res = await fetch(`${baserUrl}/api/album/removealbum?albumID=${albumID}`, {
+        method: 'DELETE',
+        headers: {
+          Accept: 'application/json',
+        },
+        credentials:'include',
+      })
+      const data = await res.json()
+      if(res.status === 200) {
+        return data
+      }
+      else{
+        return thunkAPI.rejectWithValue(data)
+      }
+    }
+    catch(error) {
 
+    }
+  }
+)
+///Single photo removal from album
+export const removePhotoFromAlbum = createAsyncThunk(
+  'api/album/remove-photo-album', async(id:number, thunkAPI) =>{
+    try{
+      const res = await fetch(`${baserUrl}/api/album/remove-photo-album?id=${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+
+      })
+      const data = await res.json()
+
+      if(res.status === 200){
+        return data
+      }
+    }
+    catch(error: any | typeof Error){
+      return thunkAPI.rejectWithValue(error.response.data)
+    }
+
+  }
+)
+///Single or multiple photos removal from S3 bucket
+export const removePhoto = createAsyncThunk(
+  '/api/album/remove-photo-s3', async (photoURLs: string[], thunkAPI) => {
+    
+    try {
+      const res = await fetch(`${baserUrl}/api/album/remove-photo-s3`, {
+          method: 'DELETE',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({photoURLs: photoURLs})
+
+        })
+        const data = await res.json()
+
+        if(res.status === 200){
+          return data
+        }
+        else {
+          return thunkAPI.rejectWithValue(data)
+        }
+    }
+    catch(error: any | typeof Error) {
+      return thunkAPI.rejectWithValue(error.response.data)
+    }
+  }
+)
+
+///Like photo
 export const LikePhoto = createAsyncThunk(
   'album/likephoto', async (id: number, thunkAPI ) => {
     const body = JSON.stringify({id : id})
@@ -131,6 +208,8 @@ export const LikePhoto = createAsyncThunk(
         return thunkAPI.rejectWithValue(error.response.data)
       }
     })
+
+///Create album
 export const createAlbum = createAsyncThunk(
     'album/create-album',
     async ({title, description, thumbnail, photos} : Album,  thunkAPI) => {
@@ -167,6 +246,7 @@ export const createAlbum = createAsyncThunk(
       }
     }
 )
+///Add photos to album
 export const Photos = createAsyncThunk(
   'album/photos',
   async (photos: Photo[],  thunkAPI) => {
@@ -195,7 +275,31 @@ export const Photos = createAsyncThunk(
     }
   }
 )
+///Edit photo
+export const editPhoto = createAsyncThunk(
+'api/album/editPhoto', async({caption, id}: {caption: string, id:number}, thunkAPI) => {
+    try{
+      const res = await fetch(`${baserUrl}/api/album/editPhoto`, {
+        method: 'PUT',
+        headers: {
+          Accepts: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({caption: caption, id:id}),
+        credentials:'include',
+      })
+      const data = await res.json()
 
+      if(res.status=== 200){
+        return data
+      }
+    }
+    catch(err:  any | typeof Error){
+      return thunkAPI.rejectWithValue(err.request.data)
+
+    }
+})
+///Get albums from database (includes photos)
 export const getAlbums = createAsyncThunk(
   'api/album/albums',
   async (_, thunkAPI) => {
@@ -224,18 +328,17 @@ export const getAlbums = createAsyncThunk(
     }
    })
 
+///Get users who liked photos
 export const getPhotoLikes = createAsyncThunk(
   'api/album/getPhotoLikes',
   async (id: number, thunkAPI) => {
     try{
-      const res = await fetch(`${baserUrl}/api/album/getPhotoLikes/${id}`, {
+      const res = await fetch(`${baserUrl}/api/album/getPhotoLikes?id=${id}`, {
         method: 'GET',
         headers: {
           Accepts: 'application/json',
         },
         credentials: 'include'
-
-
     })
     const data = await res.json()
     if(res.status === 200) {
@@ -267,11 +370,12 @@ export const AlbumSlice = createSlice({
     },
     extraReducers: builder => {
 
-        builder
+    builder
+    ///Album cases: 
     .addCase(createAlbum.pending, (state) => {
         state.loading = true
     })
-    .addCase(createAlbum.fulfilled, (state, action) => {
+    .addCase(createAlbum.fulfilled, (state) => {
         toast.success('Album created!')
         state.loading = false
     })
@@ -281,10 +385,10 @@ export const AlbumSlice = createSlice({
     .addCase(addThumbnail.pending, (state) => {
       state.loading = true
     })
-    .addCase(addThumbnail.fulfilled, (state, action) => {
+    .addCase(addThumbnail.fulfilled, (state) => {
       state.loading = false
     })
-    .addCase(addThumbnail.rejected, (state,action) => {
+    .addCase(addThumbnail.rejected, (state) => {
         state.loading = false
     })
     .addCase(getAlbums.pending, (state) => {
@@ -294,26 +398,67 @@ export const AlbumSlice = createSlice({
         state.albums = action.payload
         state.loading = false
     })
-    .addCase(getAlbums.rejected, (state,action) => {
+    .addCase(getAlbums.rejected, (state) => {
         state.loading = false
     })
+    .addCase(removeAlbum.pending, (state) => {
+      state.loading = true
+    })
+    .addCase(removeAlbum.fulfilled, (state, action) => {
+      state.loading = false
+      state.albums = action.payload
+    })
+    .addCase(removeAlbum.rejected, (state) => {
+      state.loading = false
+    })
+
+    ///Photo cases: 
     .addCase(Photos.pending, (state) => {
       state.loading = true
     })
-    .addCase(Photos.fulfilled, (state, action) => {
+    .addCase(Photos.fulfilled, (state) => {
         state.loading = false
     })
-    .addCase(Photos.rejected, (state,action) => {
+    .addCase(Photos.rejected, (state) => {
         state.loading = false
     })
     .addCase(LikePhoto.pending, (state) => {
         state.loading = true
     })
-    .addCase(LikePhoto.fulfilled, (state, action) => {
+    .addCase(LikePhoto.fulfilled, (state) => {
         state.loading = false
     })
-    .addCase(LikePhoto.rejected, (state,action) => {
+    .addCase(LikePhoto.rejected, (state) => {
         state.loading = false
+    })
+    .addCase(removePhoto.pending, (state) => {
+      state.loading = true
+    })
+    .addCase(removePhoto.rejected, (state) => {
+      state.loading = false
+    })
+    .addCase(removePhoto.fulfilled, (state) => {
+      state.loading = false
+    })
+    .addCase(removePhotoFromAlbum.pending, (state) => {
+      state.loading = true
+    })
+    .addCase(removePhotoFromAlbum.rejected, (state) => {
+      state.loading = false
+    })
+    .addCase(removePhotoFromAlbum.fulfilled, (state, action) => {
+      state.loading = true
+      state.albums = action.payload
+    })
+    .addCase(editPhoto.pending, (state) => {
+      state.loading = true
+    })
+    .addCase(editPhoto.rejected, (state) => {
+      state.loading = false
+    })
+    .addCase(editPhoto.fulfilled, (state, action) => {
+      state.loading = false
+      state.albums = action.payload
     })
     }
 })
