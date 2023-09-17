@@ -24,7 +24,7 @@ I made this project to learn about django and redux-toolkit. Project frontend si
 
 Project is deployed at https://photo-gallery-production.up.railway.app/
 
-##How to install: 
+## How to install: 
 Server:
 1. Clone project from https://github.com/Juhoedvard/Albumproject.git
 2. Open project in terminal and add command cd backend
