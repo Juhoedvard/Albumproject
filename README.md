@@ -25,7 +25,8 @@ I made this project to learn about django and redux-toolkit. Project frontend si
 Project is deployed at https://photo-gallery-production.up.railway.app/
 
 ## How to install: 
-Server:
+ Server:
+
 1. Clone project from https://github.com/Juhoedvard/Albumproject.git
 2. Open project in terminal and add command cd backend
 3. Use command python -m venv venv and then if you use windows cd venv and Scripts/activate. If you are on linux/macOS use commadn python -m venv venv and then source venv/bin/activate
@@ -34,15 +35,17 @@ Server:
 6. When you have your database ready run python manage.py makemigrations in your terminal and after that run python manage.py migrate.
 7. Now you can run your server with python manage.py runserver
 
-Express: 
+ Express: 
+
 1.Open project in terminal and add command cd frontend
 2. Use command use npm install to install dependencies
 3. Use command npm run dev to run express locally in development enviroment
 
-S3aws:
+ S3aws:
+
 1. You can get instructions from here https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html
 
-Client:
+ Client:
 1. OPen project in terminal and add command cd client
 2. Use command npm install to install dependencies
 3. Use command npm start to start your client.
