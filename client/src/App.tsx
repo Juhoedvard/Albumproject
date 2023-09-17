@@ -15,6 +15,7 @@ import CreateAlbum from './pages/AlbumPages/CreateAlbum';
 import UserAlbumPage from './pages/AlbumPages/UserAlbumPage';
 import UserProfile from './pages/UserProfile';
 import MyAlbumsPage from './pages/AlbumPages/MyAlbumsPage';
+import ErrorPage from "./pages/ErrorPage";
 import { verifyUser } from "./Features/user";
 import { getAlbums } from './Features/album';
 import { ProtectedRoutes }  from './hooks/AuthContextProvider';
@@ -32,6 +33,7 @@ const router = createBrowserRouter(
           <Route path="new-password/:token" element={<NewPasswordPage />} />
           <Route path="album/:id" element={<UserAlbumPage/>} />
           <Route path="user/:id" element ={<UserProfile/>} />
+          <Route path="*" element={<ErrorPage/>}/>
           <Route element={<ProtectedRoutes/>}>
             <Route path="create-album" element={<CreateAlbum />} />
             <Route path="myalbums/:id" element={<MyAlbumsPage/>}/>
@@ -55,7 +57,7 @@ function App() {
   return (
       <RouterProvider
         router={router}
-        fallbackElement={<LoadingSpinner />}
+        fallbackElement={<LoadingSpinner loadingText="" />}
       />
 
   );

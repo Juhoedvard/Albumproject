@@ -74,10 +74,8 @@ const CreateAlbum = () => {
           throw Error(error)
         });
       if (photos) {
-          console.log(photos)
         dispatch(addPhotos(photos))
           .then((add) => {
-            console.log(add)
             setAddedPhotos(add.payload);
             setPhotosLoaded(true)
           })
