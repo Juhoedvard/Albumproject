@@ -88,6 +88,7 @@ export const addPhotos = createAsyncThunk(
         const data = await res.json()
 
         if(res.status === 200){
+          console.log(data)
           return data
         }
         else {

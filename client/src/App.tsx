@@ -21,8 +21,8 @@ import { getAlbums } from './Features/album';
 import { ProtectedRoutes }  from './hooks/AuthContextProvider';
 
 
-const router = createBrowserRouter(
 
+const router = createBrowserRouter(
 
   createRoutesFromElements(
        <Route  path='/' element={<Layout />}>

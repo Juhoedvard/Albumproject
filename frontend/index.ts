@@ -54,7 +54,7 @@ app.use((req, res, next) => {
   console.log('Request Body:', req.body);
   next(); // Siirry seuraavaan middlewareen tai reittiin
 });
-app.listen(PORT, () => {
 
+app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}`);
 });
