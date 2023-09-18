@@ -1,5 +1,5 @@
 import React from "react";
-import { FileInput, Label, Textarea, Tooltip } from "flowbite-react";
+import { Button, FileInput, Label, Textarea, Tooltip } from "flowbite-react";
 import { ChangeEvent, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Album, addPhotos, addThumbnail, createAlbum, removePhoto } from "../../Features/album";
@@ -233,7 +233,7 @@ const CreateAlbum = () => {
                     </div>
                     </div>
                         <div>
-                            {addedPhotos.length > 0 && (
+                            {addedPhotos.length > 0 ? (
                                 <div className="grid grid-cols-3 md:grid-cols-3 m-10 justify-items-start   ">
                                     {addedPhotos.map((photo, index) => {
                                         return(
@@ -252,7 +252,11 @@ const CreateAlbum = () => {
                                         )
                                     })}
                                 </div>
-                            )}
+                            ) : addedPhotos === undefined && 
+                            <div>
+                              <span>Something went wrong uploading photos, please try again</span>
+                              <Button color="light">Try again</Button>
+                            </div>}
                         </div>
                         <br></br>
                       {loading?
