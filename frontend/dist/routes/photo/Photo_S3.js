@@ -83,6 +83,7 @@ router.post('/api/album/add-photos-s3', upload.array('photo', 10), async (req, r
             return res.status(200).json(uploadedImageUrls);
         }
         catch (err) {
+            console.log(err);
             return res.status(500).json({ error: `Something went wrong ${err}` });
         }
     }

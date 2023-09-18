@@ -90,10 +90,14 @@ export const addPhotos = createAsyncThunk(
         if(res.status === 200){
           return data
         }
+        else if (res.status === 503){
+          console.log('503 error, korjaa tähän')
+        }
         else {
           console.log(thunkAPI.rejectWithValue(data))
           return thunkAPI.rejectWithValue(data)
         }
+
     }
     catch(error: any | typeof Error) {
       return thunkAPI.rejectWithValue(error.response.data)
