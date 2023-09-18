@@ -93,6 +93,9 @@ const CreateAlbum = () => {
     }
     setLoading(false)
   };
+  const SendPhotosAgain = () =>{
+
+  }
 
   const CutPhoto = async (photo: string) => {
     const cutPhotos = [...removeThesePhotos]
@@ -233,7 +236,11 @@ const CreateAlbum = () => {
                     </div>
                     </div>
                         <div>
-                            {addedPhotos.length > 0 ? (
+                            {addedPhotos === undefined ?
+                            <div>
+                              <span>Something went wrong uploading photos, please try again</span>
+                              <Button color="light" onClick={SendPhotosAgain}>Try again</Button>
+                            </div> : addedPhotos.length > 0 &&  (
                                 <div className="grid grid-cols-3 md:grid-cols-3 m-10 justify-items-start   ">
                                     {addedPhotos.map((photo, index) => {
                                         return(
@@ -252,11 +259,7 @@ const CreateAlbum = () => {
                                         )
                                     })}
                                 </div>
-                            ) : addedPhotos === undefined && 
-                            <div>
-                              <span>Something went wrong uploading photos, please try again</span>
-                              <Button color="light">Try again</Button>
-                            </div>}
+                            )}
                         </div>
                         <br></br>
                       {loading?
