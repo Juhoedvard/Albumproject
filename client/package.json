@@ -2,6 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://photo-gallery-production.up.railway.app",
   "dependencies": {
     "@heroicons/react": "^2.0.18",
     "@reduxjs/toolkit": "^1.9.5",

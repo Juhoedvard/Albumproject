@@ -79,6 +79,7 @@ router.post('/api/album/add-photos-s3', upload.array('photo', 10), async (req, r
         });
         try {
             const uploadedImageUrls = await Promise.all(uploadPromises);
+            console.log(uploadedImageUrls);
             return res.status(200).json(uploadedImageUrls);
         }
         catch (err) {
