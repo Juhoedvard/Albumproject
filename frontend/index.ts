@@ -12,6 +12,7 @@ import { forgottenPasswordRouter } from './routes/auth/forgotten-password';
 import { changePasswordRouter } from './routes/auth/change-password';
 import { albumRouter } from './routes/photo/album';
 import { photoRouter } from './routes/photo/Photo_S3';
+import path from 'path';
 
 
 
@@ -54,6 +55,10 @@ app.use((req, res, next) => {
   console.log('Request Body:', req.body);
   next(); // Siirry seuraavaan middlewareen tai reittiin
 });
+app.use(express.static(path.join(__dirname, '../', 'client', 'build')))
+app.get('/', (req,res) => {
+  res.sendFile(path.join(__dirname, '../', 'client', 'build', 'index.html'))
+})
 
 app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}`);
