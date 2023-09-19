@@ -60,6 +60,7 @@ router.post('/api/album/add-thumbnail-s3', upload.single('thumbnail'), async (re
 });
 router.post('/api/album/add-photos-s3', upload.array('photo', 10), async (req, res) => {
     const s3 = (0, exports.s3ClientData)();
+    console.log('s3 upload started');
     const bucketname = process.env.AWS_BUCKET_NAME;
     const bucketRegion = process.env.REGION;
     const files = req.files;
@@ -74,7 +75,9 @@ router.post('/api/album/add-photos-s3', upload.array('photo', 10), async (req, r
                 ContentType: file.mimetype,
             };
             const command = new client_s3_1.PutObjectCommand(params);
+            console.log('Sending to s3');
             await s3.send(command);
+            console.log('Send to s3:', key);
             return `https://${bucketname}.s3.${bucketRegion}.amazonaws.com/${key}`;
         });
         try {

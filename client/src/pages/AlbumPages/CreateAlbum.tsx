@@ -237,7 +237,7 @@ const CreateAlbum = () => {
                     </div>
                         <div>
                             {addedPhotos === undefined ?
-                            <div>
+                            <div className="flex flex-col w-full justify-center items-center">
                               <span>Something went wrong uploading photos, please try again</span>
                               <Button color="light" onClick={SendPhotosAgain}>Try again</Button>
                             </div> : addedPhotos.length > 0 &&  (
