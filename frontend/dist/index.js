@@ -53,9 +53,9 @@ app.use((req, res, next) => {
     next(); // Siirry seuraavaan middlewareen tai reittiin
 });
 console.log(__dirname, '');
-app.use(express_1.default.static(path_1.default.join(__dirname, 'build')));
+app.use(express_1.default.static(path_1.default.join(__dirname, '../', 'build')));
 app.get('/', (req, res) => {
-    res.sendFile(path_1.default.join(__dirname, 'build', 'index.html'));
+    res.sendFile(path_1.default.join(__dirname, '../', 'build', 'index.html'));
 });
 app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}`);
