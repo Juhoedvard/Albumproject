@@ -451,7 +451,7 @@ export const AlbumSlice = createSlice({
       state.loading = false
     })
     .addCase(removePhotoFromAlbum.fulfilled, (state, action) => {
-      state.loading = true
+      state.loading = false
       state.albums = action.payload
     })
     .addCase(editPhoto.pending, (state) => {
