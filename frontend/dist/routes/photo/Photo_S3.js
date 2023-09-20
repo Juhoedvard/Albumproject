@@ -50,6 +50,7 @@ router.post('/api/album/add-thumbnail-s3', upload.single('thumbnail'), async (re
             };
             const command = new client_s3_1.PutObjectCommand(params);
             await s3.send(command);
+            console.log('Done');
             const imageUrl = `https://${bucketname}.s3.${bucketRegion}.amazonaws.com/${key}`;
             return res.status(200).json(imageUrl);
         }
