@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import type { Photo } from "../../Features/album";
 import CreatePhotoComponent from "../../components/CreatePhotoComponent";
 import LoadingSpinner from "../../components/LoadingSpinner";
+import {CiCircleRemove} from "react-icons/ci"
 
 const CreateAlbum = () => {
   const {
@@ -28,7 +29,6 @@ const CreateAlbum = () => {
   const [loading, setLoading] = useState(false)
   const [removeThesePhotos, setRemoveThesePhotos] = useState<string[]>([])
 
-
   const dispatch = useAppDispatch();
 
   const onSubmit: SubmitHandler<Album> = async (data) => {
@@ -47,8 +47,12 @@ const CreateAlbum = () => {
   };
 
   const UploadThumbnail = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
+    if (e.target.files && e.target.files[0].size < 5000000) {
       setThumbnail(e.target.files[0]);
+      console.log(thumbnail)
+    }
+    else{
+      toast.info('Keep your files less than 5MB, please')
     }
   };
 
@@ -57,18 +61,31 @@ const CreateAlbum = () => {
       toast.info('You can upload only 3 images when creating Album, you can upload more later')
       return
     }
-    if (e.target.files) {
+    
+    if (e.target.files && e.target.files.length < 4) {
+      
       const newPhotos = [...photos];
       for (let i = 0; i < e.target.files.length; i++) {
-        newPhotos.push(e.target.files[i]);
+        if(e.target.files[i].size > 5000000){
+          toast.info('Keep you files less than 5MB, please')
+        }
+        else{
+          newPhotos.push(e.target.files[i]);
+        }
       }
+      
+      console.log(newPhotos)
       setPhotos(newPhotos);
+      console.log(photos)
+    }
+    else{
+      toast.info('You can upload max 3 photos now. You will be able to add more photos later')
     }
   };
 
   const uploadSelectedPhotos = () => {
     setLoading(true)
-    if (thumbnail) {
+    if (thumbnail && title) {
       dispatch(addThumbnail(thumbnail))
         .then((add) => {
           setThumbnailUrl(add.payload);
@@ -89,7 +106,7 @@ const CreateAlbum = () => {
           });
       }
     } else {
-      toast.error('Add a thumbnail');
+      toast.error(!thumbnail ? 'Add a thumbnail' : !title && 'Add title to your album');
     }
     setLoading(false)
   };
@@ -124,6 +141,10 @@ const CreateAlbum = () => {
       setLoading(false)
       navigate('/')
     }
+  }
+  const unuploadFile = (p : File) => {  
+    const removeOne = photos.filter((photo) => photo.name !== p.name)
+    setPhotos(removeOne)
   }
 
     return(
@@ -163,7 +184,7 @@ const CreateAlbum = () => {
                             <div className="mb-2 block">
                                 <Label
                                 htmlFor="file"
-                                value="Upload file"
+                                value={thumbnail?.name ||"Upload file"}
                                 color={'white'}
                                 />
                             </div>
@@ -171,6 +192,9 @@ const CreateAlbum = () => {
                                 helperText="Upload you cover thumbnail"
                                 id="file"
                                 onChange={UploadThumbnail}
+                                draggable={"true"}
+                                max={"5000000"}
+                                value={''}
                             />
                         </Tooltip>
                     <br></br>
@@ -184,11 +208,13 @@ const CreateAlbum = () => {
                             />
                           </div>
                         <FileInput
-
                               helperText="Upload you album photos"
                               id="file"
                               multiple
+                              draggable={true}
+                              max={"5000000"}
                               onChange={UploadPhotos}
+                              value={''}   
                           />
                         </Tooltip>
                         <p>Added photos:</p>
@@ -197,7 +223,7 @@ const CreateAlbum = () => {
                                 return (
                                 <div key={index}>
                                     <ul>
-                                        <li className="text-sm">{p.name}</li>
+                                        <li className="flex gap-2 text-sm">{p.name} <Tooltip content="Remove photo"><CiCircleRemove size={20} onClick={() => unuploadFile(p)}/></Tooltip></li>
                                     </ul>
                                 </div>)
                         }))}
