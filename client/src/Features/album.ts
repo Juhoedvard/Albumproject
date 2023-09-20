@@ -200,8 +200,6 @@ export const LikePhoto = createAsyncThunk(
       })
       const data = await res.json()
           if(res.status === 200){
-            const { dispatch} = thunkAPI
-            dispatch(getAlbums())
             return data
           }
           else {
@@ -349,7 +347,6 @@ export const getPhotoLikes = createAsyncThunk(
       return data
     }
     else{
-      (thunkAPI.rejectWithValue(data))
       return thunkAPI.rejectWithValue(data)
     }
     }
@@ -424,15 +421,6 @@ export const AlbumSlice = createSlice({
         state.loading = false
     })
     .addCase(Photos.rejected, (state) => {
-        state.loading = false
-    })
-    .addCase(LikePhoto.pending, (state) => {
-        state.loading = true
-    })
-    .addCase(LikePhoto.fulfilled, (state) => {
-        state.loading = false
-    })
-    .addCase(LikePhoto.rejected, (state) => {
         state.loading = false
     })
     .addCase(removePhoto.pending, (state) => {

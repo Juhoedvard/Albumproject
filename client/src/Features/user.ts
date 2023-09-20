@@ -135,10 +135,11 @@ export const getProfile = createAsyncThunk('users/get-profile', async (id : stri
       })
       const data = await res.json()
       if(res.status === 200){
-        const { dispatch} = thunkAPI
+       const { dispatch} = thunkAPI
        await dispatch(getUser())
 
-        return data
+
+        return true
       }
       else {
         return thunkAPI.rejectWithValue(data)
@@ -370,6 +371,8 @@ export const UserSlice = createSlice({
     state.isAuthenticated = true
   })
   .addCase(verifyUser.rejected, (state, action) => {
+    state.isAuthenticated= false
+    state.user = null
     state.loading = false
   })
 
@@ -432,3 +435,7 @@ export const UserSlice = createSlice({
 
 export const { resetRegistered} = UserSlice.actions
 export default UserSlice.reducer
+
+function LogInTimeOut() {
+  throw new Error('Function not implemented.');
+}

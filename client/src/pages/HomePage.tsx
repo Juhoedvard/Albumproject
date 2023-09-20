@@ -50,7 +50,7 @@ const HomePage = () => {
             <br></br>
             <div className="grid grid-cols-3 md:grid-cols-4 gap-10 m-10 ">{loading && albums.length < 1 ?
 
-                Array(8).fill(null).map((_, index)=> {
+                Array(4).fill(null).map((_, index)=> {
                     return(
                         <div key={index} className="flex justify-center items-center h-80">
                           <LoadingSpinner loadingText=""/>

@@ -10,6 +10,7 @@ import LoadingSpinner from "./LoadingSpinner"
 
 
 
+
 const LogInModal = ({openModal, setOpenModal} : {openModal: undefined | string, setOpenModal: Function,}) => {
     const dispatch = useAppDispatch()
     const {loading, registered} = useAppSelector((state) => state.user)
@@ -17,6 +18,8 @@ const LogInModal = ({openModal, setOpenModal} : {openModal: undefined | string, 
         register,
         handleSubmit,
         reset,
+        formState: {isSubmitSuccessful}
+        
       } = useForm<LoginUser>()
 
     useEffect(() => {
@@ -24,10 +27,16 @@ const LogInModal = ({openModal, setOpenModal} : {openModal: undefined | string, 
     }, [registered])
 
     const onSubmit: SubmitHandler<LoginUser> = (data) => {
-        dispatch(loginUser({...data})).then(() => {
-            setOpenModal(undefined)
+        dispatch(loginUser({...data})).then((success) => {
             reset({email: '', password: ''})
-          
+            if(success.payload === true)
+            {
+                 setOpenModal(undefined)
+            }
+            else{
+                return
+            }
+               
         })
     }
 

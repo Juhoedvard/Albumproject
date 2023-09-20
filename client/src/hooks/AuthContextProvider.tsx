@@ -1,6 +1,6 @@
 import React from "react";
-import { createContext, useState} from "react";
-import { useAppSelector } from "../store";
+import {  useState} from "react";
+import {  useAppSelector } from "../store";
 import { Outlet, useNavigate} from "react-router-dom";
 import LogInModal from "../components/LogInModal";
 import { Button } from "flowbite-react";
@@ -8,14 +8,6 @@ import LoadingSpinner from "../components/LoadingSpinner";
 
 
 
-
-interface AuthContextProps {
-  isAuthenticated: boolean;
-}
-
-export const AuthContext = createContext<AuthContextProps>({
-  isAuthenticated: false,
-});
 
 export default  function  Auth() {
   const { isAuthenticated } = useAppSelector((state) => state.user);
