@@ -65,7 +65,9 @@ router.post('/api/album/add-photos-s3', upload.array('photo', 10), async (req, r
     const bucketname = process.env.AWS_BUCKET_NAME;
     const bucketRegion = process.env.REGION;
     const files = req.files;
+    console.log(files);
     if (s3 && req.files) {
+        console.log('S3 luotu');
         const uploadPromises = files.map(async (file) => {
             const buffer = await (0, sharp_1.default)(file.buffer).resize({ height: 1080, width: 1080, fit: 'contain' }).toBuffer();
             const key = (0, crypto_1.randomUUID)().toString();
@@ -75,6 +77,7 @@ router.post('/api/album/add-photos-s3', upload.array('photo', 10), async (req, r
                 Body: buffer,
                 ContentType: file.mimetype,
             };
+            console.log('addeing command');
             const command = new client_s3_1.PutObjectCommand(params);
             console.log('Sending to s3');
             await s3.send(command);
