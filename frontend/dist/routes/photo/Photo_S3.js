@@ -65,12 +65,15 @@ router.post('/api/album/add-photos-s3', upload.array('photo', 10), async (req, r
     const bucketname = process.env.AWS_BUCKET_NAME;
     const bucketRegion = process.env.REGION;
     const files = req.files;
-    console.log(files);
-    if (s3 && req.files) {
+    if (s3 && req.files && bucketname && bucketRegion) {
         console.log('S3 luotu');
+        console.log(s3);
         const uploadPromises = files.map(async (file) => {
+            console.log(file);
             const buffer = await (0, sharp_1.default)(file.buffer).resize({ height: 1080, width: 1080, fit: 'contain' }).toBuffer();
+            console.log(buffer);
             const key = (0, crypto_1.randomUUID)().toString();
+            console.log(key);
             const params = {
                 Bucket: bucketname,
                 Key: key,
