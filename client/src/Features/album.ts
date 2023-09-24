@@ -171,8 +171,10 @@ export const AlbumSlice = createSlice({
     .addCase(createAlbum.pending, (state) => {
         state.loading = true
     })
-    .addCase(createAlbum.fulfilled, (state) => {
-        toast.success('Album created!')
+    .addCase(createAlbum.fulfilled, (state, action) => {
+        const newAlbums = [...state.albums]
+        newAlbums.push(action.payload)
+        state.albums = newAlbums
         state.loading = false
     })
     .addCase(createAlbum.rejected, (state,action) => {

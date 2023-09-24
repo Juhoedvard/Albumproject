@@ -35,8 +35,15 @@ const CreateAlbum = () => {
   const onSubmit: SubmitHandler<Album> = async (data) => {
     if (thumbnail && selectedPhoto) {
       setLoading(true)
-      await dispatch(createAlbum({ ...data, thumbnail: thumbnailUrl}));
-      await dispatch(Photos(selectedPhoto))
+      await dispatch(createAlbum({ ...data, thumbnail: thumbnailUrl})).then(({payload}) => {
+        const sendPhoto = selectedPhoto.map((p) => ({
+          ...p,
+          album: payload.id
+        }
+        ))
+        dispatch(Photos(sendPhoto))
+      })
+
       if(removeThesePhotos.length > 0)
       {
           await dispatch(removePhoto(removeThesePhotos))

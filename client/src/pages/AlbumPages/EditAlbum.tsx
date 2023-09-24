@@ -188,8 +188,10 @@ return(
             </div>}
             {addMore && photosAddedS3.length <1 ?  <div className="flex flex-col justify-center items-center gap-4">
                 <br></br>
-                <div className="w-1/3 gap-4">
-                <FileInput onChange={UploadPhotos} id="file" value="" multiple={true}/>
+                <div className="flex justify-center w-1/3 gap-4">
+                <Tooltip className="" placement="top" style="light" content={<span>You can get pictures from Unsplash for free. You can only upload 3 pictures, when creating Album <a className="text-blue-500 hover:underline italic" href="https://unsplash.com/" target="_black">https://unsplash.com/</a></span>}>
+                      <FileInput onChange={UploadPhotos} id="file" value="" multiple={true}/>
+                </Tooltip>
                     <ul>
                         {photo && photo.map((photo, index) => {
                             return(
