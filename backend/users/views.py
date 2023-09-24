@@ -57,7 +57,7 @@ class ResetPasswordView(APIView):
             user.reset_password_token = token
             user.save()
             subject = 'Your password reset link: '
-            message = f'Hi, click on the link to reset your password: http://localhost:3000/new-password/{token}'
+            message = f'Hi, click on the link to reset your password: https://albumproject-production.up.railway.app/new-password/{token}'
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [email]
             send_mail(subject, message, email_from , recipient_list)
