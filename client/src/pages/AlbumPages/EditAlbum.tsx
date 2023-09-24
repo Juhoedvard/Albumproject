@@ -54,13 +54,12 @@ const EditAlbum = () => {
 
     const Submit = async () => {
         if(selectedPhoto && id){
-            console.log(selectedPhoto)
+
             const sendPhoto = selectedPhoto.map((p) => ({
                 ...p,
                 album: id
               }
               ))
-            console.log(sendPhoto)
             await dispatch(Photos(sendPhoto))
             setSelectedPhoto([])
             setPhotosAddedS3([])
@@ -86,10 +85,8 @@ const EditAlbum = () => {
               newPhotos.push(e.target.files[i]);
             }
           }
-          
-          console.log(newPhotos)
           setPhoto(newPhotos);
-          console.log(photos)
+
         }
         else{
           toast.info('You can upload max 3 photos now. You will be able to add more photos later')
@@ -123,10 +120,7 @@ const EditAlbum = () => {
         setPhotosAddedS3([])
     
       }
-
     const album = albums && id && albums.find((album) => album?.id.toString() === id)
-    
-    console.log(photos, 'edit kompoentissä')
     
 return(
     <>

@@ -1,14 +1,15 @@
 import { Button } from "flowbite-react"
 import React from "react"
 import {BiSad} from "react-icons/bi"
+import { Link } from "react-router-dom";
 
 const ErrorPage = () => {
 
     return(
-        <div className="flex flex-col h-screen w-full justify-center">
-            <span>Soomething went wrong <BiSad/></span>
+        <div className="flex flex-col h-screen w-full justify-center items-center gap-4">
+            <span className="flex gap-2">Something went wrong <BiSad/></span>
             <div>
-                <Button color="light">Return to the homepage</Button>
+                <Link to={"/"}><Button size='sm'color="dark">Return to the homepage</Button></Link>
             </div>
 
         </div>

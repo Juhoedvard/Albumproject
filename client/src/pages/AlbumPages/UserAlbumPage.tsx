@@ -22,9 +22,8 @@ const UserAlbumPage = () =>{
     const {albums, loading} = useAppSelector((state) => state.albums)
     const {photos, photosLoading} = useAppSelector((state) => state.photos)
     const album : Album | undefined = albums.find((a) => a.id.toString() === id)
-    console.log(photos)
+    
     useEffect(() => {
-        console.log(id)
         if(id) {
             dispatch(getAlbumPhotos(parseInt(id)))
         }

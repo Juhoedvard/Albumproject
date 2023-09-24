@@ -51,7 +51,6 @@ const CreateAlbum = () => {
   const UploadThumbnail = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0].size < 5000000) {
       setThumbnail(e.target.files[0]);
-      console.log(thumbnail)
     }
     else{
       toast.info('Keep your files less than 5MB, please')
@@ -75,10 +74,7 @@ const CreateAlbum = () => {
           newPhotos.push(e.target.files[i]);
         }
       }
-      
-      console.log(newPhotos)
       setPhotos(newPhotos);
-      console.log(photos)
     }
     else{
       toast.info('You can upload max 3 photos now. You will be able to add more photos later')

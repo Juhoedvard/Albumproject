@@ -13,7 +13,6 @@ interface EditPhotoComponentProps {
       photo,
 
   }) => {
-    console.log(photo)
     const [openEditModal, setOpenEditModal] = useState<string |undefined>()
     return(
         <div>

@@ -145,7 +145,6 @@ export const removePhotoFromAlbum = createAsyncThunk(
   
         })
         const data = await res.json()
-        console.log(data)
         if(res.status === 200){
           return data
         }
@@ -230,15 +229,11 @@ export const addPhotos = createAsyncThunk(
   
           })
           const data = await res.json()
-          console.log(data)
           if(res.status === 200){
             return data
           }
-          else if (res.status === 503){
-            console.log('503 error, korjaa tähän')
-          }
           else {
-            console.log(thunkAPI.rejectWithValue(data))
+
             return thunkAPI.rejectWithValue(data)
           }
   
@@ -283,7 +278,6 @@ export const PhotosSlice = createSlice({
       })
       .addCase(Photos.fulfilled, (state, action) => {
           const addedPhotos = [...state.photos]
-          console.log(action.payload)
           addedPhotos.push(...action.payload)
           state.photos = addedPhotos
           state.photosLoading = false
