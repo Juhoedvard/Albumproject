@@ -8,7 +8,7 @@ import LoadingSpinner from "./LoadingSpinner";
 
 
 /// Tähän joskus joku fiksumpi tapa
-const  ModalComponent = ({openModal, setOpenModal, photo, caption, likes, id, albumUser, userLiked, setUserLiked }: {openModal: undefined | string, setOpenModal: Function, photo: string, caption?: string, likes?: number, id?: number, albumUser: string, userLiked: boolean | undefined, setUserLiked: Function}) =>  {
+const  ModalComponent = ({openModal, setOpenModal, photo, caption, likes, id, albumUser, userLiked, setUserLiked }: {openModal: undefined | string, setOpenModal: Function, photo: string, caption?: string, likes?: number, id?: number, albumUser?: string, userLiked: boolean | undefined, setUserLiked: Function}) =>  {
 
   const dispatch = useAppDispatch()
   const {isAuthenticated, user } = useAppSelector((state) => state.user)

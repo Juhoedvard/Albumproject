@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from "../store";
 
 
 
-const PhotoComponent = ({photo, albumUser} : {photo: Photo, albumUser: string}) => {
+const PhotoComponent = ({photo, albumUser} : {photo: Photo, albumUser?: string}) => {
 
     const [openModal, setOpenModal] = useState<string |undefined>()
     const dispatch = useAppDispatch()
