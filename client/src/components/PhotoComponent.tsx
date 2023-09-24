@@ -24,7 +24,7 @@ const PhotoComponent = ({photo, albumUser} : {photo: Photo, albumUser?: string})
         }, [openModal, userLiked])
 
     useEffect(() => {
-            if(likedUsers.length > 0  && likedUsers.includes(user.id)){
+            if(likedUsers && likedUsers.length > 0  && likedUsers.includes(user.id)){
               setUserLiked(true)
             }
             else{
