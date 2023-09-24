@@ -13,7 +13,7 @@ import LoadingSpinner from "./LoadingSpinner"
 
 const LogInModal = ({openModal, setOpenModal} : {openModal: undefined | string, setOpenModal: Function,}) => {
     const dispatch = useAppDispatch()
-    const {loading, registered} = useAppSelector((state) => state.user)
+    const {userLoading, registered} = useAppSelector((state) => state.user)
     const {
         register,
         handleSubmit,
@@ -60,7 +60,7 @@ const LogInModal = ({openModal, setOpenModal} : {openModal: undefined | string, 
                     </div>
                     <label htmlFor="remember" className="ml-2 text-sm font-medium text-black dark:text-gray-300">Remember me</label>
                 </div>
-                {loading ? (
+                {userLoading ? (
                     <div className="flex justify-center">
                         <LoadingSpinner loadingText="Logging in..."/>
                     </div>

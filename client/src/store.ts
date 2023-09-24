@@ -3,6 +3,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import { UserSlice } from './Features/user'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { AlbumSlice } from './Features/album'
+import { PhotosSlice } from './Features/photos'
 
 
 
@@ -12,7 +13,8 @@ import { AlbumSlice } from './Features/album'
 const store = configureStore({
   reducer: {
     user: UserSlice.reducer,
-    albums: AlbumSlice.reducer
+    albums: AlbumSlice.reducer,
+    photos: PhotosSlice.reducer
   },
   devTools: process.env.REACT_APP_NODE_ENV !== 'production',
 })

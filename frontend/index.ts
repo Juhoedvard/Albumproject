@@ -49,16 +49,11 @@ app.use(forgottenPasswordRouter)
 app.use(changePasswordRouter)
 app.use(albumRouter)
 app.use(photoRouter)
-app.use((req, res, next) => {
-  console.log(`Received ${req.method} request to ${req.path}`);
-  console.log('Request Headers:', req.headers);
-  console.log('Request Body:', req.body);
-  next(); // Siirry seuraavaan middlewareen tai reittiin
-});
-console.log(__dirname, '')
-app.use(express.static(path.join(__dirname,'../', 'build')))
-app.get('/', (req,res) => {
-  res.sendFile(path.join(__dirname, '../',  'build', 'index.html'))
+
+
+app.use(express.static(path.join(__dirname, '../', 'build')))
+app.get('*', (req,res) => {
+  res.sendFile(path.join(__dirname, '../', 'build', 'index.html'))
 })
 
 app.listen(PORT, () => {

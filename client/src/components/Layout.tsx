@@ -12,6 +12,7 @@ const Layout = () => {
             <main className="grid min-h-full w-full mx-auto">
                 <Outlet />
             </main>
+            <br></br>
         </SearchProvider>
         </>
     )

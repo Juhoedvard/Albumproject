@@ -48,13 +48,14 @@ class RemoveAlbumView(APIView):
 
 class AddPhotosView(APIView):
     permission_classes = [permissions.IsAuthenticated]
+ 
     def post(self, request):
         data = request.data
-
         photos = []
 
         for photo_data in data:
-            album_id = photo_data.get('albumID')
+            album_id = photo_data.get('album')
+            print(album_id)
             try:
                 album = Album.objects.get(id=album_id)
             except Album.DoesNotExist:
@@ -80,12 +81,12 @@ class RemovePhotoFromAlbum(APIView):
         try:
             photo = get_object_or_404(Photo, id=photoID)
             Photo.delete(photo)
-            albums = Album.objects.all()
-            serializer = AlbumSerializer(albums, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+
+            return Response(photoID, status=status.HTTP_200_OK)
         except:
             return Response({'Error': 'Something went wrong when removing photo'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR )    
       
+
 class LikePhotoView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     def post(self, request):
@@ -117,6 +118,18 @@ class LikedUsersForPhotoView(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
         
 
+class GetAlbumPhotos(APIView):
+    def get(self, request):
+        id = request.GET.get('id')
+        try:
+            photos = Photo.objects.filter(album_id = id)
+            serializer = PhotosSerializer(photos, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
+
+
 class EditPhotoView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     def put(self, request):
@@ -126,8 +139,10 @@ class EditPhotoView(APIView):
             photo =get_object_or_404(Photo, id = photoID)
             photo.caption = caption
             photo.save()
-            albums = Album.objects.all()
-            serializer = AlbumSerializer(albums, many=True)
+            serializer = PhotosSerializer(photo)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except:
             return Response({'Error': 'Something went wrong editing photo'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+
+

@@ -17,11 +17,11 @@ export default  function  Auth() {
 
 export const ProtectedRoutes = () => {
 
-    const {isAuthenticated, loading } = useAppSelector((state) => state.user);
+    const {isAuthenticated, userLoading } = useAppSelector((state) => state.user);
     const [openModal, setOpenModal] = useState<string |undefined>()
     const navigate = useNavigate()
 
-   if(loading) {
+   if(userLoading) {
     return(
       <div className="flex w-full h-screen justify-center">
         <LoadingSpinner loadingText="Loading..."/>

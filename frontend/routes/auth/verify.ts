@@ -14,6 +14,7 @@ router.get('/api/users/verify', async (req: Request, res: Response) => {
     const body = JSON.stringify({
         token: access,
     });
+
     try {
         const apiRes = await fetch(`${process.env.API_URL}/api/token/verify/`, {
             method: 'POST',

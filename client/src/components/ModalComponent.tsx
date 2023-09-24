@@ -3,7 +3,7 @@ import { Modal } from 'flowbite-react';
 import {  useState } from 'react';
 import {FcLike, FcLikePlaceholder} from 'react-icons/fc'
 import { useAppDispatch, useAppSelector } from '../store';
-import { LikePhoto, } from '../Features/album';
+import { LikePhoto, } from '../Features/photos';
 import LoadingSpinner from "./LoadingSpinner";
 
 

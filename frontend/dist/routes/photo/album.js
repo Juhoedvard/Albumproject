@@ -71,6 +71,25 @@ router.get('/api/album/albums', async (req, res) => {
         });
     }
 });
+router.get('/api/photos/getAlbumPhotos', async (req, res) => {
+    const { id } = req.query;
+    try {
+        const PhotoResponse = await fetch(`${process.env.API_URL}/api/album/getAlbumPhotos?id=${id}`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+        });
+        const data = await PhotoResponse.json();
+        return res.status(PhotoResponse.status).json(data);
+    }
+    catch (err) {
+        return res.status(500).json({
+            error: `Something went wrong when getting data, ${err}`
+        });
+    }
+});
 router.post('/api/album/likephoto', async (req, res) => {
     const access = req.cookies['access'];
     const body = req.body;
@@ -124,6 +143,7 @@ router.delete('/api/album/remove-photo-album', async (req, res) => {
             },
         });
         const data = await apiRes.json();
+        console.log(data);
         return res.status(apiRes.status).json(data);
     }
     catch {

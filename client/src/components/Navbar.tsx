@@ -15,7 +15,7 @@ import LogInModal from "./LogInModal";
 const NavBar = () => {
 
     const dispatch = useAppDispatch()
-    const {user, loading } = useAppSelector((state) => state.user);
+    const {user, userLoading } = useAppSelector((state) => state.user);
 
     const {searchTerm, setSearchTerm} = useSearch()
     const [openModal, setOpenModal] = useState<string |undefined>()
@@ -64,7 +64,7 @@ const NavBar = () => {
                             </svg>
                         </button>
                     </div>
-                   {loading ? <div className="flex md:order-3"> <Spinner/> </div> :  <div className="flex md:order-3">
+                   {userLoading ? <div className="flex md:order-3"> <Spinner/> </div> :  <div className="flex md:order-3">
                         {user ?
                             <Dropdown color={'bg-neutral-700'}  label={user.first_name}>
                                   <Dropdown.Header>

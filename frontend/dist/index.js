@@ -46,15 +46,8 @@ app.use(forgotten_password_1.forgottenPasswordRouter);
 app.use(change_password_1.changePasswordRouter);
 app.use(album_1.albumRouter);
 app.use(Photo_S3_1.photoRouter);
-app.use((req, res, next) => {
-    console.log(`Received ${req.method} request to ${req.path}`);
-    console.log('Request Headers:', req.headers);
-    console.log('Request Body:', req.body);
-    next(); // Siirry seuraavaan middlewareen tai reittiin
-});
-console.log(__dirname, '');
 app.use(express_1.default.static(path_1.default.join(__dirname, '../', 'build')));
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
     res.sendFile(path_1.default.join(__dirname, '../', 'build', 'index.html'));
 });
 app.listen(PORT, () => {

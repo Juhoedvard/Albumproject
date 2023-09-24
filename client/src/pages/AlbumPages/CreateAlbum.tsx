@@ -2,7 +2,8 @@ import React from "react";
 import { Button, FileInput, Label, Textarea, Tooltip } from "flowbite-react";
 import { ChangeEvent, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Album, addPhotos, addThumbnail, createAlbum, removePhoto } from "../../Features/album";
+import { Album, addThumbnail, createAlbum } from "../../Features/album";
+import { Photos, addPhotos, removePhoto } from "../../Features/photos";
 import { useAppDispatch } from "../../store";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -34,7 +35,8 @@ const CreateAlbum = () => {
   const onSubmit: SubmitHandler<Album> = async (data) => {
     if (thumbnail && selectedPhoto) {
       setLoading(true)
-      await dispatch(createAlbum({ ...data, thumbnail: thumbnailUrl, photos: selectedPhoto }));
+      await dispatch(createAlbum({ ...data, thumbnail: thumbnailUrl}));
+      await dispatch(Photos(selectedPhoto))
       if(removeThesePhotos.length > 0)
       {
           await dispatch(removePhoto(removeThesePhotos))

@@ -10,8 +10,8 @@ interface CreatePhotoComponentProps {
   CutPhoto?: Function;
   photosLoaded?: boolean
   index: number,
-  selectedPhoto: Photo[],
-  setSelectedPhoto: Function
+  selectedPhoto?: Photo[],
+  setSelectedPhoto?: Function
 
 }
 
@@ -36,13 +36,16 @@ const CreatePhotoComponent: React.FC<CreatePhotoComponentProps> = ({
     const temporaryPhoto: Photo = {
       caption: caption[index],
       photo: photo,
-      albumID: '',
+      album: '',
     };
-    let newSelectedPhotos: Photo[] = [...selectedPhoto]
-    newSelectedPhotos = newSelectedPhotos.filter((selected) => selected.photo !== photo )
-    newSelectedPhotos.push(temporaryPhoto)
-    setSelectedPhoto(newSelectedPhotos);
-    setSelectedPhotoEffects({ ...selectedPhotoEffects, [photo]: !isSelected });
+    if(selectedPhoto && setSelectedPhoto){
+      let newSelectedPhotos: Photo[] = [...selectedPhoto]
+      newSelectedPhotos = newSelectedPhotos.filter((selected) => selected.photo !== photo )
+      newSelectedPhotos.push(temporaryPhoto)
+      setSelectedPhoto(newSelectedPhotos);
+      setSelectedPhotoEffects({ ...selectedPhotoEffects, [photo]: !isSelected });
+    }
+
 
   };
 
@@ -55,6 +58,9 @@ const CreatePhotoComponent: React.FC<CreatePhotoComponentProps> = ({
 
 
   const toggleSelected = () => {
+    if(!caption){
+      toast.info('Set caption to you photo')
+    }
     setIsSelected(!isSelected);
     if (setSelectedPhotoEffects) {
       setSelectedPhotoEffects((prevSelectedPhotoEffects) => ({

@@ -29,8 +29,8 @@ const ResetPasswordPage = () => {
                     <input type="email" id="email" onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" required/>
                 </div>
                 <div className="flex gap-2">
-                    <Button color="light" type="submit">Send email</Button>
-                    <Link to={'/'}><Button color="light" type="button"> Cancel</Button></Link>
+                    <Button color="dark" type="submit">Send email</Button>
+                    <Link to={'/'}><Button color="dark" type="button"> Cancel</Button></Link>
                 </div>
 
             </form>

@@ -14,7 +14,7 @@ export type User = {
 export type UserState = {
     isAuthenticated: boolean,
     user: User | any,
-    loading: boolean,
+    userLoading: boolean,
     registered: boolean,
     userprofile: User | any
 }
@@ -293,7 +293,7 @@ export const sendPasswordEmail = createAsyncThunk(
  const initialState: UserState = {
    isAuthenticated: false,
    user: null,
-   loading: false,
+   userLoading: false,
    registered: false,
    userprofile: null
  }
@@ -311,123 +311,123 @@ export const UserSlice = createSlice({
     builder
     /// Register user
     .addCase(registerUser.pending, (state, action) => {
-      state.loading = true
+      state.userLoading = true
     })
     .addCase(registerUser.fulfilled, (state, action) => {
       state.registered = true
-      state.loading = false
+      state.userLoading = false
       toast.success('Registered successfully')
     })
     .addCase(registerUser.rejected, (state, action) => {
-    state.loading = false
+    state.userLoading = false
     toast.error('Registration failed')
    })
    
    // Login user
     .addCase(loginUser.pending, (state, action) => {
-    state.loading = true
+    state.userLoading = true
   })
     .addCase(loginUser.fulfilled, (state, action) => {
-    state.loading = false
+    state.userLoading = false
     state.isAuthenticated = true
     toast.success('Logged in successfully')
   })
     .addCase(loginUser.rejected, (state, action) =>{
-    state.loading = false
+    state.userLoading = false
     toast.error('Login failed')
   })
 
   ///Get user
     .addCase(getUser.pending, (state, action) => {
-    state.loading = true
+    state.userLoading = true
   })
     .addCase(getUser.fulfilled, (state, action) => {
-    state.loading = false
+    state.userLoading = false
     state.user = action.payload
   })
     .addCase(getUser.rejected, (state, action) =>{
-    state.loading = false
+    state.userLoading = false
   })
 
   ///Get userprofile
   .addCase(getProfile.pending, (state, action) => {
-    state.loading = true
+    state.userLoading = true
   })
     .addCase(getProfile.fulfilled, (state, action) => {
     state.userprofile = action.payload
-    state.loading = false
+    state.userLoading = false
 
   })
     .addCase(getProfile.rejected, (state, action) =>{
-    state.loading = false
+    state.userLoading = false
   })
 
   ///Verify user
   .addCase(verifyUser.pending, (state, action) => {
-    state.loading = true
+    state.userLoading = true
   })
   .addCase(verifyUser.fulfilled, (state, action) => {
-    state.loading = false
+    state.userLoading = false
     state.isAuthenticated = true
   })
   .addCase(verifyUser.rejected, (state, action) => {
     state.isAuthenticated= false
     state.user = null
-    state.loading = false
+    state.userLoading = false
   })
 
   ///Logout user
   .addCase(logoutUser.pending, (state, action) => {
-  state.loading = true
+  state.userLoading = true
   })
   .addCase(logoutUser.fulfilled, (state, action) => {
-  state.loading = false
+  state.userLoading = false
   state.isAuthenticated = false
   state.user = null
   toast.success('Logged out successfully')
   })
   .addCase(logoutUser.rejected, (state, action) =>{
-  state.loading = false
+  state.userLoading = false
   toast.error('Logout failed')
   })
 
   ///Send email to reset password
   .addCase(sendPasswordEmail.pending, (state, action) => {
-    state.loading = true
+    state.userLoading = true
   })
   .addCase(sendPasswordEmail.fulfilled, (state, action) => {
     window.localStorage.setItem('passwordResetTime', Date.now().toString())
-    state.loading = false
+    state.userLoading = false
     toast.success('Email sent successfully')
   })
   .addCase(sendPasswordEmail.rejected, (state, action) => {
-    state.loading = false
+    state.userLoading = false
     toast.error('Email failed to send')
   })
 
   ///Change forgotten password
   .addCase(changeForgottenPassword.pending, (state, action) => {
-    state.loading = true
+    state.userLoading = true
   })
   .addCase(changeForgottenPassword.fulfilled, (state, action) => {
-    state.loading = false
+    state.userLoading = false
     toast.success('Password changed successfully')
   })
   .addCase(changeForgottenPassword.rejected, (state, action) => {
-    state.loading = false
+    state.userLoading = false
     toast.error('Password failed to change')
   })
 
   ///Change password
   .addCase(changePassword.pending, (state, action) => {
-    state.loading = true
+    state.userLoading = true
   })
   .addCase(changePassword.fulfilled, (state, action) => {
-    state.loading = false
+    state.userLoading = false
     toast.success('Password changed successfully')
   })
   .addCase(changePassword.rejected, (state, action) => {
-    state.loading = false
+    state.userLoading = false
     toast.error('Password failed to change')
   })
   }
@@ -436,6 +436,3 @@ export const UserSlice = createSlice({
 export const { resetRegistered} = UserSlice.actions
 export default UserSlice.reducer
 
-function LogInTimeOut() {
-  throw new Error('Function not implemented.');
-}

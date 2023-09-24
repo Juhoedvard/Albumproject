@@ -6,7 +6,7 @@ import RegisterPage from './pages/CredentialsPages/RegisterPage';
 import Dashboard from './pages/Dashboard';
 import Layout from './components/Layout';
 import EditAlbum from './pages/AlbumPages/EditAlbum';
-import { useAppDispatch} from './store';
+import { useAppDispatch, useAppSelector} from './store';
 import { useEffect } from 'react';
 import LoadingSpinner from './components/LoadingSpinner';
 import ResetPasswordPage from './pages/CredentialsPages/ResetPasswordPage';
@@ -48,11 +48,20 @@ const router = createBrowserRouter(
 
 function App() {
 
+  const {albums, loading} = useAppSelector((state) => state.albums)
+  const {userLoading} = useAppSelector((state) => state.user)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(verifyUser())
-    dispatch(getAlbums())
+    if(!userLoading) {
+          dispatch(verifyUser())
+    }  
+  }, [])
+
+  useEffect(() => {
+    if(albums.length < 1 && !loading){
+      dispatch(getAlbums())
+    }
   }, [])
 
   return (

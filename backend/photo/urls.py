@@ -1,7 +1,7 @@
 from django.urls import path
 
 
-from photo.views import AddPhotosView, CreateAlbumView, GetAlbumsView, LikePhotoView, LikedUsersForPhotoView, RemoveAlbumView, RemovePhotoFromAlbum, EditPhotoView
+from photo.views import AddPhotosView, CreateAlbumView, GetAlbumsView, LikePhotoView, LikedUsersForPhotoView, RemoveAlbumView, RemovePhotoFromAlbum, EditPhotoView, GetAlbumPhotos
 
 
 urlpatterns = [
@@ -12,6 +12,7 @@ urlpatterns = [
     path('getPhotoLikes', LikedUsersForPhotoView.as_view()),
     path('removealbum', RemoveAlbumView.as_view()),
     path('remove-photo-album', RemovePhotoFromAlbum.as_view()),
-    path('editPhoto', EditPhotoView.as_view())
+    path('editPhoto', EditPhotoView.as_view()),
+    path('getAlbumPhotos', GetAlbumPhotos.as_view()),
 
 ]

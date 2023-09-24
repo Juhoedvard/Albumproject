@@ -4,7 +4,7 @@ import { useAppDispatch} from "../store"
 import LoadingSpinner from "./LoadingSpinner"
 import {CiCircleRemove} from "react-icons/ci"
 import AlertModalComponent from "./AlertModalComponent";
-import { editPhoto, removePhoto, removePhotoFromAlbum } from "../Features/album";
+import { editPhoto, removePhoto, removePhotoFromAlbum } from "../Features/photos";
 
 
 
@@ -31,6 +31,7 @@ const EditPhotoModal= ({openEditModal, setOpenEditModal, photo, caption, id} : {
                 await dispatch(removePhotoFromAlbum(id))
                 setLoading(false)
                 setConfirmRemove(false)
+                setOpenEditModal(undefined)
                 }
             else{
                 return

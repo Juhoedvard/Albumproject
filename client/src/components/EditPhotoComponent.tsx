@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Photo } from "../Features/album"
+import { Photo } from "../Features/photos"
 import {AiFillEdit} from "react-icons/ai"
 import { Tooltip } from "flowbite-react"
 import EditPhotoModal from "./EditPhotoModal"
@@ -13,7 +13,7 @@ interface EditPhotoComponentProps {
       photo,
 
   }) => {
-
+    console.log(photo)
     const [openEditModal, setOpenEditModal] = useState<string |undefined>()
     return(
         <div>
@@ -25,7 +25,7 @@ interface EditPhotoComponentProps {
               
                 <figcaption className="w-full absolute px-4 top-2 text-right">
                     <button type="button" onClick={() => setOpenEditModal('dismissible')}>
-                        <Tooltip content="Edit photo" placement="right">
+                        <Tooltip content="Edit photo" placement="top">
                              <AiFillEdit size={20} />
                          </Tooltip>
                     </button> 

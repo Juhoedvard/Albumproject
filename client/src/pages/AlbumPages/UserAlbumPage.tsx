@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom"
-import { useAppSelector } from "../../store"
+import { useAppDispatch, useAppSelector } from "../../store"
 import { Album,} from "../../Features/album"
 import AlbumComponent from "../../components/AlbumComponent"
 import PhotoComponent from "../../components/PhotoComponent"
 import LoadingSpinner from "../../components/LoadingSpinner"
+import { getAlbumPhotos } from "../../Features/photos";
 
 
 
@@ -17,9 +18,18 @@ const UserAlbumPage = () =>{
 
     const {id} = useParams<RouteParams>()
     const navigate = useNavigate()
+    const dispatch = useAppDispatch()
     const {albums, loading} = useAppSelector((state) => state.albums)
+    const {photos, photosLoading} = useAppSelector((state) => state.photos)
     const album : Album | undefined = albums.find((a) => a.id.toString() === id)
-    const photos = album?.photos
+    console.log(photos)
+    useEffect(() => {
+        console.log(id)
+        if(id) {
+            dispatch(getAlbumPhotos(parseInt(id)))
+        }
+    }, [id])
+
     if(!album && !loading) {
         navigate('/')
     }
@@ -55,7 +65,7 @@ const UserAlbumPage = () =>{
                 </div>
               }
             </div>
-            <div className="grid grid-cols-3 md:grid-cols-3 gap-10 m-10 ">{photos &&
+            {photosLoading ? <div className=" flex justify-center h-screen w-full"> <LoadingSpinner loadingText="Loading photos..."/> </div> : photos && album?.user.id && <div className="grid grid-cols-3 md:grid-cols-3 gap-10 m-10 ">{photos &&
                 photos.map((photo) => {
                     return(
                         <div key={photo.id} className="flex items-center gap-2">
@@ -64,7 +74,7 @@ const UserAlbumPage = () =>{
                         </div>)}) 
                     }
                      
-             </div>
+             </div>}
         </div>
     )
 }

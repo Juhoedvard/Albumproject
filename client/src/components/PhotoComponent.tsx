@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react"
 import ModalComponent from "./ModalComponent"
-import { Photo, getPhotoLikes } from "../Features/album"
+import { Photo, getPhotoLikes } from "../Features/photos"
 import { useAppDispatch, useAppSelector } from "../store";
 
 
@@ -15,7 +15,6 @@ const PhotoComponent = ({photo, albumUser} : {photo: Photo, albumUser: string}) 
     const [likedUsers, setLikedUsers] = useState<number[]>([])
     const [userLiked, setUserLiked] = useState<boolean>(false)
     const { user } = useAppSelector((state) => state.user)
-
     useEffect(() => {
         if(photo.id !== undefined && photo.likes !== undefined && photo.likes > 0 && openModal !== undefined ){
           dispatch(getPhotoLikes(photo.id)).then((users) => {
