@@ -46,7 +46,7 @@ Project is deployed at https://photo-gallery-production.up.railway.app/
 1. You can get instructions from here https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html
 
  Client:
-1. OPen project in terminal and add command cd client
+1. Open project in terminal and add command cd client
 2. Use command npm install to install dependencies
 3. Use command npm start to start your client.
 
