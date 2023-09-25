@@ -2,7 +2,7 @@
 
 ## Description: 
 
-I made this project to learn about django and redux-toolkit. Project frontend side was made with typescript and server with python. Project is simple site where you can put your albums so others can view them. Project has still some things to fix, example updating more than 3 photos at time to S3 bucket and some routing fixes. I used following frameworks to create project: 
+I made this project to learn about django and redux-toolkit. Project frontend side was made with typescript and server with python. Project is simple site where you can put your albums so others can view them. Project has still some problems to fix, example updating more than 3 photos at time to S3 bucket and some routing fixes. I used following frameworks to create project: 
 
 ### Server: 
 
