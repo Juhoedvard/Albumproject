@@ -2,7 +2,7 @@
 
 ## Description: 
 
-I made this project to learn about django and redux-toolkit. Project frontend side was made with typescript and server with python. Project is simple site where you can put your albums so others can view them. Project has still some things to fix, example updating more than 3 photos at time to S3 bucket and some routing fixes. I used following frameworks to create project: 
+I made this project to learn about django and redux-toolkit. Project frontend side was made with typescript and server with python. Project is simple site where you can put your albums so others can view them. Project has still some problems to fix, example updating more than 3 photos at time to S3 bucket and some routing fixes. I used following frameworks to create project: 
 
 ### Server: 
 
@@ -22,7 +22,7 @@ I made this project to learn about django and redux-toolkit. Project frontend si
 - [Tailwind](https://tailwindcss.com/) and [Flowbite](https://www.flowbite-react.com/) for css
 - [ReactRouterDom](https://reactrouter.com/en/main) for routing different pages
 
-Project is deployed at https://photo-gallery-production.up.railway.app/
+Project is deployed at https://albumproject-production.up.railway.app/
 
 ## How to install: 
  Server:
@@ -46,7 +46,7 @@ Project is deployed at https://photo-gallery-production.up.railway.app/
 1. You can get instructions from here https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html
 
  Client:
-1. OPen project in terminal and add command cd client
+1. Open project in terminal and add command cd client
 2. Use command npm install to install dependencies
 3. Use command npm start to start your client.
 
