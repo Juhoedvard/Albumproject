@@ -21,33 +21,32 @@ const UserProfile = () => {
         }, [id])
 
     return(
-        <div className="flex">
-            <br></br>
-            <div className="flex flex-col h-1/3  items-center my-6 w-1/3 border-b">
+        <div className="flex flex-col">
+            <div className="flex flex-col items-center px-4">
                 {loading ? <LoadingSpinner loadingText="Loading profile"/> : userprofile  &&
                 <div>
                  <div>
                       <h1 className="text-3xl font-bold">{userprofile.first_name} {userprofile.last_name}</h1>
                  </div>
                  <br></br>
-                <div className="flex flex-col h-2/3 gap-4 ">
+                <div className="flex flex-col gap-4">
                             <dt>Description: </dt>
-                           <dd> {userprofile.description}</dd>
-
+                            <dd className="pl-3 pb-4 text-sm">{userprofile.descripton ?  userprofile.description : "User has no description"}</dd>
                 </div>
                 </div>}
             </div>
-            <div className=" min-h-screen border-r"></div>
-            <div className="grid h-2/3 w-full mx-10 items-center justify-center ">
-             <div className="maw-w-4xl w-full">
+            <div className="flex items-center justify-center px-4">
+                <div className="w-full border-b py-4 lg:border-none"></div>
+            </div>
+            <div className="grid items-center justify-center  ">
+             <div className="">
                 <h1 className="font-extrabold text-5xl italic m-10">
                     Albums
                 </h1>
                 <br></br>
-                <div className="grid grid-cols-2 md:grid-cols-3 m-10 gap-10 w-2/3 ">{loading ?
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-10 ">{loading ?
                     <LoadingSpinner loadingText="Loading albums..."/>
-                :
-                    userprofile?.useralbums.map((album : Album, index: string) => {
+                : userprofile?.useralbums.map((album : Album, index: string) => {
                         return(
                             <div key={index}>
                                 <AlbumComponent

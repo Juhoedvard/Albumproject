@@ -23,22 +23,19 @@ const MyAlbumsPage = () => {
         )
     }
     return(
-        <div className="flex h-full w-full ">
-
-            <div className="w-2/3">
-            <br></br>
-            {user &&
-            <div className="flex justify-between m-10" >
-                <h1 className="font-extrabold text-3xl italic">
+        <div className="flex flex-col justify-center items-center pt-4 px-4">
+         {user &&
+            <div className="flex gap-4" >
+                <h1 className="font-extrabold text-xl md:text-3xl italic">
                     {user.first_name} {user.last_name} albums:
                 </h1>
-                <div>
+                <div >
                   <Link to={'/create-album'} className="flex items-center gap-2"> <AiOutlineUpload/>Add a new album</Link>
                 </div>
             </div>
             }
             <br></br>
-            <div className="grid grid-cols-3 md:grid-cols-3 gap-10 m-10 ">{loading ?
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">{loading ?
                 <LoadingSpinner loadingText="Loading albums..."/>
              :
                 myAlbums?.map((album : Album, index) => {
@@ -51,7 +48,6 @@ const MyAlbumsPage = () => {
                     )
                 })
            } </div>
-           </div>
         </div>
     )
 }

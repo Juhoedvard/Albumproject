@@ -154,23 +154,14 @@ const CreateAlbum = () => {
 
     return(
             <main className="flex flex-col items-center justify-center gap-4 py-5 ">
-             <br></br>
-           {!thumbnailUrl &&  <h1 className="text-2xl font-medium italic">Create Album</h1>}
-             <br></br>
-             <form onSubmit={handleSubmit(onSubmit)} className="flex justify-center items-center gap-4 w-full">
+              <h1 className="text-4xl lg:text-6xl font-medium italic">Create Album</h1>
+                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-center items-center gap-4 pt-4 w-full">
 
-                <div className={`flex flex-col w-1/3 pr-5 justify-center items-center  gap-4 ${!thumbnailUrl ? "" : "border-r"}`}>
+             { addedPhotos.length < 1 &&  <div className={`flex flex-col  pr-5 justify-center items-center  gap-4`}>
                     <div className="">
-                    {thumbnailUrl &&
-
-                     <div>
-                         <h1 className="text-2xl font-medium italic">Create Album</h1>
-                         <br></br>
-                    </div>}
                     <div className="relative z-0 w-full mb-6 group">
                         <label  htmlFor="floating_title" className="block mb-2 text-sm font-medium text-white  dark:text-white">Album title</label>
                         <input {...register("title", {required:true})} type="text"  id="floating_title" className="bg-gray-50 border text-black border-gray-300  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Title " required />
-
                     </div>
                     <div className="max-w-md" id="textarea">
                         <div className="mb-2 block">
@@ -182,7 +173,7 @@ const CreateAlbum = () => {
                         </div>
                     </div>
                         <Textarea {...register("description", {required:true})} rows={6} id="floating_title"   placeholder="Description " required  />
-                        <Tooltip placement="right" style="light" content={<span>You can get pictures from Unsplash for free <a className="text-blue-500 hover:underline italic" href="https://unsplash.com/" target="_black">https://unsplash.com/</a></span>}
+                        <Tooltip placement="top" style="light" content={<span>You can get pictures from Unsplash for free <a className="text-blue-500 hover:underline italic" href="https://unsplash.com/" target="_black">https://unsplash.com/</a></span>}
                             className="max-w-md"
                             id="fileUpload"
                             >
@@ -204,7 +195,7 @@ const CreateAlbum = () => {
                         </Tooltip>
                     <br></br>
                     <div className="flex flex-col gap-4">
-                      <Tooltip placement="right" style="light" content={<span>You can get pictures from Unsplash for free. You can only upload 3 pictures, when creating Album <a className="text-blue-500 hover:underline italic" href="https://unsplash.com/" target="_black">https://unsplash.com/</a></span>}>
+                      <Tooltip placement="top" style="light" content={<span>You can get pictures from Unsplash for free. You can only upload 3 pictures, when creating Album <a className="text-blue-500 hover:underline italic" href="https://unsplash.com/" target="_black">https://unsplash.com/</a></span>}>
                         <div className="mb-2 block">
                             <Label
                             htmlFor="file"
@@ -241,30 +232,33 @@ const CreateAlbum = () => {
                         </div>}
                     </div>
                   </div>
-                </div>
+                </div>}
 
               {loading  && !thumbnailUrl?
               <div>
                 <LoadingSpinner loadingText=""/>
               </div> :
               thumbnailUrl  &&
-              <div className="flex flex-col w-2/3 h-full">
+              <div className="flex flex-col pt-6">
 
-                    <div className="flex w-full items-center justify-center gap-4">
-                        <figure className="relative max-w-xs transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0 text-transparent hover:text-zinc-300">
-
+                    <div className="flex flex-col w-full items-center justify-center gap-4">
+                      <div className="flex gap-4">
+                          <div className="flex  justify-start items-start">
+                            <h1 className="italic text-5xl font-medium ">{title}</h1>
+                          </div>
+                          <div className="flex flex-col gap-4">
+                              <dt>Description: </dt>
+                              <dd className="pl-2"> {description}</dd>
+                          </div>
+                      </div>
+                      <div className="border-b pb-4" >
+                        <p className="pb-4">Thumbnail: </p>
+                         <figure className="relative max-w-xs transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0 text-transparent hover:text-zinc-300">
                                 <img className="rounded-lg" src={thumbnailUrl} alt="thumbnail" />
                         </figure>
-                        <div className="flex h-full flex-col  gap-4 ">
-                        <div className="flex  justify-start items-start">
-                           <h1 className="italic text-5xl font-medium ">{title}</h1>
-                        </div>
-                        <div className="flex flex-col gap-4">
-                            <dt>Description: </dt>
-                           <dd> {description}</dd>
-
-                        </div>
-                    </div>
+                      </div>
+                       
+                    
                     </div>
                         <div>
                             {addedPhotos === undefined ?
@@ -272,10 +266,10 @@ const CreateAlbum = () => {
                               <span>Something went wrong uploading photos, please try again</span>
                               <Button color="light" onClick={SendPhotosAgain}>Try again</Button>
                             </div> : addedPhotos.length > 0 &&  (
-                                <div className="grid grid-cols-3 md:grid-cols-3 m-10 justify-items-start   ">
+                                <div className="grid grid-cols-1 md:grid-cols-3 justify-items-start">
                                     {addedPhotos.map((photo, index) => {
                                         return(
-                                            <div key={index} className="flex flex-col w-80  items-center ">
+                                            <div key={index} className="flex flex-col w-80 pt-4 items-center ">
                                                 <div>
                                                     <CreatePhotoComponent photo={photo}
                                                         CutPhoto={CutPhoto}
@@ -285,7 +279,6 @@ const CreateAlbum = () => {
                                                         index={index}
                                                                 />
                                                 </div>
-                                                <br></br>
                                             </div>
                                         )
                                     })}
@@ -298,8 +291,8 @@ const CreateAlbum = () => {
                               <LoadingSpinner loadingText="Creating album..."/>
                         </div>:
                          <div className="flex justify-center ">
-                           <button type="button" onClick={Reset} className="w-1/5 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Cancel</button>
-                           <button type="submit" className="w-1/5 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Add album</button>
+                           <button type="button" onClick={Reset} className=" text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Cancel</button>
+                           <button type="submit" className=" text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Add album</button>
                         </div>}
              </div>}
             </form>

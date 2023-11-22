@@ -42,13 +42,13 @@ const HomePage = () => {
         )
     }
     return(
-        <div className="grid h-full w-full ">
+        <div className="grid h-full w-full p-8 ">
             <br></br>
-            <h1 className="font-extrabold text-5xl italic m-10">
+            <h1 className="font-extrabold text-5xl italic p-4">
                 Albums
             </h1>
             <br></br>
-            <div className="grid grid-cols-3 md:grid-cols-4 gap-10 m-10 ">{loading && albums.length < 1 ?
+            <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 ">{loading && albums.length < 1 ?
 
                 Array(4).fill(null).map((_, index)=> {
                     return(

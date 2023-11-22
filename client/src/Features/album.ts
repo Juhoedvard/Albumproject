@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import type { User } from './user';
-import { toast } from 'react-toastify';
-import { Photos } from './photos';
+
 
 
 

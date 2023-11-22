@@ -41,9 +41,8 @@ const UserAlbumPage = () =>{
     }
 
     return(
-        <div className="flex flex-col justify-center items-center">
-            <div className="border-b m-2 p-4 w-1/4">
-                <br></br>
+        <div className="flex flex-col items-center">
+            <div className="border-b pb-4 px-4">
                 { album &&
                 <div className="flex gap-4">
                     <div className="flex h-full w-full justify-end">
@@ -64,7 +63,7 @@ const UserAlbumPage = () =>{
                 </div>
               }
             </div>
-            {photosLoading ? <div className=" flex justify-center h-screen w-full"> <LoadingSpinner loadingText="Loading photos..."/> </div> : photos && album?.user.id && <div className="grid grid-cols-3 md:grid-cols-3 gap-10 m-10 ">{photos &&
+            {photosLoading ? <div className=" flex justify-center pt-4 w-full"> <LoadingSpinner loadingText="Loading photos..."/> </div> : photos && album?.user.id && <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 py-8 ">{photos &&
                 photos.map((photo) => {
                     return(
                         <div key={photo.id} className="flex items-center gap-2">

@@ -35,7 +35,7 @@ const  ModalComponent = ({openModal, setOpenModal, photo, caption, likes, id, al
     }
 
   return (
-      <Modal  dismissible show={openModal === 'dismissible'}  size={'md'}  onClose={() => setOpenModal(undefined)}>
+      <Modal  dismissible show={openModal === 'dismissible'}  size={'md'}  onClose={() => setOpenModal(undefined)} position={"center"}>
       <Modal.Header  >{caption}</Modal.Header>
         <Modal.Body >
         <figure className="flex flex-growrelative text-transparent hover:text-zinc-300">

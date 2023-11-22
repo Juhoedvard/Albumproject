@@ -124,7 +124,7 @@ const EditAlbum = () => {
     
 return(
     <>
-    {loading ?  <div className="flex h-screen w-full justify-center">
+    {loading ?  <div className="flex justify-center">
             <LoadingSpinner loadingText = { confirmRemove === false ? "Loading album..." : "Removing Album"}/>
         </div>
         :
@@ -134,17 +134,15 @@ return(
                     <BsArrowLeft size={30} onClick={() => navigate(-1)}/>
                     </Tooltip>
                 </div>
-            <div className="border-b m-2 p-4 w-1/4">
-                <br></br>
+            <div className="border-b p-4">
                 { album &&
                 <div className="flex gap-4">
-                    <div className="flex h-full w-full justify-end">
+                    <div className="flex">
                         <AlbumComponent album = {album}/>
                     </div>
                     <div className="flex flex-col w-full h-full gap-4 ">
-
                         <div className="flex">
-                        <h1 className="italic text-5xl font-medium "> {album.title} </h1>
+                        <h1 className="italic text-2xl md:text-4xl font-medium "> {album.title} </h1>
                         <div className="flex w-full justify-end">
                             <Tooltip  content={'remove album'} >
                                 <RiDeleteBinLine size={20} onClick={() => setOpenModal('dismissible')}/>
@@ -153,9 +151,8 @@ return(
                         </div>
                         <div className="flex flex-col gap-2">
                             <dt>Description: </dt>
-                            <dd>{album.description}</dd>
+                            <dd className="px-2">{album.description}</dd>
                         </div>
-
                     </div>
                 </div>
             }
@@ -167,22 +164,23 @@ return(
             />
             </div>
             <div className="flex flex-col">
-            {!addMore &&  <div className="flex w-5/7 justify-end">
-                <Tooltip content="Add photos">
-                <AiOutlineUpload size={30} onClick={() => setAddMore(!addMore)}/>
-                </Tooltip>
-                </div>}
-            {photosLoading && !addMore ?
-                <div><br></br> <LoadingSpinner loadingText="Loading photos..."/></div>
-                : !addMore && photos && <div className="grid grid-cols-3 md:grid-cols-3 m-10 gap-4 justify-items-start   ">
-                    {photos.map((photo) => {
-                        return(
-                            <div key={photo.id}>
-                                    <EditPhotoComponent photo={photo}/>
-                                </div>
-                        )
-                    })}
-                </div>}
+                {!addMore && 
+                <div className="flex justify-end py-4">
+                    <Tooltip content="Add photos">
+                    <AiOutlineUpload size={30} onClick={() => setAddMore(!addMore)}/>
+                    </Tooltip>
+                    </div>}
+                {photosLoading && !addMore ?
+                    <div> <LoadingSpinner loadingText="Loading photos..."/></div>
+                    : !addMore && photos && <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 justify-items-start   ">
+                        {photos.map((photo) => {
+                            return(
+                                <div key={photo.id}>
+                                        <EditPhotoComponent photo={photo}/>
+                                    </div>
+                            )
+                        })}
+                    </div>}
             </div>
             <br></br>
             </div>}
