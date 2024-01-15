@@ -28,7 +28,7 @@ const NavBar = () => {
 
     }
     return(
-            <nav className= "sticky top-0 z-30 border-gray-400 dark:bg-gray-900 text-white border-b px-4 ">
+            <nav className= "sticky bg-black top-0 z-30 border-gray-400 dark:bg-gray-900 text-white border-b px-4 ">
                 <div className="w-full flex justify-between p-4">
                     <Link to="/">
                         <h2 className="font-bold text-xl lg:text-4xl pr-4">Albumproject</h2>

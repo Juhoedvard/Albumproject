@@ -4,6 +4,7 @@ import type { User } from './user';
 
 
 
+
  export type Album = {
     title: string;
     description: string;
@@ -96,12 +97,13 @@ export const createAlbum = createAsyncThunk(
     'album/create-album',
     async ({title, description, thumbnail} : Album,  thunkAPI) => {
         const body = JSON.stringify({title: title, description: description, thumbnail: thumbnail})
+      
       try {
         const res = await fetch(`${baserUrl}/api/album/create-album`, {
             method: 'POST',
             headers: {
               Accept: 'application/json',
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
             },
             credentials: 'include',
             body,

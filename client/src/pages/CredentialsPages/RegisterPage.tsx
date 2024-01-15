@@ -9,7 +9,7 @@ import LoadingSpinner from "../../components/LoadingSpinner";
 
 const RegisterPage = () => {
 
-    const { registered, loading } = useAppSelector((state) => state.user);
+    const { registered, userLoading } = useAppSelector((state) => state.user);
     const dispatch = useAppDispatch()
     const {
         register,
@@ -25,7 +25,7 @@ const RegisterPage = () => {
     }
 
     return(
-        <main className="flex flex-col justify-center items-center gap-4 py-5 ">
+        <main className="flex flex-col justify-center items-center gap-4 py-5">
             <br></br>
             <h1 className="text-2xl">Register for an Account</h1>
             <form onSubmit={handleSubmit(onSubmit)} className="w-1/4 ">
@@ -45,8 +45,8 @@ const RegisterPage = () => {
                     <label  htmlFor="floating_password" className="block mb-2 text-sm font-medium text-white-900">Password</label>
                     <input {...register("password", {required: true})} type="password" id="floating_password" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder=" " required />
                 </div>
-                {loading ? (
-                    <LoadingSpinner/>
+                {userLoading ? (
+                    <LoadingSpinner loadingText=""/>
                 ): (
                     <div className="flex justify-center">
                         <button type="submit" className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Register</button>

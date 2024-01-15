@@ -7,14 +7,15 @@ For more information on this file, see
 https://docs.djangoproject.com/en/4.2/topics/settings/
 
 For the full list of settings and their values, see
-https://docs.djangoproject.com/en/4.2/ref/settings/
+https://docs.djangoproject.com/en/4.2/ref/settings/1
 """
 
 import os
+import dj_database_url
 from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
-import sys
+
 
 
 load_dotenv()
@@ -30,16 +31,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG")
+AH = os.getenv("ALLOWED_HOSTS")
 
-ALLOWED_HOSTS = [
-    'albumproject-production.up.railway.app',
-    'albumbackend-production.up.railway.app',
-    '127.0.0.1:8000',
-    'localhost:5000',
-    '127.0.0.1',
-    'albumproject-production.up.railway.app',
-    'albumbackend-production.up.railway.app',
-]
+if AH:
+    ALLOWED_HOSTS = AH.split(" ")
+else:
+    ALLOWED_HOSTS=[]
+
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -64,9 +63,12 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 CORS_ALLOWED_ORIGINS = [
-    "https://albumbackend-production.up.railway.app",
-    "http://localhost:5000"
+    'http://127.0.0.1:8000',
+    'http://localhost:3000',
+    'http://localhost:8000',
+    'https://albumfrontend-swdfx3v3pa-lz.a.run.app'
 ]
+
 
 ROOT_URLCONF = 'photo_album.urls'
 
@@ -90,17 +92,24 @@ WSGI_APPLICATION = 'photo_album.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': "django.db.backends.mysql",
-        'NAME': os.getenv("DBNAME"),
-        'USER':  os.getenv("DBUSER"),
-        'PASSWORD':  os.getenv("DBPASSWORD"),
-        'PORT':  os.getenv("DBPORT"),
-        'HOST': os.getenv("DBHOST"),
-
+if os.getenv("STAGE") == "DEVELOPMENT":
+    DATABASES = {
+        'default': {
+            'ENGINE': "django.db.backends.postgresql",
+            'NAME': os.getenv("DB_NAME"),
+            'USER':  os.getenv("DB_USER"),
+            'PASSWORD':  os.getenv("DB_PASSWORD"), ##
+            'PORT':  os.getenv("DB_PORT"), ##3306
+            'HOST': os.getenv("DB_HOST"), ## 127.0.0.1
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.getenv('DATABASE_URL')
+        )
+    }
+
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 

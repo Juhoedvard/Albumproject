@@ -17,23 +17,20 @@ import path from 'path';
 
 
 
+
 dotenv.config();
 const PORT = process.env.PORT || 5000;
 
 const app:Express = express();
 const corsOptions = {
-    origin: ['http://localhost:3000',
-     '127.0.0.1:8000',
-     'https://albumbackend-production.up.railway.app',
-     'albumbackend-production.up.railway.app',
-     'https://albumproject-production.up.railway.app',
-     'albumproject-production.up.railway.app',
-     'https://photo-gallery-production.up.railway.app',
-     'photo-gallery-production.up.railway.app'
-    ],
-    credentials: true,
+  origin: ['http://localhost:3000', 'http://127.0.0.1:8000', 'http://localhost:8000', 'https://server-swdfx3v3pa-lz.a.run.app'],
+  credentials: true,
+};
+app.use((req, res, next) => {
+  console.log(`Received ${req.method} request for ${req.url}`);
+  next();
+});
 
-  };
 app.use(express.json());
 app.use(cors(corsOptions))
 app.use(cookieParser());
@@ -51,9 +48,9 @@ app.use(albumRouter)
 app.use(photoRouter)
 
 
-app.use(express.static(path.join(__dirname, '../', 'build')))
+app.use(express.static(path.join(__dirname,'../', 'build')))
 app.get('*', (req,res) => {
-  res.sendFile(path.join(__dirname, '../', 'build', 'index.html'))
+  res.sendFile(path.join(__dirname,'../',  'build', 'index.html'))
 })
 
 app.listen(PORT, () => {
