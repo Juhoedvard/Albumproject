@@ -12,7 +12,7 @@ const UserProfile = () => {
 
     const dispatch = useAppDispatch()
     const {id } = useParams()
-    const {userprofile, loading} = useAppSelector((state) => state.user)
+    const {userprofile, userLoading} = useAppSelector((state) => state.user)
 
     useEffect(() => {
         if(id){
@@ -23,7 +23,7 @@ const UserProfile = () => {
     return(
         <div className="flex flex-col">
             <div className="flex flex-col items-center px-4">
-                {loading ? <LoadingSpinner loadingText="Loading profile"/> : userprofile  &&
+                {userLoading ? <LoadingSpinner loadingText="Loading profile"/> : userprofile  &&
                 <div>
                  <div>
                       <h1 className="text-3xl font-bold">{userprofile.first_name} {userprofile.last_name}</h1>
@@ -44,7 +44,7 @@ const UserProfile = () => {
                     Albums
                 </h1>
                 <br></br>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-10 ">{loading ?
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-10 ">{userLoading ?
                     <LoadingSpinner loadingText="Loading albums..."/>
                 : userprofile?.useralbums.map((album : Album, index: string) => {
                         return(

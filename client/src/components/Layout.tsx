@@ -8,7 +8,7 @@ const Layout = () => {
         <>
         <SearchProvider>
             <NavBar />
-            <main className="grid min-h-full w-full mx-auto z-10">
+            <main className="grid min-h-full w-full mx-auto z-10 py-4">
                 <Outlet />
             </main>
         </SearchProvider>

@@ -27,8 +27,9 @@ const CreateAlbum = () => {
   const [thumbnailUrl, setThumbnailUrl] = useState<string>('');
   const [selectedPhoto, setSelectedPhoto] = useState<Photo[]>([]);
   const [photosLoaded, setPhotosLoaded] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState<boolean>(false)
   const [removeThesePhotos, setRemoveThesePhotos] = useState<string[]>([])
+  const [preview, setPreview] = useState<boolean>(false)
 
   const dispatch = useAppDispatch();
 
@@ -52,6 +53,7 @@ const CreateAlbum = () => {
       navigate('/');
     } else {
       toast.info('Add a thumbnail for your album');
+      setLoading(false)
     }
   };
 
@@ -90,6 +92,7 @@ const CreateAlbum = () => {
 
   const uploadSelectedPhotos = () => {
     setLoading(true)
+
     if (thumbnail && title) {
       dispatch(addThumbnail(thumbnail))
         .then((add) => {
@@ -110,10 +113,14 @@ const CreateAlbum = () => {
               throw Error(error)
           });
       }
+      setLoading(false)
+      setPreview(true)
     } else {
       toast.error(!thumbnail ? 'Add a thumbnail' : !title && 'Add title to your album');
+      setLoading(false)
     }
-    setLoading(false)
+
+    
   };
   const SendPhotosAgain = () =>{
 
@@ -137,6 +144,8 @@ const CreateAlbum = () => {
     setRemoveThesePhotos(removeFromS3)
     setThumbnailUrl('')
     setAddedPhotos([])
+    setLoading(false)
+    setPreview(false)
 
   }
   const removePhotosS3 = async () => {
@@ -234,31 +243,27 @@ const CreateAlbum = () => {
                   </div>
                 </div>}
 
-              {loading  && !thumbnailUrl?
-              <div>
-                <LoadingSpinner loadingText=""/>
-              </div> :
-              thumbnailUrl  &&
-              <div className="flex flex-col pt-6">
 
-                    <div className="flex flex-col w-full items-center justify-center gap-4">
-                      <div className="flex gap-4">
-                          <div className="flex  justify-start items-start">
-                            <h1 className="italic text-5xl font-medium ">{title}</h1>
+              {preview &&
+              <div className="flex flex-col items-center p-6">
+                    <div className="flex justify-center gap-4">
+                      <div className="border-b pb-4" >
+                         <figure className="relative max-w-xs transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0 text-transparent hover:text-zinc-300">
+                                <img className="rounded-lg" src={thumbnailUrl} alt="thumbnail" />
+                        </figure>
+                      </div>
+
+                      <div className="flex flex-col gap-4">
+                          <div className="flex ">
+                            <h1 className="italic text-3xl font-medium ">{title}</h1>
                           </div>
                           <div className="flex flex-col gap-4">
                               <dt>Description: </dt>
                               <dd className="pl-2"> {description}</dd>
                           </div>
                       </div>
-                      <div className="border-b pb-4" >
-                        <p className="pb-4">Thumbnail: </p>
-                         <figure className="relative max-w-xs transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0 text-transparent hover:text-zinc-300">
-                                <img className="rounded-lg" src={thumbnailUrl} alt="thumbnail" />
-                        </figure>
-                      </div>
-                       
                     
+                       
                     </div>
                         <div>
                             {addedPhotos === undefined ?
@@ -266,7 +271,7 @@ const CreateAlbum = () => {
                               <span>Something went wrong uploading photos, please try again</span>
                               <Button color="light" onClick={SendPhotosAgain}>Try again</Button>
                             </div> : addedPhotos.length > 0 &&  (
-                                <div className="grid grid-cols-1 md:grid-cols-3 justify-items-start">
+                                <div className="grid grid-cols-1 md:grid-cols-3 justify-items-start pt-4">
                                     {addedPhotos.map((photo, index) => {
                                         return(
                                             <div key={index} className="flex flex-col w-80 pt-4 items-center ">

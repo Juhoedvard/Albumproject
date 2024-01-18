@@ -142,7 +142,7 @@ return(
                     </div>
                     <div className="flex flex-col w-full h-full gap-4 ">
                         <div className="flex">
-                        <h1 className="italic text-2xl md:text-4xl font-medium "> {album.title} </h1>
+                        <h3 className="italic text-2xl md:text-4xl font-medium "> {album.title} </h3>
                         <div className="flex w-full justify-end">
                             <Tooltip  content={'remove album'} >
                                 <RiDeleteBinLine size={20} onClick={() => setOpenModal('dismissible')}/>
@@ -187,7 +187,7 @@ return(
             {addMore && photosAddedS3.length <1 ?  <div className="flex flex-col justify-center items-center gap-4">
                 <br></br>
                 <div className="flex justify-center w-1/3 gap-4">
-                <Tooltip className="" placement="top" style="light" content={<span>You can get pictures from Unsplash for free. You can only upload 3 pictures, when creating Album <a className="text-blue-500 hover:underline italic" href="https://unsplash.com/" target="_black">https://unsplash.com/</a></span>}>
+                <Tooltip className="" placement="top"  content={<span>You can get pictures from Unsplash for free. You can only upload 3 pictures, when creating Album <a className="text-blue-500 hover:underline italic" href="https://unsplash.com/" target="_black">https://unsplash.com/</a></span>}>
                       <FileInput onChange={UploadPhotos} id="file" value="" multiple={true}/>
                 </Tooltip>
                     <ul>

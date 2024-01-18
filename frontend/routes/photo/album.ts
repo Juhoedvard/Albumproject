@@ -57,6 +57,7 @@ router.post('/api/album/add-photos',  async (req: Request, res: Response) => {
 });
 
 router.get('/api/album/albums', async (req: Request, res: Response) => {
+    console.log(`${process.env.API_URL}/api/album/albums`)
     try {
         const apiRes = await fetch(`${process.env.API_URL}/api/album/albums`, {
             method: 'GET',
@@ -68,6 +69,7 @@ router.get('/api/album/albums', async (req: Request, res: Response) => {
         return res.status(apiRes.status).json(data)
     }
     catch(err) {
+        console.log(err)
         return res.status(500).json({
             error: `Something went wrong when getting  data, ${err}`
         })

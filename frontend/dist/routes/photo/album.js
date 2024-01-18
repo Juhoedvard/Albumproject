@@ -55,6 +55,7 @@ router.post('/api/album/add-photos', async (req, res) => {
     }
 });
 router.get('/api/album/albums', async (req, res) => {
+    console.log(`${process.env.API_URL}/api/album/albums`);
     try {
         const apiRes = await fetch(`${process.env.API_URL}/api/album/albums`, {
             method: 'GET',

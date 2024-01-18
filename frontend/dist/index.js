@@ -17,13 +17,18 @@ const forgotten_password_1 = require("./routes/auth/forgotten-password");
 const change_password_1 = require("./routes/auth/change-password");
 const album_1 = require("./routes/photo/album");
 const Photo_S3_1 = require("./routes/photo/Photo_S3");
+const path_1 = __importDefault(require("path"));
 dotenv_1.default.config();
 const PORT = process.env.PORT || 5000;
 const app = (0, express_1.default)();
 const corsOptions = {
-    origin: ['http://localhost:3000', 'http://127.0.0.1:8000', 'http://localhost:8000'],
+    origin: ['http://localhost:3000', 'http://127.0.0.1:8000', 'http://localhost:8000', 'https://server-swdfx3v3pa-lz.a.run.app'],
     credentials: true,
 };
+app.use((req, res, next) => {
+    console.log(`Received ${req.method} request for ${req.url}`);
+    next();
+});
 app.use(express_1.default.json());
 app.use((0, cors_1.default)(corsOptions));
 app.use((0, cookie_parser_1.default)());
@@ -37,13 +42,9 @@ app.use(forgotten_password_1.forgottenPasswordRouter);
 app.use(change_password_1.changePasswordRouter);
 app.use(album_1.albumRouter);
 app.use(Photo_S3_1.photoRouter);
-/*app.use(express.static(path.join(__dirname, '../', 'build')))
-app.get('*', (req,res) => {
-  res.sendFile(path.join(__dirname, '../', 'build', 'index.html'))
-})*/
-app.use((req, res, next) => {
-    console.log(`Received ${req.method} request for ${req.url}`);
-    next();
+app.use(express_1.default.static(path_1.default.join(__dirname, '../', 'build')));
+app.get('*', (req, res) => {
+    res.sendFile(path_1.default.join(__dirname, '../', 'build', 'index.html'));
 });
 app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}`);

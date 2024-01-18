@@ -3,7 +3,8 @@ FROM python:latest
 
 # Aseta työskentelykansio kontissa
 WORKDIR /backend
-ENV PYTHONBUFERED=1
+ENV PYTHONBUFFERED=1
+
 
 RUN pip install --upgrade pip
 # Kopioi vaaditut tiedostot konttiin
@@ -14,6 +15,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Kopioi Django-sovelluksen koodi konttiin
 COPY . .
+
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 
 
 
