@@ -22,7 +22,7 @@ I made this project to learn about django and redux-toolkit. Project frontend si
 - [Tailwind](https://tailwindcss.com/) and [Flowbite](https://www.flowbite-react.com/) for css
 - [ReactRouterDom](https://reactrouter.com/en/main) for routing different pages
 
-Project is not deployed at the moment in google cloud:  https://albumfrontend-swdfx3v3pa-lz.a.run.app/
+Project is not deployed at the moment in google cloud:  Free trial expired
 
 ## How to install: 
  Server:
